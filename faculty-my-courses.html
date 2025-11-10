@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="portal-page">
+    <nav class="navbar">
+        <div class="logo">
+            <a href="faculty-dashboard.html">SVITS Portal</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="faculty-dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="faculty-my-courses.html" class="active"><i class="fas fa-book"></i> My Courses</a></li>
+            <li><a href="faculty-upload-grades.html"><i class="fas fa-pen-to-square"></i> Upload Grades</a></li>
+            <li><a href="faculty-attendance.html"><i class="fas fa-user-check"></i> Attendance</a></li>
+            <li><a href="login.html" class="btn btn-logout">Logout</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="login.html" class="btn btn-logout-desktop">Logout</a>
+            <i class="fas fa-bars hamburger"></i>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 id="welcomeMessage">My Courses</h1>
+            <p>Manage materials, assignments, and student rosters for your assigned courses.</p>
+        </header>
+
+        <section class="course-manage-grid">
+            <div class="course-manage-card">
+                <div class="card-header">
+                    <i class="fas fa-laptop-code card-icon"></i>
+                    <div>
+                        <h3>CSE-301: Operating Systems</h3>
+                        <p>B.Tech 3rd Year, Sec A | 45 Students</p>
+                    </div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn-course-action upload-btn" data-course="CSE-301: Operating Systems"><i class="fas fa-upload"></i> Upload Materials</button>
+                    <button class="btn-course-action btn-secondary"><i class="fas fa-tasks"></i> Manage Assignments</button>
+                    <button class="btn-course-action btn-secondary"><i class="fas fa-users"></i> View Roster</button>
+                    <a href="faculty-upload-grades.html" class="btn-course-action btn-secondary"><i class="fas fa-marker"></i> Upload Grades</a>
+                </div>
+            </div>
+
+            <div class="course-manage-card">
+                <div class="card-header">
+                    <i class="fas fa-database card-icon"></i>
+                    <div>
+                        <h3>CSE-302: Database Systems</h3>
+                        <p>B.Tech 3rd Year, Sec B | 42 Students</p>
+                    </div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn-course-action upload-btn" data-course="CSE-302: Database Systems"><i class="fas fa-upload"></i> Upload Materials</button>
+                    <button class="btn-course-action btn-secondary"><i class="fas fa-tasks"></i> Manage Assignments</button>
+                    <button class="btn-course-action btn-secondary"><i class="fas fa-users"></i> View Roster</button>
+                    <a href="faculty-upload-grades.html" class="btn-course-action btn-secondary"><i class="fas fa-marker"></i> Upload Grades</a>
+                </div>
+            </div>
+
+            <div class="course-manage-card">
+                <div class="card-header">
+                    <i class="fas fa-brain card-icon"></i>
+                    <div>
+                        <h3>CSE-305: AI & Machine Learning</h3>
+                        <p>B.Tech 3rd Year, Sec A | 33 Students</p>
+                    </div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn-course-action upload-btn" data-course="CSE-305: AI & ML"><i class="fas fa-upload"></i> Upload Materials</button>
+                    <button class="btn-course-action btn-secondary"><i class="fas fa-tasks"></i> Manage Assignments</button>
+                    <button class="btn-course-action btn-secondary"><i class="fas fa-users"></i> View Roster</button>
+                    <a href="faculty-upload-grades.html" class="btn-course-action btn-secondary"><i class="fas fa-marker"></i> Upload Grades</a>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalCourseTitle">Upload Materials</h2>
+                <i class="fas fa-times close-btn"></i>
+            </div>
+            <div class="modal-body">
+                <form id="uploadFileForm" class="form-card" style="padding: 0; border: none; margin-top: 0;">
+                    <div class="form-group">
+                        <label for="fileType">File Type</label>
+                        <select id="fileType" name="fileType" required>
+                            <option value="notes">Lecture Notes (PDF)</option>
+                            <option value="syllabus">Syllabus</option>
+                            <option value="assignment">Assignment Sheet</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fileUpload">Select File</label>
+                        <input type="file" id="fileUpload" name="fileUpload" required>
+                    </div>
+                    <button class="btn" type="submit" style="width: 100%;">Upload File</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer" style="margin-top: 50px;">
+        <div class="footer-bottom">
+             <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

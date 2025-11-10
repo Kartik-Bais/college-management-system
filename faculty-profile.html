@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Aman Sharma - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">SVITS</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="departments.html">Departments</a></li>
+            <li><a href="faculty.html" class="active">Faculty</a></li>
+            <li><a href="login.html" class="btn">Login</a></li>
+        </ul>
+        <i class="fas fa-bars hamburger"></i>
+    </nav>
+    
+    <header class="page-header">
+        <div class="container">
+            <h1>Faculty Profile</h1>
+        </div>
+    </header>
+
+    <main>
+        <section class="container content-card">
+            <div class="profile-grid">
+                <aside class="profile-sidebar">
+                    <img src="sir.webp" alt="Dr. Aman Sharma">
+                    <h3>Dr. Aman Sharma</h3>
+                    <p>Professor & HOD, Computer Science</p>
+                    <div class="profile-links">
+                        <a href="mailto:aman.sharma@svits.edu.in"><i class="fas fa-envelope"></i> aman.sharma@svits.edu.in</a>
+                        <a href="tel:+919876543210"><i class="fas fa-phone"></i> +91 98765 43210</a>
+                        <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn Profile</a>
+                    </div>
+                </aside>
+                <section class="profile-main">
+                    <h2>About Dr. Sharma</h2>
+                    <p>Dr. Aman Sharma is a distinguished Professor and the Head of the Department of Computer Science & Engineering at SVITS. With over 20 years of experience in academia and research, his expertise lies in the fields of Artificial Intelligence, Machine Learning, and Natural Language Processing.</p>
+                    <p>He holds a Ph.D. in AI from IIT Bombay and has published over 50 research papers in international journals and conferences. Dr. Sharma is dedicated to mentoring students and fostering a research-oriented environment within the department.</p>
+
+                    <h2>Areas of Expertise</h2>
+                    <ul style="list-style-type: disc; margin-left: 20px; color: var(--text-light);">
+                        <li>Artificial Intelligence</li>
+                        <li>Machine Learning</li>
+                        <li>Natural Language Processing (NLP)</li>
+                        <li>Data Science</li>
+                    </ul>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div class="chatbot-toggler">
+        <i class="fas fa-robot"></i>
+    </div>
+    <div class="chatbot-window">
+        <div class="chatbot-header">
+            <h3>SVITS AI Assistant</h3>
+            <i class="fas fa-times chatbot-close"></i>
+        </div>
+        <ul class="chatbot-log">
+            </ul>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Ask a question...">
+            <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

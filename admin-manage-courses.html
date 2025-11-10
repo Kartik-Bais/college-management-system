@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Courses - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="portal-page">
+    <nav class="navbar">
+        <div class="logo">
+            <a href="admin-panel.html">SVITS Admin</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="admin-panel.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="admin-manage-users.html"><i class="fas fa-users-cog"></i> Manage Users</a></li>
+            <li><a href="admin-manage-courses.html" class="active"><i class="fas fa-book"></i> Manage Courses</a></li>
+            <li><a href="admin-analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            <li><a href="login.html" class="btn btn-logout">Logout</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="login.html" class="btn btn-logout-desktop">Logout</a>
+            <i class="fas fa-bars hamburger"></i>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 id="welcomeMessage">Manage Courses</h1>
+            <p>Add new courses, assign faculty, and manage departments.</p>
+        </header>
+
+        <section class="content-grid" style="grid-template-columns: 1fr 2fr; align-items: flex-start;">
+            <div class="content-card">
+                <h2><i class="fas fa-plus-circle"></i> Add New Course</h2>
+                <form id="addCourseForm" class="form-card" style="padding: 0; border: none; margin-top: 0;">
+                    <div class="form-group">
+                        <label for="courseCode">Course Code</label>
+                        <input type="text" id="courseCode" name="courseCode" placeholder="e.g., CSE-301" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseName">Course Name</label>
+                        <input type="text" id="courseName" name="courseName" placeholder="e.g., Operating Systems" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseDept">Department</label>
+                        <select id="courseDept" name="courseDept" required>
+                            <option value="">-- Select Department --</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Mechanical Engineering">Mechanical Engineering</option>
+                            <option value="Electronics & Comm.">Electronics & Comm.</option>
+                            <option value="Civil Engineering">Civil Engineering</option>
+                        </select>
+                    </div>
+                     <div class="form-group">
+                        <label for="courseCredits">Credits</label>
+                        <input type="number" id="courseCredits" name="courseCredits" min="1" max="5" placeholder="e.g., 4" required>
+                    </div>
+                    <button class="btn" type="submit" style="width: 100%;">Add Course</button>
+                </form>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-book-open"></i> All Courses</h2>
+                <div class="table-actions">
+                    <input type="text" placeholder="Search courses...">
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Course Name</th>
+                                <th>Department</th>
+                                <th>Credits</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CSE-301</td>
+                                <td>Operating Systems</td>
+                                <td>Computer Science</td>
+                                <td>4</td>
+                                <td>
+                                    <button class="btn-action edit"><i class="fas fa-pen"></i></button>
+                                    <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>CSE-302</td>
+                                <td>Database Systems</td>
+                                <td>Computer Science</td>
+                                <td>4</td>
+                                <td>
+                                    <button class="btn-action edit"><i class="fas fa-pen"></i></button>
+                                    <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ME-201</td>
+                                <td>Thermodynamics</td>
+                                <td>Mechanical Engineering</td>
+                                <td>3</td>
+                                <td>
+                                    <button class="btn-action edit"><i class="fas fa-pen"></i></button>
+                                    <button class="btn-action delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

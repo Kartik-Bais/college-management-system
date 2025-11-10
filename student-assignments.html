@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Assignments - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="portal-page">
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">SVITS Portal</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="student-portal.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="student-grades.html"><i class="fas fa-graduation-cap"></i> Grades</a></li>
+            <li><a href="student-timetable.html"><i class="fas fa-calendar-alt"></i> Timetable</a></li>
+            <li><a href="student-assignments.html" class="active"><i class="fas fa-tasks"></i> Assignments</a></li>
+            <li><a href="login.html" class="btn btn-logout">Logout</a></li>
+        </ul>
+        <div class="nav-right">
+             <a href="login.html" class="btn btn-logout-desktop">Logout</a>
+             <i class="fas fa-bars hamburger"></i>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 id="welcomeMessage">My Assignments</h1>
+            <p>Submit your work and track your deadlines.</p>
+        </header>
+
+        <section class="content-grid" style="grid-template-columns: 1fr 1fr; align-items: flex-start;">
+            <div class="content-card">
+                <h2>Pending Assignments</h2>
+                <ul class="course-list">
+                    <li>
+                        <strong>CSE-301: OS Assignment 2</strong>
+                        <p style="color: var(--danger-color); font-size: 0.9rem; margin: 5px 0;">Due: 15 Nov 2025</p>
+                        <a href="#" class="btn" style="padding: 5px 15px; font-size: 0.9rem;">Submit Now</a>
+                    </li>
+                    <li>
+                        <strong>CSE-302: DBMS Mini-Project</strong>
+                        <p style="color: var(--danger-color); font-size: 0.9rem; margin: 5px 0;">Due: 20 Nov 2025</p>
+                        <a href="#" class="btn" style="padding: 5px 15px; font-size: 0.9rem;">Submit Now</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-card">
+                <h2>Submitted Assignments</h2>
+                <ul class="course-list">
+                    <li>
+                        <strong>CSE-301: OS Assignment 1</strong>
+                        <p style="color: var(--text-light); font-size: 0.9rem; margin: 5px 0;">Submitted: 01 Nov 2025</p>
+                        <span class="status active">Graded (8/10)</span>
+                    </li>
+                     <li>
+                        <strong>MAT-301: Proofs</strong>
+                        <p style="color: var(--text-light); font-size: 0.9rem; margin: 5px 0;">Submitted: 28 Oct 2025</p>
+                        <span class="status warning-color" style="background: #ffc10720; color: #ffc107;">Pending</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer" style="margin-top: 50px;">
+        <div class="footer-bottom">
+            <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

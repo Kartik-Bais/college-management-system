@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Grades - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="portal-page">
+    <nav class="navbar">
+        <div class="logo">
+            <a href="faculty-dashboard.html">SVITS Portal</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="faculty-dashboard.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="faculty-my-courses.html"><i class="fas fa-book"></i> My Courses</a></li>
+            <li><a href="faculty-upload-grades.html" class="active"><i class="fas fa-pen-to-square"></i> Upload Grades</a></li>
+            <li><a href="faculty-attendance.html"><i class="fas fa-user-check"></i> Attendance</a></li>
+            <li><a href="login.html" class="btn btn-logout">Logout</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="login.html" class="btn btn-logout-desktop">Logout</a>
+            <i class="fas fa-bars hamburger"></i>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 id="welcomeMessage">Upload Grades</h1>
+            <p>Select a course and assessment to enter student marks.</p>
+        </header>
+
+        <section class="content-card">
+            <div class="table-actions" style="grid-template-columns: 1fr 1fr 1fr; display: grid; gap: 20px;">
+                <div class="form-group" style="margin: 0;">
+                    <label for="courseSelect">Select Course</label>
+                    <select id="courseSelect">
+                        <option>CSE-301: Operating Systems</option>
+                        <option>CSE-302: Database Systems</option>
+                    </select>
+                </div>
+                 <div class="form-group" style="margin: 0;">
+                    <label for="assessmentSelect">Select Assessment</label>
+                    <select id="assessmentSelect">
+                        <option>Mid-Term Exam</option>
+                        <option>Assignment 1</option>
+                    </select>
+                </div>
+                <button class="btn" style="align-self: end; height: 47px;">Load Roster</button>
+            </div>
+
+            <div class="table-responsive" style="margin-top: 30px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Marks (Out of 30)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>S1250</td>
+                            <td>Kartik Bais</td>
+                            <td><input type="number" min="0" max="30" value="25" style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color);"></td>
+                            <td><span class="status active">Saved</span></td>
+                        </tr>
+                         <tr>
+                            <td>S1249</td>
+                            <td>Riya Singh</td>
+                            <td><input type="number" min="0" max="30" value="28" style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color);"></td>
+                            <td><span class="status active">Saved</span></td>
+                        </tr>
+                         <tr>
+                            <td>S1248</td>
+                            <td>Arjun Mehra</td>
+                            <td><input type="number" min="0" max="30" placeholder="Enter marks" style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color);"></td>
+                            <td><span class="status inactive">Pending</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn" style="margin-top: 20px; float: right;">Save All Changes</button>
+        </section>
+    </main>
+
+    <footer class="footer" style="margin-top: 50px;">
+        <div class="footer-bottom">
+             <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>

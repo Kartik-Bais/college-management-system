@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Science - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">SVITS</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="departments.html" class="active">Departments</a></li>
+            <li><a href="faculty.html">Faculty</a></li>
+            <li><a href="login.html" class="btn">Login</a></li>
+        </ul>
+        <i class="fas fa-bars hamburger"></i>
+    </nav>
+    
+    <header class="page-header">
+        <div class="container">
+            <h1>Computer Science & Engineering</h1>
+            <p>Engineering the Future of Technology</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="container content-card">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>About the Program</h2>
+                    <p>The Department of Computer Science & Engineering at SVITS is a hub of innovation. Our program is designed to provide students with a robust foundation in computing, software development, and advanced topics like Artificial Intelligence, Machine Learning, and Cybersecurity.</p>
+                    <p>We focus on a hands-on, project-based learning approach. Our state-of-the-art labs for AI, data science, and network security provide an unparalleled environment for students to experiment and build cutting-edge solutions.</p>
+                    
+                    <h2>Key Subjects & Syllabus</h2>
+                    <ul style="list-style-type: disc; margin-left: 20px; color: var(--text-light);">
+                        <li>Data Structures & Algorithms</li>
+                        <li>Database Management Systems (DBMS)</li>
+                        <li>Operating Systems</li>
+                        <li>Artificial Intelligence & Machine Learning</li>
+                        <li>Cybersecurity & Network Protocols</li>
+                        <li>Cloud Computing & DevOps</li>
+                    </ul>
+                </div>
+                <div class="about-image">
+                    <img src="https://placehold.co/600x400/004a99/FFFFFF?text=Computer+Lab" alt="Computer Science">
+                </div>
+            </div>
+            
+            <h2 style="margin-top: 40px;">Department Faculty</h2>
+            <div class="programs-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                <div class="faculty-card">
+                    <a href="faculty-profile.html">
+                        <img src="https://placehold.co/400x300/007bff/FFFFFF?text=Dr.+Aman+Sharma" alt="Dr. Aman Sharma">
+                        <h3>Dr. Aman Sharma</h3>
+                        <p><strong>Professor & HOD</strong></p>
+                    </a>
+                </div>
+                <div class="faculty-card">
+                    <a href="faculty-profile.html">
+                        <img src="https://placehold.co/400x300/007bff/FFFFFF?text=Faculty+Member" alt="Faculty Member">
+                        <h3>Dr. Riya Jain</h3>
+                        <p><strong>Associate Professor</strong></p>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <div class="chatbot-toggler">
+        <i class="fas fa-robot"></i>
+    </div>
+    <div class="chatbot-window">
+        <div class="chatbot-header">
+            <h3>SVITS AI Assistant</h3>
+            <i class="fas fa-times chatbot-close"></i>
+        </div>
+        <ul class="chatbot-log">
+            </ul>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Ask a question...">
+            <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

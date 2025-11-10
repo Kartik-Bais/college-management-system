@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="portal-page">
+    <nav class="navbar">
+        <div class="logo">
+            <a href="admin-panel.html">SVITS Admin</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="admin-panel.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="admin-manage-users.html"><i class="fas fa-users-cog"></i> Manage Users</a></li>
+            <li><a href="admin-manage-courses.html"><i class="fas fa-book"></i> Manage Courses</a></li>
+            <li><a href="admin-analytics.html" class="active"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            <li><a href="login.html" class="btn btn-logout">Logout</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="login.html" class="btn btn-logout-desktop">Logout</a>
+            <i class="fas fa-bars hamburger"></i>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 id="welcomeMessage">Analytics & Reports</h1>
+            <p>Visualize website traffic and enrollment data.</p>
+        </header>
+
+        <section class="summary-cards">
+            <div class="card">
+                <h3>Site Visits (7 days)</h3>
+                <p>28,490</p>
+                <i class="fas fa-eye card-icon"></i>
+            </div>
+            <div class="card">
+                <h3>New Applications (24h)</h3>
+                <p>152</p>
+                <i class="fas fa-file-signature card-icon"></i>
+            </div>
+            <div class="card">
+                <h3>Total Enrollments</h3>
+                <p>1,250</p>
+                <i class="fas fa-user-graduate card-icon"></i>
+            </div>
+            <div class="card">
+                <h3>Bounce Rate</h3>
+                <p>23.4%</p>
+                <i class="fas fa-mouse-pointer card-icon"></i>
+            </div>
+        </section>
+
+        <section class="content-grid" style="grid-template-columns: 1fr 1fr; align-items: flex-start;">
+            <div class="content-card">
+                <h2><i class="fas fa-chart-bar"></i> Website Traffic (Last 30 Days)</h2>
+                <img src="https://placehold.co/600x300/f8f9fa/333?text=Chart+Placeholder+(Visits)" alt="Website Traffic Chart" style="width: 100%; border: 1px solid var(--border-color);">
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-chart-pie"></i> Enrollment by Department</h2>
+                <img src="https://placehold.co/600x300/f8f9fa/333?text=Pie+Chart+Placeholder+(Enrollment)" alt="Enrollment by Department Chart" style="width: 100%; border: 1px solid var(--border-color);">
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

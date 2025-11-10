@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">SVITS</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="departments.html">Departments</a></li>
+            <li><a href="faculty.html" class="active">Faculty</a></li>
+            <li><a href="admissions.html">Admissions</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="btn">Login</a></li>
+        </ul>
+        <i class="fas fa-bars hamburger"></i>
+    </nav>
+    
+    <header class="page-header">
+        <div class="container">
+            <h1>Our Esteemed Faculty</h1>
+            <p>Mentors, Researchers, and Innovators</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="container content-card">
+            <div class="programs-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                <div class="faculty-card">
+                    <a href="faculty-profile.html">
+                        <img src="sir.webp" alt="Dr. Aman Sharma">
+                        <h3>Dr. Aman Sharma</h3>
+                        <p><strong>Professor, CSE</strong></p>
+                    </a>
+                </div>
+                <div class="faculty-card">
+                    <a href="faculty-profile.html">
+                        <img src="maam.webp" alt="Dr. Priya Singh">
+                        <h3>Dr. Priya Singh</h3>
+                        <p><strong>Associate Professor, ME</strong></p>
+                    </a>
+                </div>
+                <div class="faculty-card">
+                    <a href="faculty-profile.html">
+                        <img src="sir.webp" alt="Dr. Akash Verma">
+                        <h3>Dr. Akash Verma</h3>
+                        <p><strong>Assistant Professor, ECE</strong></p>
+                    </a>
+                </div>
+                 <div class="faculty-card">
+                    <a href="faculty-profile.html">
+                        <img src="maam.webp" alt="Dr. Sneha Patel">
+                        <h3>Dr. Sneha Patel</h3>
+                        <p><strong>Professor, Civil Engg.</strong></p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="chatbot-toggler">
+        <i class="fas fa-robot"></i>
+    </div>
+    <div class="chatbot-window">
+        <div class="chatbot-header">
+            <h3>SVITS AI Assistant</h3>
+            <i class="fas fa-times chatbot-close"></i>
+        </div>
+        <ul class="chatbot-log">
+            </ul>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Ask a question...">
+            <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fa fa-phone"></i> +91 9406661558</li>
+                    <li><i class="fa fa-envelope"></i> admission@svits.edu.in</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

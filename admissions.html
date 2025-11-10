@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admissions - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">SVITS</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="departments.html">Departments</a></li>
+            <li><a href="faculty.html">Faculty</a></li>
+            <li><a href="admissions.html" class="active">Admissions</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="btn">Login</a></li>
+        </ul>
+        <i class="fas fa-bars hamburger"></i>
+    </nav>
+    
+    <header class="page-header">
+        <div class="container">
+            <h1>Admissions 2025-26</h1>
+            <p>Begin Your Journey with Us</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="container content-card" style="max-width: 800px;">
+            <div class="eligibility-check">
+                <h2>Check Your Eligibility</h2>
+                <p>Not sure if you're eligible? Click the button below to see the criteria for all our programs.</p>
+                <button class="btn" id="checkEligibilityBtn" style="margin-top: 15px;">Check Eligibility Criteria</button>
+            </div>
+            
+            <h2 style="text-align: center;">Online Application Form</h2>
+            <form id="admissionForm" class="form-card">
+                <input type="text" name="fullName" placeholder="Full Name *" required>
+                <input type="email" name="email" placeholder="Email Address *" required>
+                <input type="tel" name="contactNumber" placeholder="Contact Number *" required>
+                <select name="department" required>
+                    <option value="">Select Desired Program *</option>
+                    <option value="Computer Science">B.Tech - Computer Science</option>
+                    <option value="Mechanical">B.Tech - Mechanical Engineering</option>
+                    <option value="Electronics">B.Tech - Electronics & Comm.</option>
+                    <option value="Civil">B.Tech - Civil Engineering</option>
+                    <option value="MBA">MBA - Business Administration</option>
+                </select>
+                <button class="btn" type="submit">Submit Application</button>
+            </form>
+        </section>
+    </main>
+
+    <div id="eligibilityModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Program Eligibility Criteria</h2>
+                <i class="fas fa-times close-btn"></i>
+            </div>
+            <div class="modal-body">
+                <p>Below are the minimum criteria for our popular programs.</p>
+                
+                <h3 style="color: var(--primary-color); margin-top: 15px;">B.Tech (All Branches)</h3>
+                <ul>
+                    <li>10+2 (or equivalent) with Physics, Chemistry, and Mathematics.</li>
+                    <li>Minimum 60% aggregate marks.</li>
+                    <li>Valid JEE Main score (preferred).</li>
+                </ul>
+
+                <h3 style="color: var(--primary-color); margin-top: 15px;">MBA</h3>
+                <ul>
+                    <li>Bachelor's degree in any discipline from a recognized university.</li>
+                    <li>Minimum 50% aggregate marks.</li>
+                    <li>Valid CAT / MAT / CMAT score (preferred).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="chatbot-toggler">
+        <i class="fas fa-robot"></i>
+    </div>
+    <div class="chatbot-window">
+        <div class="chatbot-header">
+            <h3>SVITS AI Assistant</h3>
+            <i class="fas fa-times chatbot-close"></i>
+        </div>
+        <ul class="chatbot-log">
+            </ul>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Ask a question...">
+            <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fa fa-phone"></i> +91 9406661558</li>
+                    <li><i class="fa fa-envelope"></i> admission@svits.edu.in</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

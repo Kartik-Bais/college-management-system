@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="portal-page">
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">SVITS Portal</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="student-portal.html" class="active"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="student-grades.html"><i class="fas fa-graduation-cap"></i> Grades</a></li>
+            <li><a href="student-timetable.html"><i class="fas fa-calendar-alt"></i> Timetable</a></li>
+            <li><a href="student-assignments.html"><i class="fas fa-tasks"></i> Assignments</a></li>
+            <li><a href="login.html" class="btn btn-logout">Logout</a></li>
+        </ul>
+        <div class="nav-right">
+             <a href="login.html" class="btn btn-logout-desktop">Logout</a>
+             <i class="fas fa-bars hamburger"></i>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 id="welcomeMessage">Welcome, Student!</h1>
+            <p>Here is your academic dashboard.</p>
+        </header>
+
+        <section class="portal-cards">
+            <a href="student-grades.html" class="card card-clickable">
+                <h3><i class="fas fa-graduation-cap"></i> View Grades</h3>
+                <p>Check your semester results and overall GPA.</p>
+            </a>
+            <a href="student-timetable.html" class="card card-clickable">
+                <h3><i class="fas fa-calendar-alt"></i> Dynamic Timetable</h3>
+                <p>Access your daily class schedule and exam dates.</p>
+            </a>
+            <a href="student-fees.html" class="card card-clickable">
+                <h3><i class="fas fa-credit-card"></i> Online Fee Payment</h3>
+                <p>Pay tuition, exam, and other fees securely online.</p>
+            </a>
+            <a href="student-placements.html" class="card card-clickable">
+                <h3><i class="fas fa-briefcase"></i> Placement Portal</h3>
+                <p>Apply for jobs, upload your resume, and track applications.</p>
+            </a>
+            <a href="#" class="card card-clickable">
+                <h3><i class="fas fa-book"></i> E-Learning Hub</h3>
+                <p>Access video lectures, notes, and other course materials.</p>
+            </a>
+             <a href="student-assignments.html" class="card card-clickable">
+                <h3><i class="fas fa-tasks"></i> Assignments</h3>
+                <p>View and submit your course assignments.</p>
+            </a>
+        </section>
+    </main>
+    
+    <footer class="footer" style="margin-top: 150px;">
+        <div class="footer-bottom">
+            <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

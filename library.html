@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">SVITS</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="library.html" class="active">Library</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="btn">Login</a></li>
+        </ul>
+        <i class="fas fa-bars hamburger"></i>
+    </nav>
+    
+    <header class="page-header">
+        <div class="container">
+            <h1>Library & Resources</h1>
+            <p>Your Gateway to Knowledge</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="container content-card">
+            <p style="text-align:center; font-size: 1.1rem; margin-bottom: 20px;">Our library offers a vast collection of over 50,000 books, journals, and access to numerous e-resources.</p>
+            
+            <form class="form-card" style="display: flex; gap: 10px; margin-bottom: 40px; background: var(--bg-light);">
+                <input type="text" placeholder="Search for books, authors, or topics..." style="flex-grow: 1; margin-bottom: 0;">
+                <button class="btn" type="submit" style="border-radius: 5px;">Search</button>
+            </form>
+
+            <h2>Featured Resources</h2>
+            <div class="programs-grid">
+                <div class="card">
+                    <div class="icon"><i class="fas fa-book"></i></div>
+                    <h3>Introduction to Artificial Intelligence</h3>
+                    <p>Author: John Smith | Status: <span style="color: var(--success-color);">Available</span></p>
+                </div>
+                <div class="card">
+                    <div class="icon"><i class="fas fa-book"></i></div>
+                    <h3>Advanced Robotics Systems</h3>
+                    <p>Author: Jane Doe | Status: <span style="color: var(--danger-color);">Checked Out</span></p>
+                </div>
+                <div class="card">
+                    <div class="icon"><i class="fas fa-book"></i></div>
+                    <h3>Fundamentals of Quantum Physics</h3>
+                    <p>Author: Albert Einstein | Status: <span style="color: var(--success-color);">Available</span></p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div class="chatbot-toggler">
+        <i class="fas fa-robot"></i>
+    </div>
+    <div class="chatbot-window">
+        <div class="chatbot-header">
+            <h3>SVITS AI Assistant</h3>
+            <i class="fas fa-times chatbot-close"></i>
+        </div>
+        <ul class="chatbot-log">
+            </ul>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Ask a question...">
+            <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fa fa-phone"></i> +91 9406661558</li>
+                    <li><i class="fa fa-envelope"></i> admission@svits.edu.in</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

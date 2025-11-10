@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Timetable - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="portal-page">
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">SVITS Portal</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="student-portal.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="student-grades.html"><i class="fas fa-graduation-cap"></i> Grades</a></li>
+            <li><a href="student-timetable.html" class="active"><i class="fas fa-calendar-alt"></i> Timetable</a></li>
+            <li><a href="student-assignments.html"><i class="fas fa-tasks"></i> Assignments</a></li>
+            <li><a href="login.html" class="btn btn-logout">Logout</a></li>
+        </ul>
+        <div class="nav-right">
+             <a href="login.html" class="btn btn-logout-desktop">Logout</a>
+             <i class="fas fa-bars hamburger"></i>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 id="welcomeMessage">Class Timetable</h1>
+            <p>Your schedule for Semester 3 (CSE-A)</p>
+        </header>
+
+        <section class="content-card">
+            <div class="table-responsive">
+                <table class="timetable">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>10:00 - 11:00</strong></td>
+                            <td><strong>CSE-301</strong><span>Dr. Sharma</span></td>
+                            <td><strong>CSE-302</strong><span>Dr. Jain</span></td>
+                            <td><strong>CSE-301</strong><span>Dr. Sharma</span></td>
+                            <td><strong>CSE-302</strong><span>Dr. Jain</span></td>
+                            <td><strong>CSE-305</strong><span>Dr. Verma</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>11:00 - 12:00</strong></td>
+                            <td><strong>CSE-302</strong><span>Dr. Jain</span></td>
+                            <td><strong>CSE-301</strong><span>Dr. Sharma</span></td>
+                            <td><strong>CSE-305</strong><span>Dr. Verma</span></td>
+                            <td><strong>MAT-301</strong><span>Prof. Das</span></td>
+                            <td><strong>MAT-301</strong><span>Prof. Das</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>12:00 - 01:00</strong></td>
+                            <td colspan="5" style="background: var(--bg-light); color: var(--text-light); font-weight: 500;">L U N C H</td>
+                        </tr>
+                        <tr>
+                            <td><strong>01:00 - 03:00</strong></td>
+                            <td><strong>OS Lab</strong><span>Lab 1</span></td>
+                            <td><strong>DBMS Lab</strong><span>Lab 2</span></td>
+                            <td><strong>OS Lab</strong><span>Lab 1</span></td>
+                            <td><strong>DBMS Lab</strong><span>Lab 2</span></td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer" style="margin-top: 50px;">
+        <div class="footer-bottom">
+            <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">SVITS</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="alumni.html" class="active">Alumni</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="btn">Login</a></li>
+        </ul>
+        <i class="fas fa-bars hamburger"></i>
+    </nav>
+    
+    <header class="page-header">
+        <div class="container">
+            <h1>Our Proud Alumni</h1>
+            <p>Carrying the Legacy Forward</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="container content-card">
+            <h2>Notable Alumni</h2>
+            <div class="programs-grid">
+                <div class="alumni-card">
+                    <h3>Rohit Sharma</h3>
+                    <p><strong>Software Engineer at Google</strong></p>
+                    <p>Batch: 2015 (CSE)</p>
+                </div>
+                <div class="alumni-card">
+                    <h3>Priya Singh</h3>
+                    <p><strong>Research Scientist at MIT</strong></p>
+                    <p>Batch: 2016 (ECE)</p>
+                </div>
+                <div class="alumni-card">
+                    <h3>Akash Verma</h3>
+                    <p><strong>Entrepreneur, Founder of TechStart</strong></p>
+                    <p>Batch: 2014 (ME)</p>
+                </div>
+            </div>
+            
+            <h2 style="margin-top: 50px;">Join the Alumni Network</h2>
+            <p>Stay connected with your alma mater. Join our alumni network for mentorship opportunities, career guidance, and to reconnect with old friends. <a href="#">Register Here</a>.</p>
+        </section>
+    </main>
+
+    <div class="chatbot-toggler">
+        <i class="fas fa-robot"></i>
+    </div>
+    <div class="chatbot-window">
+        <div class="chatbot-header">
+            <h3>SVITS AI Assistant</h3>
+            <i class="fas fa-times chatbot-close"></i>
+        </div>
+        <ul class="chatbot-log">
+            </ul>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Ask a question...">
+            <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    
+    <footer class="footer">
+         <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fa fa-phone"></i> +91 9406661558</li>
+                    <li><i class="fa fa-envelope"></i> admission@svits.edu.in</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

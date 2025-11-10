@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="portal-page">
+    <nav class="navbar">
+        <div class="logo">
+            <a href="faculty-dashboard.html">SVITS Portal</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="faculty-dashboard.html" class="active"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="faculty-my-courses.html"><i class="fas fa-book"></i> My Courses</a></li>
+            <li><a href="faculty-upload-grades.html"><i class="fas fa-pen-to-square"></i> Upload Grades</a></li>
+            <li><a href="faculty-attendance.html"><i class="fas fa-user-check"></i> Attendance</a></li>
+            <li><a href="login.html" class="btn btn-logout">Logout</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="login.html" class="btn btn-logout-desktop">Logout</a>
+            <i class="fas fa-bars hamburger"></i>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 id="welcomeMessage">Welcome, Faculty Member</h1>
+            <p>Here's your summary for today.</p>
+        </header>
+
+        <section class="summary-cards">
+            <div class="card">
+                <h3>Courses Assigned</h3>
+                <p>4</p>
+                <i class="fas fa-book-open card-icon"></i>
+            </div>
+            <div class="card">
+                <h3>Pending Grades</h3>
+                <p>2 Sections</p>
+                <i class="fas fa-marker card-icon"></i>
+            </div>
+            <div class="card">
+                <h3>Total Students</h3>
+                <p>120</p>
+                <i class="fas fa-users card-icon"></i>
+            </div>
+            <div class="card">
+                <h3>Notices Published</h3>
+                <p>3</p>
+                <i class="fas fa-bullhorn card-icon"></i>
+            </div>
+        </section>
+
+        <section class="content-grid">
+            <div class="content-card">
+                <h2><i class="fas fa-book"></i> My Courses</h2>
+                <ul class="course-list">
+                    <li><span>CSE-301:</span> Operating Systems</li>
+                    <li><span>CSE-302:</span> Database Management Systems</li>
+                    <li><span>CSE-305:</span> AI & Machine Learning</li>
+                    <li><span>CSE-310:</span> OS Lab</li>
+                </ul>
+                <a href="faculty-my-courses.html" class="btn" style="margin-top: 20px;">Manage All Courses</a>
+            </div>
+            <div class="content-card">
+                <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                <div class="quick-actions">
+                    <a href="faculty-my-courses.html" class="action-btn"><i class="fas fa-upload"></i> Upload Materials</a>
+                    <a href="#" class="action-btn"><i class="fas fa-bullhorn"></i> Post Announcement</a>
+                    <a href="faculty-attendance.html" class="action-btn"><i class="fas fa-user-plus"></i> Mark Attendance</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer" style="margin-top: 50px;">
+        <div class="footer-bottom">
+             <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

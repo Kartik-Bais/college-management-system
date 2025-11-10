@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Grades - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="portal-page">
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">SVITS Portal</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="student-portal.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a href="student-grades.html" class="active"><i class="fas fa-graduation-cap"></i> Grades</a></li>
+            <li><a href="student-timetable.html"><i class="fas fa-calendar-alt"></i> Timetable</a></li>
+            <li><a href="student-assignments.html"><i class="fas fa-tasks"></i> Assignments</a></li>
+            <li><a href="login.html" class="btn btn-logout">Logout</a></li>
+        </ul>
+        <div class="nav-right">
+             <a href="login.html" class="btn btn-logout-desktop">Logout</a>
+             <i class="fas fa-bars hamburger"></i>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 id="welcomeMessage">My Grades</h1>
+            <p>View your subject-wise marks and download results.</p>
+        </header>
+
+        <section class="content-card">
+            <h2>Semester 3 Results</h2>
+            <div class="table-actions">
+                <input type="text" id="gradeSearchInput" placeholder="Search by subject code or name...">
+                <select id="semesterSelect">
+                    <option value="sem3">Semester 3</option>
+                    <option value="sem2">Semester 2</option>
+                    <option value="sem1">Semester 1</option>
+                </select>
+                <a href="report.pdf" download class="btn" style="padding: 10px 20px;"><i class="fas fa-file-pdf"></i> Download Result PDF</a>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Subject Code</th>
+                            <th>Subject Name</th>
+                            <th>Mid-Term (30)</th>
+                            <th>End-Sem (70)</th>
+                            <th>Total (100)</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradeTableBody">
+                        <tr>
+                            <td>CSE-301</td>
+                            <td>Operating Systems</td>
+                            <td>25</td>
+                            <td>55</td>
+                            <td>80</td>
+                            <td><span class="status active">A</span></td>
+                        </tr>
+                        <tr>
+                            <td>CSE-302</td>
+                            <td>Database Systems</td>
+                            <td>28</td>
+                            <td>62</td>
+                            <td>90</td>
+                            <td><span class="status active">A+</span></td>
+                        </tr>
+                         <tr>
+                            <td>CSE-305</td>
+                            <td>AI & Machine Learning</td>
+                            <td>22</td>
+                            <td>50</td>
+                            <td>72</td>
+                            <td><span class="status active">B+</span></td>
+                        </tr>
+                         <tr>
+                            <td>MAT-301</td>
+                            <td>Discrete Mathematics</td>
+                            <td>15</td>
+                            <td>35</td>
+                            <td>50</td>
+                            <td><span class="status" style="background: #ffc10720; color: #ffc107;">C</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer" style="margin-top: 50px;">
+        <div class="footer-bottom">
+            <p>© 2025 Shri Vaishnav Institute of Technology & Science</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
