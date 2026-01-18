@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Library | SVITS - Knowledge Resource Center</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="contact-info">
+                <span><i class="fas fa-phone-alt"></i> +91 9406661558</span>
+                <span><i class="fas fa-envelope"></i> library@svits.edu.in</span>
+            </div>
+            <div class="portal-links">
+                <a href="login.html?role=faculty"><i class="fas fa-chalkboard-teacher"></i> Faculty ERP</a>
+                <a href="login.html?role=admin"><i class="fas fa-user-cog"></i> Admin Panel</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar" id="mainNav">
+        <div class="logo">
+            <a href="index.html">
+                <i class="fas fa-graduation-cap"></i> SVITS<span>ERP</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="departments.html">Academics</a></li>
+            <li><a href="library.html" class="active">Library</a></li> <li><a href="admissions.html">Admissions</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="btn-nav">Student Portal</a></li>
+        </ul>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <header class="page-header" style="background: linear-gradient(rgba(0,74,153,0.9), rgba(0,0,0,0.7)), url('image.jpg') center/cover;">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Academics</li>
+                <li>Library</li>
+            </ul>
+            <h1>Central Library</h1>
+            <p>The Heart of the Institute - Knowledge Resource Center</p>
+        </div>
+    </header>
+
+    <section class="library-search-section">
+        <div class="container">
+            <div class="search-box-large">
+                <h2><i class="fas fa-search"></i> Search Library Catalog (OPAC)</h2>
+                <div class="search-input-group">
+                    <select class="search-select">
+                        <option>Title</option>
+                        <option>Author</option>
+                        <option>ISBN</option>
+                        <option>Subject</option>
+                    </select>
+                    <input type="text" placeholder="Enter book title, author, or keywords...">
+                    <button class="btn btn-primary">Search</button>
+                </div>
+                <div class="search-tags">
+                    <span>Quick Links:</span>
+                    <a href="#">Question Papers</a>
+                    <a href="#">E-Journals</a>
+                    <a href="#">Project Reports</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <section class="section-padding">
+            <div class="container library-grid">
+                
+                <div class="library-content">
+                    
+                    <div class="lib-stats-row mb-4">
+                        <div class="lib-stat">
+                            <i class="fas fa-book"></i>
+                            <h3>50,000+</h3>
+                            <p>Books</p>
+                        </div>
+                        <div class="lib-stat">
+                            <i class="fas fa-book-reader"></i>
+                            <h3>150+</h3>
+                            <p>Journals</p>
+                        </div>
+                        <div class="lib-stat">
+                            <i class="fas fa-laptop"></i>
+                            <h3>5,000+</h3>
+                            <p>E-Resources</p>
+                        </div>
+                        <div class="lib-stat">
+                            <i class="fas fa-chair"></i>
+                            <h3>200</h3>
+                            <p>Seating</p>
+                        </div>
+                    </div>
+
+                    <div class="content-box">
+                        <h3>About the Library</h3>
+                        <p>The SVITS Central Library is a state-of-the-art facility spread over 1500 sq. meters. It is fully automated with KOHA Integrated Library Management Software. We provide access to a vast collection of text books, reference books, periodicals, and digital resources including IEEE, ASME, and DELNET.</p>
+                        
+                        <h4 class="mt-4">Library Services</h4>
+                        <ul class="check-list-grid">
+                            <li><i class="fas fa-check-circle"></i> Book Bank Scheme</li>
+                            <li><i class="fas fa-check-circle"></i> Digital Library Section</li>
+                            <li><i class="fas fa-check-circle"></i> Reprography & Scanning</li>
+                            <li><i class="fas fa-check-circle"></i> Reference Service</li>
+                        </ul>
+                    </div>
+
+                    <div class="new-arrivals mt-5">
+                        <div class="section-header-flex">
+                            <h3>New Arrivals</h3>
+                            <a href="#" class="link-arrow">View All <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="books-grid">
+                            <div class="book-card">
+                                <div class="book-cover">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <h4>Data Science 101</h4>
+                                <p>O'Reilly</p>
+                                <span class="badge-status">Available</span>
+                            </div>
+                            <div class="book-card">
+                                <div class="book-cover">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <h4>Clean Code</h4>
+                                <p>Robert C. Martin</p>
+                                <span class="badge-status">Issued</span>
+                            </div>
+                            <div class="book-card">
+                                <div class="book-cover">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <h4>VLSI Design</h4>
+                                <p>W. Wolf</p>
+                                <span class="badge-status">Available</span>
+                            </div>
+                            <div class="book-card">
+                                <div class="book-cover">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <h4>Thermal Engg.</h4>
+                                <p>R.K. Rajput</p>
+                                <span class="badge-status">Available</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="sidebar">
+                    
+                    <div class="sidebar-widget bg-light-blue">
+                        <h3><i class="fas fa-clock"></i> Library Status</h3>
+                        <div class="status-indicator">
+                            <span class="dot open"></span>
+                            <strong>Currently Open</strong>
+                        </div>
+                        <p class="small mt-2">Closing at 08:00 PM today.</p>
+                        <hr>
+                        <div class="seat-status">
+                            <p><strong>Seating Availability:</strong></p>
+                            <div class="progress-bar-wrapper">
+                                <div class="progress-bar" style="width: 65%;">65% Full</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3><i class="fas fa-user-graduate"></i> Your Account</h3>
+                        <p class="small text-muted mb-3">Please login to view details.</p>
+                        <form class="login-mini-form">
+                            <input type="text" placeholder="Library ID / Roll No.">
+                            <button class="btn btn-sm btn-primary w-100">Check Status</button>
+                        </form>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3><i class="fas fa-globe"></i> E-Resources</h3>
+                        <ul class="download-list">
+                            <li><a href="#" target="_blank">IEEE Xplore Digital</a></li>
+                            <li><a href="#" target="_blank">DELNET</a></li>
+                            <li><a href="#" target="_blank">NPTEL Video Lectures</a></li>
+                            <li><a href="#" target="_blank">National Digital Library</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3>Contact Librarian</h3>
+                        <div class="organizer-item">
+                            <strong>Dr. S.K. Jain</strong>
+                            <p>Chief Librarian</p>
+                            <a href="mailto:library@svits.edu.in">library@svits.edu.in</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact SVITS</h3>
+                <ul class="contact-list">
+                    <li><i class="fa fa-map-marker-alt"></i> Ujjain Road, Indore</li>
+                    <li><i class="fa fa-envelope"></i> library@svits.edu.in</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="departments.html">Academics</a></li>
+                    <li><a href="login.html">ERP Login</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 SVITS | Developed by Kartik Bais</p>
+        </div>
+    </footer>
+
+    <div class="chatbot-toggler"><i class="fas fa-comment-alt"></i></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Transport | SVITS ERP</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================================
+           1. STANDARD LAYOUT (Fixed Sidebar)
+           ========================================= */
+        :root {
+            --sidebar-width: 260px;
+            --header-height: 70px;
+            --primary-color: #004a99;
+            --accent-color: #ff9800; /* Orange for Transit */
+            --text-dark: #333;
+            --bg-light: #f4f7f6;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+
+        body { background-color: var(--bg-light); margin: 0; padding: 0; overflow-x: hidden; font-family: 'Poppins', sans-serif; }
+
+        /* Sidebar & Header */
+        .sidebar {
+            width: var(--sidebar-width); background: #fff; position: fixed; top: 0; left: 0; height: 100%;
+            z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.05); overflow-y: auto; transition: 0.3s ease-in-out;
+        }
+        .dashboard-header {
+            height: var(--header-height); background: #fff; padding: 0 30px; display: flex; align-items: center; justify-content: space-between;
+            position: fixed; top: 0; right: 0; left: var(--sidebar-width); z-index: 900;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: 0.3s ease-in-out;
+        }
+        .main-content {
+            margin-left: var(--sidebar-width); padding-top: var(--header-height); min-height: 100vh;
+            transition: 0.3s ease-in-out; padding: 100px 30px 30px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 991px) {
+            .sidebar { left: -260px; } .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; } .dashboard-header { left: 0; width: 100%; }
+            #menuToggle { display: block !important; }
+        }
+
+        /* =========================================
+           2. TRANSPORT DASHBOARD STYLES
+           ========================================= */
+        
+        .transport-grid {
+            display: grid; grid-template-columns: 2fr 1fr; gap: 30px;
+        }
+        @media (max-width: 1024px) { .transport-grid { grid-template-columns: 1fr; } }
+
+        /* --- Map Container (Simulation) --- */
+        .map-widget {
+            background: #fff; border-radius: 15px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative;
+            height: 400px; border: 1px solid #ddd;
+        }
+        .map-placeholder {
+            width: 100%; height: 100%; object-fit: cover;
+            /* Placeholder background color if image is missing */
+            background: #e9ecef; display: flex; align-items: center; justify-content: center; color: #777;
+        }
+        .live-overlay {
+            position: absolute; top: 20px; left: 20px;
+            background: rgba(255, 255, 255, 0.9); padding: 15px;
+            border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+        }
+        .live-indicator {
+            display: inline-block; width: 10px; height: 10px; background: red;
+            border-radius: 50%; margin-right: 5px; animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.5); } 100% { opacity: 1; transform: scale(1); } }
+        
+        .bus-info h3 { margin: 0; font-size: 1.2rem; color: var(--primary-color); }
+        .bus-info p { margin: 2px 0 0; font-size: 0.85rem; color: #555; }
+        .eta-badge {
+            margin-top: 10px; display: inline-block; background: var(--primary-color); color: #fff;
+            padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+        }
+
+        /* --- Route Search Bar --- */
+        .route-search-bar {
+            background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 30px;
+            display: flex; gap: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); align-items: center;
+        }
+        .route-search-bar input {
+            flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 6px; outline: none;
+        }
+        .btn-find {
+            background: var(--primary-color); color: #fff; border: none; padding: 12px 25px;
+            border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.3s;
+        }
+        .btn-find:hover { background: #003366; }
+
+        /* --- Bus Cards --- */
+        .bus-list { display: flex; flex-direction: column; gap: 20px; }
+        .bus-card {
+            background: #fff; border-radius: 12px; padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex;
+            align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+            border-left: 5px solid transparent; transition: 0.3s;
+        }
+        .bus-card:hover { transform: translateY(-3px); }
+        
+        .bus-card.active { border-left-color: var(--success); }
+        .bus-card.inactive { border-left-color: #ccc; opacity: 0.8; }
+
+        .bus-icon {
+            width: 50px; height: 50px; background: #e3f2fd; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary-color);
+        }
+        .route-details h4 { margin: 0 0 5px; font-size: 1.1rem; }
+        .route-details p { margin: 0; font-size: 0.85rem; color: #666; }
+        .stops { display: flex; gap: 10px; align-items: center; margin-top: 5px; font-size: 0.8rem; color: var(--text-dark); font-weight: 500; }
+        .stops i { font-size: 0.7rem; color: #999; }
+
+        .driver-box {
+            display: flex; align-items: center; gap: 10px; background: #f9f9f9; padding: 8px 15px; border-radius: 30px;
+        }
+        .driver-box img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
+        .driver-info span { display: block; font-size: 0.8rem; font-weight: 600; }
+        .driver-info small { font-size: 0.7rem; color: #777; }
+        .call-btn {
+            width: 30px; height: 30px; background: var(--success); color: #fff;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            text-decoration: none; font-size: 0.8rem;
+        }
+
+        /* --- Digital Pass Card (Flip Effect) --- */
+        .pass-container { perspective: 1000px; margin-bottom: 30px; }
+        .digital-pass {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff; border-radius: 15px; padding: 25px;
+            position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(30, 60, 114, 0.4);
+        }
+        /* Pass Background Pattern */
+        .digital-pass::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 10%);
+            background-size: 20px 20px; opacity: 0.3;
+        }
+        .pass-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: relative; z-index: 2; }
+        .pass-logo { font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; }
+        .pass-status { background: rgba(40, 167, 69, 0.2); color: #81ef86; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; border: 1px solid #81ef86; }
+
+        .pass-body { text-align: center; margin-bottom: 20px; position: relative; z-index: 2; }
+        .student-photo {
+            width: 90px; height: 90px; border-radius: 50%; border: 4px solid rgba(255,255,255,0.3);
+            margin: 0 auto 10px; object-fit: cover; display: block;
+        }
+        .pass-body h3 { margin: 0; font-size: 1.4rem; }
+        .pass-body p { margin: 5px 0 0; opacity: 0.8; font-size: 0.9rem; }
+
+        .pass-footer {
+            display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px; position: relative; z-index: 2;
+        }
+        .pass-info label { display: block; font-size: 0.65rem; opacity: 0.7; text-transform: uppercase; }
+        .pass-info span { font-size: 0.9rem; font-weight: 600; }
+
+        /* --- SOS / Help Widget --- */
+        .sos-widget {
+            background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center;
+            border-top: 5px solid var(--danger);
+        }
+        .sos-btn {
+            background: #fee2e2; color: var(--danger); width: 60px; height: 60px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin: 0 auto 15px; cursor: pointer; animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); } }
+
+        .sos-widget h4 { margin: 0 0 5px; }
+        .sos-widget p { font-size: 0.85rem; color: #666; margin-bottom: 15px; }
+        .contact-row { display: flex; justify-content: center; gap: 10px; font-weight: 600; font-size: 0.9rem; }
+
+        /* Responsive Fix */
+        @media (max-width: 768px) {
+            .route-search-bar { flex-direction: column; }
+            .bus-card { flex-direction: column; text-align: center; }
+            .driver-box { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header" style="height: 70px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee;">
+            <h2 style="font-size: 1.5rem; color: var(--primary-color); font-weight: 700;">SVITS <span>ERP</span></h2>
+        </div>
+        
+        <div class="sidebar-menu" style="padding: 20px 0;">
+            <p style="font-size: 0.75rem; text-transform: uppercase; color: #999; font-weight: 600; padding: 0 25px; margin: 20px 0 10px;">Academic</p>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="student-portal.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-th-large" style="width: 20px; text-align: center;"></i> Dashboard</a></li>
+                <li><a href="student-timetable.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="far fa-calendar-alt" style="width: 20px; text-align: center;"></i> Timetable</a></li>
+                <li><a href="student-grades.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-chart-line" style="width: 20px; text-align: center;"></i> Grades & Results</a></li>
+                <li><a href="student-assignments.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-tasks" style="width: 20px; text-align: center;"></i> Assignments</a></li>
+                <li><a href="student-placements.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-briefcase" style="width: 20px; text-align: center;"></i> Placements</a></li>
+            </ul>
+
+            <p style="font-size: 0.75rem; text-transform: uppercase; color: #999; font-weight: 600; padding: 0 25px; margin: 20px 0 10px;">Services</p>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="student-fees.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-wallet" style="width: 20px; text-align: center;"></i> Fee Status</a></li>
+                <li><a href="canteen.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-utensils" style="width: 20px; text-align: center;"></i> Canteen</a></li>
+                <li><a href="transport.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; background: #eef7ff; color: var(--primary-color); border-left: 4px solid var(--accent-color); text-decoration: none; font-weight: 500;"><i class="fas fa-bus" style="width: 20px; text-align: center;"></i> Transport</a></li>
+                <li><a href="grievance.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-exclamation-circle" style="width: 20px; text-align: center;"></i> Grievance</a></li>
+            </ul>
+            
+            <div style="margin-top: 30px; padding: 0 25px;">
+                <a href="login.html" style="color: #dc3545; font-weight: 600; display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="dashboard-header">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <i class="fas fa-bars" id="menuToggle" style="cursor: pointer; font-size: 1.2rem; color: #555; display: none;"></i>
+                <h3 style="margin: 0; color: var(--text-dark); font-size: 1.2rem;">Live Transport Tracking</h3>
+            </div>
+            <div class="user-profile" style="display: flex; align-items: center; gap: 10px;">
+                <img src="avatar.png" alt="User" style="width: 40px; height: 40px; border-radius: 50%; background: #ddd;">
+                <div style="display: none; @media(min-width:768px){display:block;}">
+                    <h4 style="margin: 0; font-size: 0.9rem;">Kartik Bais</h4>
+                    <small style="color: #777;">Route: Vijay Nagar</small>
+                </div>
+            </div>
+        </header>
+
+        <div class="transport-grid">
+            
+            <div class="tracking-section">
+                
+                <div class="route-search-bar">
+                    <i class="fas fa-map-marker-alt" style="color: var(--primary-color); font-size: 1.2rem;"></i>
+                    <input type="text" placeholder="Search Route or Bus Number (e.g. Bus 01, Palasia)...">
+                    <button class="btn-find">Find Bus</button>
+                </div>
+
+                <div class="map-widget">
+                    <div class="map-container" style="margin-top: 30px; border-radius: 12px; overflow: hidden;">
+    
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3677.3998136856867!2d75.84705207398177!3d22.82469297931297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3963039c587a8091%3A0x206d00d7a5e4afb3!2sShri%20Vaishnav%20Vidyapeeth%20Vishwavidyalaya%20(SVVV)!5e0!3m2!1sen!2sin!4v1768672364067!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+</div>
+                    <div class="live-overlay">
+                        <div class="bus-info">
+                            <span class="live-indicator"></span> <strong>BUS 01 (Vijay Nagar)</strong>
+                            <p>Next Stop: Radisson Square</p>
+                            <span class="eta-badge"><i class="fas fa-clock"></i> 5 Mins Away</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 20px; color: var(--text-dark);">Your Routes</h3>
+                <div class="bus-list">
+                    
+                    <div class="bus-card active">
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <div class="bus-icon"><i class="fas fa-bus"></i></div>
+                            <div class="route-details">
+                                <h4>Bus 01 - Vijay Nagar</h4>
+                                <div class="stops">
+                                    <span>Vijay Nagar</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                    <span>Palasia</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                    <span>Campus</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="driver-box">
+                            <img src="driver.jfif" alt="Driver" style="background:#ddd;">
+                            <div class="driver-info">
+                                <span>Ramesh Yadav</span>
+                                <small>+91 98765 43210</small>
+                            </div>
+                            <a href="tel:+919876543210" class="call-btn"><i class="fas fa-phone"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="bus-card">
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <div class="bus-icon"><i class="fas fa-bus"></i></div>
+                            <div class="route-details">
+                                <h4>Bus 04 - Rajwada Express</h4>
+                                <div class="stops">
+                                    <span>Rajwada</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                    <span>Gangwal</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                    <span>Campus</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="driver-box">
+                            <img src="driver.jfif" alt="Driver" style="background:#ddd;">
+                            <div class="driver-info">
+                                <span>Suresh Singh</span>
+                                <small>+91 99887 76655</small>
+                            </div>
+                            <a href="tel:+" class="call-btn"><i class="fas fa-phone"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="info-sidebar">
+                
+                <h3 style="margin: 0 0 20px; color: var(--text-dark);">Digital Bus Pass</h3>
+                
+                <div class="pass-container">
+                    <div class="digital-pass">
+                        <div class="pass-header">
+                            <span class="pass-logo">SVITS</span>
+                            <span class="pass-status">ACTIVE</span>
+                        </div>
+                        <div class="pass-body">
+                            <img src="avatar.png" alt="Student Photo" class="student-photo" style="background:#ccc;">
+                            <h3>Kartik Bais</h3>
+                            <p>Route: Vijay Nagar</p>
+                        </div>
+                        <div class="pass-footer">
+                            <div class="pass-info">
+                                <label>Pass ID</label>
+                                <span>SV-BUS-9901</span>
+                            </div>
+                            <div class="pass-info" style="text-align: right;">
+                                <label>Valid Till</label>
+                                <span>30 Jun 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="renew-box" style="text-align: center; margin-bottom: 30px;">
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">Pass expiring soon?</p>
+                    <button style="width: 100%; padding: 12px; background: #fff; border: 2px solid var(--primary-color); color: var(--primary-color); border-radius: 8px; font-weight: 600; cursor: pointer;">Renew Pass</button>
+                </div>
+
+                <div class="sos-widget">
+                    <div class="sos-btn"><i class="fas fa-bell"></i></div>
+                    <h4>Emergency Help</h4>
+                    <p>Tap below if you face any issues during transit.</p>
+                    <div class="contact-row">
+                        <span><i class="fas fa-user-shield"></i> Transport Head</span>
+                        <a href="#" style="color: var(--danger);">Call Now</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Sidebar Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+        // Simulating Real-time Updates
+        function updateETA() {
+            // Logic to update ETA dynamically would go here
+            console.log("Fetching live coordinates...");
+        }
+        setInterval(updateETA, 30000); // Check every 30 secs
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users | SVITS Admin</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================================
+           1. ADMIN LAYOUT FIXES
+           ========================================= */
+        :root {
+            --sidebar-width: 260px;
+            --header-height: 70px;
+            --primary-color: #1a202c; /* Admin Dark Theme */
+            --accent-color: #3182ce;
+            --text-dark: #2d3748;
+            --bg-light: #f7fafc;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #d69e2e;
+        }
+
+        body { background-color: var(--bg-light); margin: 0; padding: 0; overflow-x: hidden; font-family: 'Poppins', sans-serif; }
+
+        /* Sidebar & Header Fixed */
+        .sidebar {
+            width: var(--sidebar-width); background: #fff; position: fixed; top: 0; left: 0; height: 100%;
+            z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.05); overflow-y: auto; transition: 0.3s ease-in-out;
+        }
+        .dashboard-header {
+            height: var(--header-height); background: #fff; padding: 0 30px; display: flex; align-items: center; justify-content: space-between;
+            position: fixed; top: 0; right: 0; left: var(--sidebar-width); z-index: 900;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: 0.3s ease-in-out;
+        }
+        
+        /* Content Offset */
+        .main-content {
+            margin-left: var(--sidebar-width); 
+            min-height: 100vh;
+            transition: 0.3s ease-in-out; 
+            padding: 100px 30px 30px; /* Top padding 100px */
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 991px) {
+            .sidebar { left: -260px; } .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; padding-top: 100px; } 
+            .dashboard-header { left: 0; width: 100%; }
+            #menuToggle { display: block !important; }
+        }
+
+        /* =========================================
+           2. USER MANAGEMENT STYLES
+           ========================================= */
+        
+        /* Controls Bar */
+        .user-controls {
+            background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-wrap: wrap; gap: 15px;
+            justify-content: space-between; align-items: center; border: 1px solid #e2e8f0;
+        }
+        
+        .search-box {
+            position: relative; flex: 1; min-width: 250px; max-width: 400px;
+        }
+        .search-box input {
+            width: 100%; padding: 10px 15px 10px 40px; border: 1px solid #e2e8f0; border-radius: 30px;
+            outline: none; transition: 0.3s;
+        }
+        .search-box input:focus { border-color: var(--accent-color); box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1); }
+        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #a0aec0; }
+
+        .filter-group { display: flex; gap: 10px; }
+        .filter-select {
+            padding: 8px 15px; border: 1px solid #e2e8f0; border-radius: 6px; background: #fff;
+            color: #4a5568; outline: none; cursor: pointer;
+        }
+
+        .btn-add {
+            background: var(--accent-color); color: #fff; padding: 10px 20px; border-radius: 6px;
+            border: none; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 8px;
+            transition: 0.3s;
+        }
+        .btn-add:hover { background: #2b6cb0; }
+
+        /* User Table */
+        .table-container {
+            background: #fff; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden; border: 1px solid #e2e8f0;
+        }
+        .table-responsive { overflow-x: auto; }
+        .user-table { width: 100%; border-collapse: collapse; min-width: 900px; }
+        
+        .user-table th {
+            background: #f7fafc; color: #4a5568; font-weight: 600; text-align: left; padding: 15px 20px;
+            border-bottom: 2px solid #edf2f7; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px;
+        }
+        .user-table td {
+            padding: 15px 20px; border-bottom: 1px solid #edf2f7; color: #2d3748; vertical-align: middle;
+        }
+        .user-table tr:hover { background: #f8fbff; }
+
+        /* User Info Cell */
+        .user-cell { display: flex; align-items: center; gap: 12px; }
+        .user-avatar {
+            width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: #cbd5e0;
+        }
+        .user-info h5 { margin: 0; font-size: 0.95rem; color: var(--text-dark); }
+        .user-info span { font-size: 0.8rem; color: #718096; }
+
+        /* Badges */
+        .role-badge {
+            padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+        }
+        .role-student { background: #ebf8ff; color: #3182ce; }
+        .role-faculty { background: #f0fff4; color: #38a169; }
+        .role-admin { background: #fff5f5; color: #e53e3e; }
+
+        /* Toggle Switch */
+        .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cbd5e0; transition: .4s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px;
+            background-color: white; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--success); }
+        input:checked + .slider:before { transform: translateX(14px); }
+
+        /* Actions */
+        .action-btns { display: flex; gap: 8px; }
+        .btn-icon {
+            width: 32px; height: 32px; border-radius: 6px; border: 1px solid #e2e8f0; background: #fff;
+            color: #718096; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: 0.2s;
+        }
+        .btn-edit:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .btn-delete:hover { border-color: var(--danger); color: var(--danger); }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 2000; display: none;
+            justify-content: center; align-items: center;
+        }
+        .modal-box {
+            background: #fff; width: 500px; padding: 30px; border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative;
+        }
+        .close-modal { position: absolute; top: 15px; right: 15px; cursor: pointer; font-size: 1.2rem; color: #a0aec0; }
+        
+        .form-row { display: flex; gap: 15px; margin-bottom: 15px; }
+        .form-group { flex: 1; margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.85rem; color: #4a5568; margin-bottom: 5px; font-weight: 500; }
+        .form-control {
+            width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; outline: none;
+        }
+        .btn-save {
+            width: 100%; padding: 12px; background: var(--primary-color); color: #fff;
+            border: none; border-radius: 6px; font-weight: 600; cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header" style="height: 70px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee;">
+            <h2 style="font-size: 1.5rem; color: var(--primary-color); font-weight: 700;">SVITS <span>Admin</span></h2>
+        </div>
+        
+        <div class="sidebar-menu" style="padding: 20px 0;">
+            <p style="font-size: 0.75rem; text-transform: uppercase; color: #a0aec0; font-weight: 600; padding: 0 25px; margin: 20px 0 10px;">Core</p>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="admin-panel.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #4a5568; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-tachometer-alt" style="width: 20px; text-align: center;"></i> Dashboard</a></li>
+                <li><a href="admin-manage-users.html" class="active" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; background: #edf2f7; color: var(--primary-color); border-left: 4px solid var(--accent-color); text-decoration: none; font-weight: 500;"><i class="fas fa-users-cog" style="width: 20px; text-align: center;"></i> Manage Users</a></li>
+                <li><a href="admin-manage-courses.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #4a5568; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-book" style="width: 20px; text-align: center;"></i> Manage Courses</a></li>
+            </ul>
+
+            <p style="font-size: 0.75rem; text-transform: uppercase; color: #a0aec0; font-weight: 600; padding: 0 25px; margin: 20px 0 10px;">Reports</p>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="admin-analytics.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #4a5568; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-chart-pie" style="width: 20px; text-align: center;"></i> Analytics & Reports</a></li>
+                <li><a href="#" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #4a5568; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-file-invoice-dollar" style="width: 20px; text-align: center;"></i> Fees Overview</a></li>
+            </ul>
+            
+            <div style="margin-top: 30px; padding: 0 25px;">
+                <a href="login.html" style="color: #e53e3e; font-weight: 600; display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="dashboard-header">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <i class="fas fa-bars" id="menuToggle" style="cursor: pointer; font-size: 1.2rem; color: #555; display: none;"></i>
+                <h3 style="margin: 0; color: var(--text-dark); font-size: 1.2rem;">User Management</h3>
+            </div>
+            <div class="user-profile" style="display: flex; align-items: center; gap: 10px;">
+                <img src="parent.webp" style="width: 40px; height: 40px; border-radius: 50%;">
+            </div>
+        </header>
+
+        <div class="user-controls">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search by name, ID or email...">
+            </div>
+            <div class="filter-group">
+                <select class="filter-select">
+                    <option>All Roles</option>
+                    <option>Student</option>
+                    <option>Faculty</option>
+                    <option>Admin</option>
+                </select>
+                <select class="filter-select">
+                    <option>All Status</option>
+                    <option>Active</option>
+                    <option>Inactive</option>
+                </select>
+                <button class="btn-add" onclick="openModal()"><i class="fas fa-plus"></i> Add User</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>User Details</th>
+                            <th>Role</th>
+                            <th>Department</th>
+                            <th>Date Added</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>
+                                <div class="user-cell">
+                                    <img src="avatar.png" class="user-avatar">
+                                    <div class="user-info">
+                                        <h5>Kartik Bais</h5>
+                                        <span>0827CS221045</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="role-badge role-student">Student</span></td>
+                            <td>CSE</td>
+                            <td>12 Jan 2025</td>
+                            <td>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-icon btn-edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon btn-delete"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="user-cell">
+                                    <img src="sir.webp" class="user-avatar">
+                                    <div class="user-info">
+                                        <h5>Prof. Amit Sharma</h5>
+                                        <span>EMP-9002</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="role-badge role-faculty">Faculty</span></td>
+                            <td>CSE</td>
+                            <td>10 Jan 2025</td>
+                            <td>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-icon btn-edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon btn-delete"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="user-cell">
+                                    <img src="maam.webp" class="user-avatar">
+                                    <div class="user-info">
+                                        <h5>Sneha Gupta</h5>
+                                        <span>ADMIN-001</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="role-badge role-admin">Admin</span></td>
+                            <td>Administration</td>
+                            <td>01 Jan 2025</td>
+                            <td>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-icon btn-edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon btn-delete"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="modal-overlay" id="userModal">
+        <div class="modal-box">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3 style="margin-top: 0; color: var(--primary-color);">Add New User</h3>
+            
+            <form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" class="form-control" placeholder="John">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" placeholder="Doe">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" class="form-control" placeholder="john@example.com">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select class="form-control">
+                            <option>Student</option>
+                            <option>Faculty</option>
+                            <option>Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Department</label>
+                        <select class="form-control">
+                            <option>CSE</option>
+                            <option>ME</option>
+                            <option>CE</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" value="Welcome123">
+                </div>
+
+                <button type="button" class="btn-save" onclick="alert('User Added Successfully!'); closeModal();">Create User</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+        // Modal Logic
+        function openModal() {
+            document.getElementById('userModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('userModal').style.display = 'none';
+        }
+        
+        // Close on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('userModal');
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

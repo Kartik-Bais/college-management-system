@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Timetable | SVITS ERP</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- 1. CRITICAL LAYOUT FIX (Sidebar Problem Solved) --- */
+        :root {
+            --sidebar-width: 260px;
+            --header-height: 70px;
+            --primary-color: #004a99;
+            --accent-color: #007bff;
+            --text-dark: #333;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar: Fixed Position on Left */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 1000; /* High Z-index to stay on top */
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            overflow-y: auto;
+            transition: 0.3s ease-in-out;
+        }
+
+        /* Header: Fixed on Top, Starts AFTER Sidebar */
+        .dashboard-header {
+            height: var(--header-height);
+            background: #fff;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: var(--sidebar-width); /* Push header to right */
+            z-index: 900;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: 0.3s ease-in-out;
+        }
+
+        /* Main Content: Pushed Right & Down */
+        .main-content {
+            margin-left: var(--sidebar-width); /* Push content to right */
+            padding-top: var(--header-height); /* Push content down */
+            min-height: 100vh;
+            transition: 0.3s ease-in-out;
+        }
+
+        /* --- 2. TIMETABLE STYLING --- */
+        .timetable-wrapper {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 25px;
+            margin: 30px;
+            overflow: hidden;
+        }
+
+        .tt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .tt-header h2 { font-size: 1.5rem; color: var(--primary-color); margin: 0; }
+        .tt-header p { color: #777; margin: 5px 0 0; font-size: 0.9rem; }
+
+        /* The Table */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        .tt-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .tt-table th, .tt-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            border-right: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        .tt-table th {
+            background: var(--primary-color);
+            color: #fff;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .tt-table td:first-child {
+            background: #f9f9f9;
+            font-weight: 600;
+            color: var(--text-dark);
+            width: 120px;
+        }
+
+        /* Subject Box */
+        .subject-box { display: flex; flex-direction: column; gap: 4px; }
+        .sub-name { font-weight: 600; font-size: 0.9rem; color: var(--text-dark); }
+        .sub-code { font-size: 0.75rem; color: #888; background: #eee; padding: 2px 6px; border-radius: 4px; display: inline-block; width: fit-content; margin: 0 auto; }
+        .faculty-name { font-size: 0.8rem; color: #666; font-style: italic; }
+        .room-no { font-size: 0.75rem; color: var(--accent-color); font-weight: 600; }
+
+        /* Slots */
+        .break-slot { background-color: #fff3cd !important; color: #856404; font-weight: 700; letter-spacing: 2px; }
+        .lab-slot { background-color: #e3f2fd; border-left: 3px solid var(--accent-color); }
+        .free-slot { color: #ccc; font-style: italic; font-size: 0.9rem; }
+
+        /* Sidebar Styles (Internal to ensure it works) */
+        .sidebar-header { height: 70px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; }
+        .sidebar-header h2 { font-size: 1.5rem; color: var(--primary-color); font-weight: 700; }
+        .sidebar-header span { color: var(--accent-color); }
+        .sidebar-menu { padding: 20px 0; }
+        .menu-label { font-size: 0.75rem; text-transform: uppercase; color: #999; font-weight: 600; padding: 0 25px; margin: 20px 0 10px; }
+        .sidebar-menu ul { list-style: none; padding: 0; }
+        .sidebar-menu a { display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: var(--text-dark); text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background: #eef7ff; color: var(--primary-color); border-left-color: var(--accent-color); }
+        .sidebar-menu i { width: 20px; text-align: center; }
+
+        /* Mobile Responsive */
+        @media (max-width: 991px) {
+            .sidebar { left: -260px; }
+            .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; }
+            .dashboard-header { left: 0; width: 100%; }
+            #menuToggle { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>SVITS <span>ERP</span></h2>
+        </div>
+        
+        <div class="sidebar-menu">
+            <p class="menu-label">Academic</p>
+            <ul>
+                <li><a href="student-portal.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+                <li><a href="student-timetable.html" class="active"><i class="far fa-calendar-alt"></i> Timetable</a></li>
+                <li><a href="student-grades.html"><i class="fas fa-chart-line"></i> Grades & Results</a></li>
+                <li><a href="student-assignments.html"><i class="fas fa-tasks"></i> Assignments</a></li>
+                <li><a href="student-placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
+            </ul>
+
+            <p class="menu-label">Administrative</p>
+            <ul>
+                <li><a href="student-fees.html"><i class="fas fa-wallet"></i> Fee Status</a></li>
+                <li><a href="library.html"><i class="fas fa-book"></i> Digital Library</a></li>
+            </ul>
+
+            <p class="menu-label">Campus Life</p>
+            <ul>
+                <li><a href="canteen.html"><i class="fas fa-utensils"></i> Canteen</a></li>
+                <li><a href="transport.html"><i class="fas fa-bus"></i> Transport</a></li>
+                <li><a href="grievance.html"><i class="fas fa-exclamation-circle"></i> Grievance</a></li>
+            </ul>
+            
+            <div style="margin-top: 30px; padding: 0 25px;">
+                <a href="login.html" style="color: #dc3545; font-weight: 600; display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="dashboard-header">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <i class="fas fa-bars" id="menuToggle" style="cursor: pointer; font-size: 1.2rem; color: #555; display: none;"></i>
+                <h3 style="margin: 0; color: var(--text-dark); font-size: 1.2rem;">Weekly Schedule</h3>
+            </div>
+            <div class="user-profile" style="display: flex; align-items: center; gap: 10px;">
+                <img src="avatar.png" style="width: 40px; height: 40px; border-radius: 50%;">
+                <div style="display: none; @media(min-width:768px){display:block;}">
+                    <h4 style="margin: 0; font-size: 0.9rem;">Kartik Bais</h4>
+                    <small style="color: #777;">0827CS221045</small>
+                </div>
+            </div>
+        </header>
+
+        <div class="timetable-wrapper">
+            <div class="tt-header">
+                <div>
+                    <h2 style="font-size: 1.5rem; color: var(--primary-color);">B.Tech CSE - Semester 4</h2>
+                    <p>Section A | Room 302 & Labs</p>
+                </div>
+                <button onclick="window.print()" style="border: 1px solid var(--primary-color); color: var(--primary-color); padding: 9px 20px; border-radius: 6px; cursor: pointer; background: transparent; display: flex; align-items: center; gap: 5px;">
+                    <i class="fas fa-download"></i> Download PDF
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="tt-table" id="timetable">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th data-day="1">Monday</th>
+                            <th data-day="2">Tuesday</th>
+                            <th data-day="3">Wednesday</th>
+                            <th data-day="4">Thursday</th>
+                            <th data-day="5">Friday</th>
+                            <th data-day="6">Saturday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>09:00 - 10:00</td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Operating Systems</span>
+                                    <span class="sub-code">CS-401</span>
+                                    <span class="faculty-name">Prof. Sharma</span>
+                                    <span class="room-no">Room 302</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">DBMS</span>
+                                    <span class="sub-code">CS-403</span>
+                                    <span class="faculty-name">Dr. Verma</span>
+                                    <span class="room-no">Room 302</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Mathematics III</span>
+                                    <span class="sub-code">BT-401</span>
+                                    <span class="faculty-name">Mrs. Gupta</span>
+                                    <span class="room-no">Room 302</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Computer Arch.</span>
+                                    <span class="sub-code">CS-404</span>
+                                    <span class="faculty-name">Prof. Ali</span>
+                                    <span class="room-no">Room 302</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Operating Systems</span>
+                                    <span class="sub-code">CS-401</span>
+                                    <span class="faculty-name">Prof. Sharma</span>
+                                    <span class="room-no">Room 302</span>
+                                </div>
+                            </td>
+                            <td class="free-slot">Library</td>
+                        </tr>
+
+                        <tr>
+                            <td>10:00 - 11:00</td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Software Engg.</span>
+                                    <span class="sub-code">CS-402</span>
+                                    <span class="faculty-name">Prof. Kale</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Operating Systems</span>
+                                    <span class="sub-code">CS-401</span>
+                                    <span class="faculty-name">Prof. Sharma</span>
+                                </div>
+                            </td>
+                            <td class="lab-slot" rowspan="2">
+                                <div class="subject-box">
+                                    <span class="sub-name">DBMS Lab</span>
+                                    <span class="sub-code">CS-403 L</span>
+                                    <span class="faculty-name">Dr. Verma</span>
+                                    <span class="room-no">Lab 2 (Block B)</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Mathematics III</span>
+                                    <span class="sub-code">BT-401</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Software Engg.</span>
+                                    <span class="sub-code">CS-402</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Mentorship</span>
+                                    <span class="faculty-name">Class Teacher</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>11:00 - 12:00</td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Computer Arch.</span>
+                                    <span class="sub-code">CS-404</span>
+                                    <span class="faculty-name">Prof. Ali</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Software Engg.</span>
+                                    <span class="sub-code">CS-402</span>
+                                    <span class="faculty-name">Prof. Kale</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">DBMS</span>
+                                    <span class="sub-code">CS-403</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Computer Arch.</span>
+                                    <span class="sub-code">CS-404</span>
+                                </div>
+                            </td>
+                            <td class="free-slot">Self Study</td>
+                        </tr>
+
+                        <tr>
+                            <td>12:00 - 12:45</td>
+                            <td colspan="6" class="break-slot">LUNCH BREAK</td>
+                        </tr>
+
+                        <tr>
+                            <td>12:45 - 01:45</td>
+                            <td class="lab-slot" rowspan="2">
+                                <div class="subject-box">
+                                    <span class="sub-name">Linux / OS Lab</span>
+                                    <span class="sub-code">CS-401 L</span>
+                                    <span class="faculty-name">Prof. Sharma</span>
+                                    <span class="room-no">Lab 1</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Mathematics III</span>
+                                    <span class="sub-code">BT-401</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Software Engg.</span>
+                                    <span class="sub-code">CS-402</span>
+                                </div>
+                            </td>
+                            <td class="lab-slot" rowspan="2">
+                                <div class="subject-box">
+                                    <span class="sub-name">Python Prog.</span>
+                                    <span class="sub-code">CS-406</span>
+                                    <span class="faculty-name">Expert</span>
+                                    <span class="room-no">Lab 4</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">DBMS</span>
+                                    <span class="sub-code">CS-403</span>
+                                </div>
+                            </td>
+                            <td class="free-slot">Sports / ECA</td>
+                        </tr>
+
+                        <tr>
+                            <td>01:45 - 02:45</td>
+                            <td class="free-slot">Library</td>
+                            <td>
+                                <div class="subject-box">
+                                    <span class="sub-name">Soft Skills</span>
+                                    <span class="faculty-name">T&P Cell</span>
+                                </div>
+                            </td>
+                            <td class="lab-slot">
+                                <div class="subject-box">
+                                    <span class="sub-name">Minor Project</span>
+                                    <span class="room-no">Project Lab</span>
+                                </div>
+                            </td>
+                            <td class="free-slot">Club Activity</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // 1. Sidebar Toggle Logic
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+        // 2. Highlight Current Day Column
+        document.addEventListener('DOMContentLoaded', () => {
+            const d = new Date();
+            let day = d.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+
+            // If Sunday (0), do nothing
+            if(day === 0) return; 
+
+            // Highlight Header
+            const headerCell = document.querySelector(`th[data-day="${day}"]`);
+            if(headerCell) {
+                headerCell.style.backgroundColor = '#003366'; // Darker blue for active day
+                headerCell.style.textDecoration = 'underline';
+            }
+        });
+    </script>
+
+</body>
+</html>

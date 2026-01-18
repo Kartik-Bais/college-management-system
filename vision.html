@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Our Philosophy - The guiding principles and core values of Shri Vaishnav Institute (SVITS).">
+    <title>Our Philosophy | SVITS - Excellence in Education</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- HEADER SECTION --- */
+        .page-header {
+            height: 400px;
+            background: linear-gradient(rgba(0, 51, 102, 0.9), rgba(0, 74, 153, 0.8)), url('https://source.unsplash.com/1600x900/?education,thinking') center/cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            margin-top: -1px;
+        }
+
+        .page-header h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 10px; }
+        .breadcrumb { display: flex; gap: 10px; justify-content: center; font-size: 0.95rem; opacity: 0.9; }
+        .breadcrumb a { color: #fff; transition: 0.3s; }
+        .breadcrumb a:hover { color: var(--accent-color); }
+        .breadcrumb span { color: var(--accent-color); }
+
+        /* --- PHILOSOPHY BOX (Floating) --- */
+        .philosophy-box {
+            background: #fff;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: -60px; /* Overlap Header */
+            text-align: center;
+            border-top: 5px solid var(--primary-color);
+            position: relative;
+            z-index: 10;
+        }
+
+        .philosophy-box .icon {
+            width: 80px; height: 80px;
+            background: #e0f2fe; color: var(--primary-color);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; margin: 0 auto 20px;
+        }
+
+        .philosophy-box h2 { color: var(--secondary-color); margin-bottom: 15px; font-size: 2rem; }
+        
+        .philosophy-box p {
+            font-size: 1.25rem; line-height: 1.8; color: #444; font-style: italic; max-width: 900px; margin: 0 auto;
+        }
+
+        /* --- PILLARS GRID --- */
+        .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+
+        .pillar-card {
+            background: #fff; padding: 40px; border-radius: 12px;
+            text-align: center; border: 1px solid #eee; transition: 0.3s;
+        }
+
+        .pillar-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: var(--accent-color); }
+
+        .pillar-card .icon-circle {
+            width: 70px; height: 70px; border-radius: 50%;
+            background: #f0f9ff; color: var(--primary-color);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; margin: 0 auto 20px; transition: 0.3s;
+        }
+
+        .pillar-card:hover .icon-circle { background: var(--primary-color); color: white; }
+
+        .pillar-card h3 { color: var(--secondary-color); margin-bottom: 15px; }
+        .pillar-card p { color: #666; font-size: 0.95rem; line-height: 1.6; }
+
+        /* --- PEDAGOGY SECTION (Alternating Layout) --- */
+        .pedagogy-row {
+            display: flex; align-items: center; gap: 50px; margin-bottom: 60px;
+        }
+        .pedagogy-row:nth-child(even) { flex-direction: row-reverse; }
+        
+        .pedagogy-img { flex: 1; border-radius: 15px; overflow: hidden; box-shadow: var(--shadow-md); }
+        .pedagogy-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .pedagogy-img:hover img { transform: scale(1.05); }
+        
+        .pedagogy-text { flex: 1; }
+        .pedagogy-text h3 { font-size: 1.8rem; color: var(--secondary-color); margin-bottom: 15px; }
+        .pedagogy-text p { color: #555; margin-bottom: 15px; font-size: 1.05rem; }
+        .pedagogy-text ul { list-style: none; margin-top: 15px; }
+        .pedagogy-text li { display: flex; gap: 10px; margin-bottom: 10px; color: #444; font-weight: 500; }
+        .pedagogy-text i { color: #28a745; margin-top: 4px; }
+
+        /* --- CTA --- */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 80px 0; color: white; text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .page-header h1 { font-size: 2.5rem; }
+            .philosophy-box { padding: 30px; margin-top: -40px; }
+            .philosophy-box p { font-size: 1.1rem; }
+            .pedagogy-row { flex-direction: column !important; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="contact-info">
+                <span><i class="fas fa-phone-alt"></i> +91 9406661558</span>
+                <span><i class="fas fa-envelope"></i> info@svits.edu.in</span>
+            </div>
+            <div class="portal-links">
+                <a href="login.html?role=faculty"><i class="fas fa-chalkboard-teacher"></i> Faculty ERP</a>
+                <a href="login.html?role=admin"><i class="fas fa-user-shield"></i> Admin Panel</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar" id="mainNav">
+        <div class="logo">
+            <a href="index.html">
+                <i class="fas fa-graduation-cap"></i> SVITS<span>ERP</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            
+            <li class="dropdown">
+                <a href="#" class="active">Institute <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="mission.html">Mission & Vision</a></li>
+                    <li><a href="philosophy.html">Philosophy</a></li> <li><a href="faculty.html">Faculty Directory</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#">Academics <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="departments.html">Departments</a></li>
+                    <li><a href="program-detail.html">Syllabus</a></li>
+                    <li><a href="documents.html">Documents</a></li>
+                </ul>
+            </li>
+
+            <li><a href="admissions.html">Admissions</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="btn-nav">Login</a></li>
+        </ul>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container animate-fade">
+            <h1>Our Philosophy</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <a href="about.html">Institute</a> / <span>Philosophy</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section-padding" style="padding-bottom: 40px;">
+            <div class="container">
+                <div class="philosophy-box animate-fade">
+                    <div class="icon"><i class="fas fa-quote-left"></i></div>
+                    <h2>The SVITS Way</h2>
+                    <p>
+                        "Education is not merely the filling of a pail, but the lighting of a fire. At SVITS, our philosophy is rooted in the belief that true education transcends textbooks. It is about igniting curiosity, fostering integrity, and building the resilience to solve the problems of tomorrow."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding bg-light">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2>Core Philosophical Pillars</h2>
+                    <p>The principles that guide our teaching, learning, and culture.</p>
+                </div>
+
+                <div class="pillars-grid">
+                    <div class="pillar-card">
+                        <div class="icon-circle"><i class="fas fa-brain"></i></div>
+                        <h3>Holistic Learning</h3>
+                        <p>We focus on intellectual, emotional, and ethical development to shape well-rounded professionals and compassionate human beings.</p>
+                    </div>
+
+                    <div class="pillar-card">
+                        <div class="icon-circle"><i class="fas fa-balance-scale"></i></div>
+                        <h3>Ethics & Values</h3>
+                        <p>Integrity, discipline, and social responsibility form the foundation of all academic and professional pursuits at SVITS.</p>
+                    </div>
+
+                    <div class="pillar-card">
+                        <div class="icon-circle"><i class="fas fa-rocket"></i></div>
+                        <h3>Innovation Mindset</h3>
+                        <p>We encourage curiosity, research, and innovation to prepare students for emerging technologies and global challenges.</p>
+                    </div>
+
+                    <div class="pillar-card">
+                        <div class="icon-circle"><i class="fas fa-users"></i></div>
+                        <h3>Societal Impact</h3>
+                        <p>Education at SVITS aims to create leaders who serve society, promote sustainability, and drive positive change.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="section-header text-center" style="margin-bottom: 60px;">
+                    <h2>How We Apply Our Philosophy</h2>
+                    <p>Translating values into action through our unique pedagogy.</p>
+                </div>
+
+                <div class="pedagogy-row">
+                    <div class="pedagogy-img">
+                        
+                        <img src="https://source.unsplash.com/600x400/?classroom,teaching" alt="Interactive Learning">
+                    </div>
+                    <div class="pedagogy-text">
+                        <h3>Student-Centric Pedagogy</h3>
+                        <p>We believe that every student learns differently. Our teaching methodology shifts from rote memorization to critical thinking and application.</p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Project-Based Learning (PBL)</li>
+                            <li><i class="fas fa-check-circle"></i> Flipped Classrooms</li>
+                            <li><i class="fas fa-check-circle"></i> Industry Case Studies</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pedagogy-row">
+                    <div class="pedagogy-img">
+                        
+                        <img src="https://source.unsplash.com/600x400/?mentorship,talking" alt="Mentorship">
+                    </div>
+                    <div class="pedagogy-text">
+                        <h3>Mentorship & Guidance</h3>
+                        <p>Following the ancient 'Guru-Shishya' tradition, our faculty act as mentors, guiding students not just in academics but in life choices and career paths.</p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> 1:20 Faculty-Student Ratio</li>
+                            <li><i class="fas fa-check-circle"></i> Regular Counselling Sessions</li>
+                            <li><i class="fas fa-check-circle"></i> Career Mapping</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pedagogy-row">
+                    <div class="pedagogy-img">
+                        
+                        <img src="https://source.unsplash.com/600x400/?technology,lab" alt="Innovation">
+                    </div>
+                    <div class="pedagogy-text">
+                        <h3>Technological Integration</h3>
+                        <p>We embrace technology not just as a subject but as a tool. Our integrated ERP system creates a transparent and efficient digital ecosystem.</p>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Smart Classrooms</li>
+                            <li><i class="fas fa-check-circle"></i> Digital Library & Resources</li>
+                            <li><i class="fas fa-check-circle"></i> Online Assessment Platforms</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="cta-section text-center">
+            <div class="container">
+                <h2 style="color:#fff;">Live Our Philosophy</h2>
+                <p style="color:#eee; margin-bottom: 25px;">Experience education that shapes character and competence.</p>
+                <div class="cta-buttons">
+                    <a href="mission.html" class="btn btn-white">Explore Our Mission</a>
+                    <a href="admissions.html" class="btn btn-out" style="margin-left:15px;">Join SVITS</a>
+                </div>
+            </div>
+        </section> 
+
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>Contact SVITS</h3>
+                <ul class="contact-list">
+                    <li><i class="fas fa-map-marker-alt"></i> Ujjain Road, Indore</li>
+                    <li><i class="fas fa-phone"></i> +91 9406661558</li>
+                    <li><i class="fas fa-envelope"></i> info@svits.edu.in</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Institute</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="philosophy.html">Philosophy</a></li>
+                    <li><a href="vision.html">Vision</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Portals</h3>
+                <ul class="footer-links">
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="student-portal.html">Student Portal</a></li>
+                    <li><a href="admin-panel.html">Admin Panel</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Mandatory Disclosure</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SVITS | Developed by <strong>Kartik Bais</strong></p>
+        </div>
+    </footer>
+
+    <div class="chatbot-toggler"><i class="fas fa-comment-alt"></i></div>
+    <div class="chatbot-window"></div> 
+
+    <script src="script.js"></script>
+    <script src="chatbot-logic.js"></script>
+</body>
+</html>

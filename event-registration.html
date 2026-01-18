@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration | Innovate 2026 - SVITS</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="contact-info">
+                <span><i class="fas fa-phone-alt"></i> +91 9406661558</span>
+                <span><i class="fas fa-envelope"></i> events@svits.edu.in</span>
+            </div>
+            <div class="portal-links">
+                <a href="login.html?role=faculty"><i class="fas fa-chalkboard-teacher"></i> Faculty ERP</a>
+                <a href="login.html?role=admin"><i class="fas fa-user-cog"></i> Admin Panel</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar" id="mainNav">
+        <div class="logo">
+            <a href="index.html">
+                <i class="fas fa-graduation-cap"></i> SVITS<span>ERP</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="departments.html">Academics</a></li>
+            <li><a href="admissions.html">Admissions</a></li>
+            <li><a href="events.html" class="active">Events</a></li> <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="btn-nav">Student Portal</a></li>
+        </ul>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <header class="page-header" style="background: linear-gradient(rgba(0,74,153,0.9), rgba(0,0,0,0.6)), url('image.jpg') center/cover;">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li>Registration</li>
+            </ul>
+            <h1>Register for Innovate 2026</h1>
+            <p>Secure your spot in the biggest tech fest of the year.</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="section-padding">
+            <div class="container registration-grid">
+                
+                <div class="registration-form-wrapper">
+                    <div class="form-header">
+                        <h3><i class="fas fa-user-edit"></i> Participant Details</h3>
+                        <p>Please fill all mandatory fields marked with (*)</p>
+                    </div>
+
+                    <form id="regForm" class="modern-form">
+                        
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Full Name *</label>
+                                <input type="text" placeholder="e.g. Rahul Sharma" required>
+                            </div>
+                            <div class="input-group">
+                                <label>College / Institute *</label>
+                                <input type="text" placeholder="e.g. SVITS Indore" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Email Address *</label>
+                                <input type="email" placeholder="rahul@example.com" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Phone Number *</label>
+                                <input type="tel" placeholder="+91 98765 43210" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Enrollment / Student ID *</label>
+                                <input type="text" placeholder="e.g. 0827CS221056" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Branch & Year *</label>
+                                <select required>
+                                    <option value="">Select Branch</option>
+                                    <option>CSE - 1st Year</option>
+                                    <option>CSE - 2nd Year</option>
+                                    <option>CSE - 3rd Year</option>
+                                    <option>CSE - 4th Year</option>
+                                    <option>ME - All Years</option>
+                                    <option>ECE - All Years</option>
+                                    <option>Civil - All Years</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr class="form-divider">
+
+                        <div class="form-header mt-4">
+                            <h3><i class="fas fa-ticket-alt"></i> Event Selection</h3>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Event Category *</label>
+                                <select id="eventCategory" onchange="updateEvents()" required>
+                                    <option value="">Select Category</option>
+                                    <option value="technical">Technical (Coding/Robotics)</option>
+                                    <option value="gaming">E-Sports / Gaming</option>
+                                    <option value="workshop">Workshops</option>
+                                    <option value="cultural">Cultural / Fun</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Select Event *</label>
+                                <select id="eventName" required>
+                                    <option value="">-- First Select Category --</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Participation Type *</label>
+                            <div class="radio-group">
+                                <label class="radio-btn">
+                                    <input type="radio" name="partType" value="individual" checked onclick="toggleTeamSection(false)">
+                                    <span><i class="fas fa-user"></i> Individual</span>
+                                </label>
+                                <label class="radio-btn">
+                                    <input type="radio" name="partType" value="team" onclick="toggleTeamSection(true)">
+                                    <span><i class="fas fa-users"></i> Team (Max 4)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="teamSection" class="team-section hidden">
+                            <label>Team Members Details</label>
+                            <textarea rows="3" placeholder="Enter Name & Enrollment No. of all team members (separated by comma)..."></textarea>
+                            <small class="text-muted"><i class="fas fa-info-circle"></i> Leader (You) will be the primary contact.</small>
+                        </div>
+
+                        <div class="payment-box mt-4">
+                            <div class="payment-header">
+                                <span>Registration Fee:</span>
+                                <span class="price">₹ 200</span>
+                            </div>
+                            <p>Payment Mode: <strong>Pay at Desk (Cash)</strong> or <strong>UPI</strong></p>
+                            <div class="upi-placeholder">
+                                <i class="fas fa-qrcode"></i>
+                                <span>Scan QR at Venue</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions mt-4">
+                            <button type="submit" class="btn btn-primary w-100">Confirm Registration</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="sidebar">
+                    
+                    <div class="sidebar-widget bg-light-blue">
+                        <h3><i class="fas fa-clipboard-list"></i> Guidelines</h3>
+                        <ul class="check-list-small">
+                            <li><i class="fas fa-check"></i> Carry your College ID card.</li>
+                            <li><i class="fas fa-check"></i> Report 30 mins before event time.</li>
+                            <li><i class="fas fa-check"></i> Team leader is responsible for coordination.</li>
+                            <li><i class="fas fa-check"></i> Registration fee is non-refundable.</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3>Need Help?</h3>
+                        <p>Contact Event Coordinators for queries.</p>
+                        <div class="contact-mini">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <strong>+91 98765 43210</strong>
+                                <span>Technical Head</span>
+                            </div>
+                        </div>
+                        <div class="contact-mini">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>events@svits.edu.in</strong>
+                                <span>Official Email</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget text-center">
+                        <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
+                        <h4>Event Rulebook</h4>
+                        <p class="small mb-3">Read detailed rules for all competitions.</p>
+                        <a href="#" class="btn btn-outline w-100">Download PDF</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact Events Cell</h3>
+                <ul class="contact-list">
+                    <li><i class="fa fa-map-marker-alt"></i> Student Activity Center</li>
+                    <li><i class="fa fa-envelope"></i> events@svits.edu.in</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="events.html">All Events</a></li>
+                    <li><a href="login.html">ERP Login</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 SVITS | Developed by Kartik Bais</p>
+        </div>
+    </footer>
+
+    <div class="chatbot-toggler"><i class="fas fa-comment-alt"></i></div>
+
+    <script src="script.js"></script>
+
+    <script>
+        // 1. Toggle Team Section
+        function toggleTeamSection(isTeam) {
+            const teamDiv = document.getElementById('teamSection');
+            if(isTeam) {
+                teamDiv.classList.remove('hidden');
+                teamDiv.style.animation = "fadeIn 0.5s";
+            } else {
+                teamDiv.classList.add('hidden');
+            }
+        }
+
+        // 2. Dynamic Event Dropdown
+        function updateEvents() {
+            const category = document.getElementById('eventCategory').value;
+            const eventSelect = document.getElementById('eventName');
+            
+            // Clear current options
+            eventSelect.innerHTML = '<option value="">-- Select Event --</option>';
+
+            const events = {
+                'technical': ['Robo-Wars', 'Code-a-Thon', 'Drone Racing', 'Circuit Design'],
+                'gaming': ['BGMI Tournament', 'FIFA 26', 'Valorant'],
+                'workshop': ['AI & ML', 'Cyber Security', 'Cloud Computing'],
+                'cultural': ['Battle of Bands', 'Dance Face-off', 'Nukkad Natak']
+            };
+
+            if(events[category]) {
+                events[category].forEach(evt => {
+                    const option = document.createElement('option');
+                    option.value = evt;
+                    option.text = evt;
+                    eventSelect.appendChild(option);
+                });
+            }
+        }
+
+        // 3. Form Submission
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Registration Successful! Your Ticket ID is SV-2026-" + Math.floor(1000 + Math.random() * 9000));
+            this.reset();
+            toggleTeamSection(false); // Reset team view
+        });
+    </script>
+</body>
+</html>

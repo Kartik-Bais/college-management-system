@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Official ERP Portal of Shri Vaishnav Institute (SVITS). Access Student Login, Faculty Dashboard, and Latest Academic Updates.">
+    <meta name="keywords" content="SVITS, ERP, Student Portal, Engineering College, Indore, Admission 2026">
+    <title>SVITS | Excellence in Education & Integrated ERP System</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Feature Grid (Why Choose Us) */
+        .features-section { padding: 60px 0; background: #fff; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .feature-box { padding: 30px; border: 1px solid #eee; border-radius: 10px; transition: 0.3s; text-align: center; }
+        .feature-box:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.1); transform: translateY(-5px); border-color: var(--primary-color); }
+        .feature-icon { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 20px; }
+        
+        /* Campus Life Preview */
+        .campus-life-section { padding: 60px 0; background: #f8fafc; }
+        .life-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .life-card { position: relative; height: 250px; border-radius: 12px; overflow: hidden; cursor: pointer; }
+        .life-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .life-card:hover img { transform: scale(1.1); }
+        .life-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 20px; color: white;
+        }
+
+        /* Testimonials */
+        .testimonials-section { padding: 80px 0; background: var(--secondary-color); color: white; text-align: center; }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .testi-card { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 10px; text-align: left; }
+        .testi-user { display: flex; align-items: center; gap: 15px; margin-top: 20px; }
+        .testi-user img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="contact-info">
+                <span><i class="fas fa-phone-alt"></i> +91 9406661558</span>
+                <span><i class="fas fa-envelope"></i> helpdesk@svits.edu.in</span>
+                <span class="desktop-only"><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 5:00 PM</span>
+            </div>
+            <div class="portal-links">
+                <a href="login.html?role=faculty" title="Faculty Login"><i class="fas fa-chalkboard-teacher"></i> Faculty ERP</a>
+                <a href="login.html?role=admin" title="Admin Login"><i class="fas fa-user-shield"></i> Admin Panel</a>
+                <a href="library.html" title="Digital Library"><i class="fas fa-book-reader"></i> E-Library</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar" id="mainNav">
+        <div class="logo">
+            <a href="index.html">
+                <i class="fas fa-graduation-cap"></i> SVITS<span>ERP</span>
+            </a>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            
+            <li class="dropdown">
+                <a href="#">Institute <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="mission.html"><i class="fas fa-bullseye"></i> Mission</a></li>
+                    <li><a href="vision.html"><i class="fas fa-eye"></i> Vision</a></li>
+                    <li><a href="faculty.html"><i class="fas fa-users"></i> Faculty Directory</a></li>
+                    <li><a href="contact.html"><i class="fas fa-map-marker-alt"></i> Contact & Map</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#">Academics <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="departments.html"><i class="fas fa-building"></i> Departments</a></li>
+                    <li><a href="program-detail.html"><i class="fas fa-book"></i> Syllabus & Schemes</a></li>
+                    <li><a href="documents.html"><i class="fas fa-file-alt"></i> DigiLocker</a></li>
+                    <li><a href="exam-portal.html"><i class="fas fa-laptop-code"></i> Exam Portal</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#">Campus Life <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Events & Fests</a></li>
+                    <li><a href="clubs.html"><i class="fas fa-guitar"></i> Student Clubs</a></li>
+                    <li><a href="hostel.html"><i class="fas fa-bed"></i> Hostel & Mess</a></li>
+                    <li><a href="transport.html"><i class="fas fa-bus"></i> Transport Routes</a></li>
+                    <li><a href="canteen.html"><i class="fas fa-utensils"></i> E-Canteen</a></li>
+                    <li><a href="grievance.html"><i class="fas fa-headset"></i> Help Desk</a></li>
+                </ul>
+            </li>
+
+            <li><a href="admissions.html">Admissions</a></li>
+            <li><a href="alumni.html">Alumni</a></li>
+            
+            <li><a href="login.html" class="btn-nav">Login <i class="fas fa-arrow-right"></i></a></li>
+        </ul>
+
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-inner animate-fade">
+                <span class="badge-new">Admissions Open 2025-26</span>
+                <h1>Shri Vaishnav Institute of Technology & Science</h1>
+                <p>Join Central India's leading technology institute with a fully integrated digital campus experience.</p>
+                
+                <div class="hero-btns">
+                    <a class="btn btn-primary" href="admissions.html">Apply Online</a>
+                    <a class="btn btn-out" href="login.html">Access ERP <i class="fas fa-lock"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <div class="container info-grid">
+                
+                <div class="welcome-text">
+                    <h5 class="sub-heading">Welcome to SVITS</h5>
+                    <h2>Nurturing Future Leaders</h2>
+                    <p>At SVITS, we believe in holistic development. Our state-of-the-art ERP system ensures parents, students, and faculty stay connected in real-time. From attendance tracking to online exams, everything is at your fingertips.</p>
+                    
+                    <div class="stats-container" id="statsSection">
+                        <div class="stat-box">
+                            <h3 class="counter" data-target="2500">0</h3>
+                            <p>Students</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3 class="counter" data-target="150">0</h3>
+                            <p>Faculty</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3 class="counter" data-target="500">0</h3>
+                            <p>Placements</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notice-board">
+                    <div class="notice-header">
+                        <i class="fas fa-bullhorn"></i> Important Circulars
+                    </div>
+                    <div class="notice-body">
+                        <ul class="notice-list marquee-vertical">
+                            <li>
+                                <span class="date">New</span>
+                                <a href="exam-portal.html">Mid-Sem Exam Schedule Released for B.Tech CSE.</a>
+                            </li>
+                            <li>
+                                <span class="date">Jan 12</span>
+                                <a href="events.html">Hackathon 2026 Registration is now open.</a>
+                            </li>
+                            <li>
+                                <span class="date">Jan 10</span>
+                                <a href="student-placements.html">TCS Ninja Hiring Drive - Apply before 20th.</a>
+                            </li>
+                            <li>
+                                <span class="date">Jan 08</span>
+                                <a href="transport.html">New Bus Route added for Indore City (Route No. 5).</a>
+                            </li>
+                            <li>
+                                <span class="date">Jan 05</span>
+                                <a href="student-grades.html">M.Tech 1st Semester Results Declared.</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="notice-footer">
+                        <a href="events.html">View All Notices</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="portals-section" id="portals">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Select Your Role</h2>
+                    <p>Secure login gateways for all campus stakeholders</p>
+                </div>
+                <div class="programs-grid">
+                    <div class="card card-hover">
+                        <div class="icon-bg"><i class="fas fa-user-graduate"></i></div>
+                        <h3>Student Portal</h3>
+                        <p>Check results, attendance, pay fees, and access library.</p>
+                        <a href="login.html?role=student" class="link-btn">Login <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                    <div class="card card-hover">
+                        <div class="icon-bg"><i class="fas fa-chalkboard-teacher"></i></div>
+                        <h3>Faculty Module</h3>
+                        <p>Mark attendance, upload grades, and manage assignments.</p>
+                        <a href="login.html?role=faculty" class="link-btn">Access <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                    <div class="card card-hover">
+                        <div class="icon-bg"><i class="fas fa-users"></i></div>
+                        <h3>Parent Dashboard</h3>
+                        <p>Monitor your ward's academic performance and activities.</p>
+                        <a href="login.html?role=parent" class="link-btn">View <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                    <div class="card card-hover">
+                        <div class="icon-bg"><i class="fas fa-user-shield"></i></div>
+                        <h3>Admin Control</h3>
+                        <p>Manage users, courses, fees, and system settings.</p>
+                        <a href="login.html?role=admin" class="link-btn">Login <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why Choose SVITS?</h2>
+                    <p>We provide an environment that fosters growth and innovation.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-box">
+                        <i class="fas fa-laptop-code feature-icon"></i>
+                        <h3>Advanced Labs</h3>
+                        <p>High-tech computer labs with AI/ML workstations.</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-briefcase feature-icon"></i>
+                        <h3>Top Placements</h3>
+                        <p>Consistent record of 95% placement in MNCs.</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-wifi feature-icon"></i>
+                        <h3>Smart Campus</h3>
+                        <p>Fully Wi-Fi enabled campus with digital classrooms.</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-user-tie feature-icon"></i>
+                        <h3>Expert Faculty</h3>
+                        <p>Mentorship from PhD holders and Industry experts.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="campus-life-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Life at Campus</h2>
+                    <p>Beyond books – Explore our vibrant campus culture.</p>
+                </div>
+                <div class="life-grid">
+                    <div class="life-card" onclick="window.location.href='events.html'">
+                        <img src="fest.webp" alt="Events">
+                        <div class="life-overlay">
+                            <h3>Cultural Fests</h3>
+                            <p>Join the biggest tech & cultural fests.</p>
+                        </div>
+                    </div>
+                    <div class="life-card" onclick="window.location.href='canteen.html'">
+                        <img src="canteen.webp" alt="Canteen">
+                        <div class="life-overlay">
+                            <h3>E-Canteen</h3>
+                            <p>Order fresh food online without queues.</p>
+                        </div>
+                    </div>
+                    <div class="life-card" onclick="window.location.href='hostel.html'">
+                        <img src="hostel.webp" alt="Hostel">
+                        <div class="life-overlay">
+                            <h3>Hostel & Mess</h3>
+                            <p>Secure accommodation with gate-pass system.</p>
+                        </div>
+                    </div>
+                    <div class="life-card" onclick="window.location.href='library.html'">
+                        <img src="library.webp" alt="Library">
+                        <div class="life-overlay">
+                            <h3>Digital Library</h3>
+                            <p>Access thousands of e-books and journals.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials-section">
+            <div class="container">
+                <h2>What Our Students Say</h2>
+                <div class="testimonial-grid">
+                    <div class="testi-card">
+                        <p>"The ERP system makes checking results and attendance so easy. I can focus more on my studies and less on paperwork."</p>
+                        <div class="testi-user">
+                            <img src="avatar.png" alt="Student">
+                            <div>
+                                <h4>Amit Verma</h4>
+                                <small>CSE, 3rd Year</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <p>"Applying for gate passes and ordering food from the canteen via the portal is a game changer. Amazing infrastructure!"</p>
+                        <div class="testi-user">
+                            <img src="girl.webp" alt="Student">
+                            <div>
+                                <h4>Priya Singh</h4>
+                                <small>ECE, Final Year</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <p>"As a parent, the dashboard gives me peace of mind. I can track my son's attendance and fees status instantly."</p>
+                        <div class="testi-user">
+                            <img src="parent.webp" alt="Parent">
+                            <div>
+                                <h4>Mr. R.K. Gupta</h4>
+                                <small>Parent</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container cta-content">
+                <div class="cta-text">
+                    <h2>Ready to join us?</h2>
+                    <p>Take a virtual tour of our campus or apply for the upcoming batch.</p>
+                    <div style="margin-top: 20px;">
+                        <a href="about.html" class="btn btn-white">View Campus Tour</a>
+                        <a href="contact.html" class="btn btn-out" style="margin-left: 10px;">Contact Admission Cell</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="chatbot-toggler">
+        <i class="fas fa-comment-alt"></i>
+    </div>
+    <div class="chatbot-window">
+        <div class="chatbot-header">
+            <div class="bot-info">
+                <i class="fas fa-robot"></i>
+                <div>
+                    <h3>SVITS Assistant</h3>
+                    <span class="status">Online</span>
+                </div>
+            </div>
+            <i class="fas fa-times chatbot-close"></i>
+        </div>
+        <div class="chatbot-log" id="chatLog">
+            <div class="chat-message bot">
+                <p>Hello! Welcome to SVITS. How can I assist you today?</p>
+                <div class="options">
+                    <button class="option-btn" onclick="sendQuery('Admissions')">Admissions</button>
+                    <button class="option-btn" onclick="sendQuery('Fees')">Fees</button>
+                    <button class="option-btn" onclick="sendQuery('Hostel')">Hostel</button>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Type your query...">
+            <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="container footer-container">
+
+            <div class="footer-column">
+                <h3>Contact SVITS</h3>
+                <ul class="contact-list">
+                    <li><i class="fas fa-map-marker-alt"></i> Ujjain Road, Indore - 453111</li>
+                    <li><i class="fas fa-phone"></i> +91 9406661558</li>
+                    <li><i class="fas fa-envelope"></i> admission@svits.edu.in</li>
+                </ul>
+                <div class="social-icons" style="margin-top: 20px;">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h3>Institute</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="vision.html">Vision & Mission</a></li>
+                    <li><a href="faculty.html">Faculty Directory</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="admissions.html">Admissions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>ERP Modules</h3>
+                <ul class="footer-links">
+                    <li><a href="login.html">Universal Login</a></li>
+                    <li><a href="login.html">Student Dashboard</a></li>
+                    <li><a href="login.html">Faculty Dashboard</a></li>
+                    <li><a href="login.html">Admin Panel</a></li>
+                    <li><a href="login.html">Parents Portal</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Campus & Tools</h3>
+                <ul class="footer-links">
+                    <li><a href="library.html">Central Library</a></li>
+                    <li><a href="canteen.html">E-Canteen</a></li>
+                    <li><a href="hostel.html">Hostel Management</a></li>
+                    <li><a href="exam-portal.html">Online Exams</a></li>
+                    <li><a href="grievance.html">Grievance Cell</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>
+                &copy; 2026 Shri Vaishnav Institute of Technology & Science |
+                Designed & Developed by <strong>Kartik Bais</strong>
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="chatbot-logic.js"></script> 
+    <script src="login-logic.js"></script>
+</body>
+</html>

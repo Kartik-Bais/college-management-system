@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Academic Departments at SVITS - Explore our B.Tech, M.Tech, and MBA programs.">
+    <title>Departments | SVITS - Academic Excellence</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- PAGE HEADER --- */
+        .page-header {
+            height: 350px;
+            background: linear-gradient(rgba(0,74,153,0.9), rgba(0,0,0,0.6)), url('image.jpg') center/cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            margin-top: -1px;
+        }
+        .page-header h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 700; }
+        .breadcrumb { display: flex; justify-content: center; gap: 10px; font-size: 0.95rem; opacity: 0.9; }
+        .breadcrumb a { color: white; transition: 0.3s; }
+        .breadcrumb a:hover { color: var(--accent-color); }
+        .breadcrumb span { color: var(--accent-color); }
+
+        /* --- FILTER BAR --- */
+        .filter-container {
+            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
+            margin-top: -30px; position: relative; z-index: 10;
+        }
+        
+        .filter-btn {
+            border: none; background: white; padding: 12px 25px; border-radius: 30px;
+            font-size: 0.95rem; font-weight: 600; color: #555; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .filter-btn:hover { transform: translateY(-3px); color: var(--primary-color); }
+        .filter-btn.active { background: var(--primary-color); color: white; box-shadow: 0 10px 20px rgba(0, 74, 153, 0.3); }
+
+        /* --- DEPARTMENT GRID --- */
+        .dept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 40px; }
+
+        .dept-card {
+            background: white; border-radius: 15px; overflow: hidden;
+            box-shadow: var(--shadow-sm); border: 1px solid #eee;
+            transition: 0.4s; display: none; /* Hidden by default for filtering */
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .dept-card.show { display: block; } /* Show class */
+
+        .dept-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: var(--accent-color); }
+
+        .dept-header {
+            background: #f8fafc; padding: 25px; display: flex; justify-content: space-between; align-items: start;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .icon-box {
+            width: 60px; height: 60px; background: white; color: var(--primary-color);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .badge {
+            background: #e0f2fe; color: var(--primary-color); padding: 5px 12px;
+            border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+        }
+
+        .dept-card h3 { padding: 20px 25px 5px; font-size: 1.4rem; color: var(--secondary-color); }
+        .dept-desc { padding: 0 25px 20px; color: #666; font-size: 0.9rem; line-height: 1.6; }
+
+        /* Stats Grid inside Card */
+        .dept-stats {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+            padding: 15px 25px; border-top: 1px dashed #eee; background: #fafbfc;
+        }
+        
+        .stat { text-align: center; }
+        .stat i { color: var(--accent-color); font-size: 1.2rem; margin-bottom: 5px; display: block; }
+        .stat span { font-size: 0.8rem; font-weight: 600; color: #555; }
+
+        /* HOD Section */
+        .dept-hod {
+            display: flex; align-items: center; gap: 15px; padding: 15px 25px;
+            border-top: 1px solid #eee;
+        }
+        .dept-hod img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #eee; }
+        .dept-hod div { display: flex; flex-direction: column; }
+        .dept-hod small { font-size: 0.75rem; color: #888; text-transform: uppercase; }
+        .dept-hod strong { font-size: 0.9rem; color: var(--text-dark); }
+
+        /* Action Buttons */
+        .dept-actions {
+            padding: 20px 25px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;
+        }
+        .btn-text { color: var(--primary-color); font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; }
+        .btn-text:hover { gap: 8px; color: var(--secondary-color); }
+        
+        .btn-icon {
+            width: 35px; height: 35px; background: #f0f4f8; color: #555; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; transition: 0.3s;
+        }
+        .btn-icon:hover { background: var(--primary-color); color: white; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .page-header h1 { font-size: 2.5rem; }
+            .dept-stats { grid-template-columns: 1fr; text-align: left; display: flex; justify-content: space-between; }
+            .stat { display: flex; align-items: center; gap: 5px; }
+            .stat i { margin-bottom: 0; }
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="contact-info">
+                <span><i class="fas fa-phone-alt"></i> +91 9406661558</span>
+                <span><i class="fas fa-envelope"></i> info@svits.edu.in</span>
+            </div>
+            <div class="portal-links">
+                <a href="login.html?role=faculty"><i class="fas fa-chalkboard-teacher"></i> Faculty ERP</a>
+                <a href="login.html?role=admin"><i class="fas fa-user-shield"></i> Admin Panel</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar" id="mainNav">
+        <div class="logo">
+            <a href="index.html">
+                <i class="fas fa-graduation-cap"></i> SVITS<span>ERP</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            
+            <li class="dropdown">
+                <a href="#">Institute <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="mission.html">Mission & Vision</a></li>
+                    <li><a href="faculty.html">Faculty Directory</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="active">Academics <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="departments.html">Departments</a></li>
+                    <li><a href="program-detail.html">Syllabus</a></li>
+                    <li><a href="documents.html">Documents</a></li>
+                </ul>
+            </li>
+
+            <li><a href="admissions.html">Admissions</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="btn-nav">Login</a></li>
+        </ul>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container animate-fade">
+            <h1>Academic Departments</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span>Departments</span>
+            </div>
+            <p style="margin-top: 15px; font-size: 1.1rem; opacity: 0.9;">Centers of Excellence fostering innovation and research.</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="section-padding pb-0">
+            <div class="container">
+                <div class="filter-container animate-fade">
+                    <button class="filter-btn active" onclick="filterSelection('all')">All Departments</button>
+                    <button class="filter-btn" onclick="filterSelection('engineering')">Engineering</button>
+                    <button class="filter-btn" onclick="filterSelection('management')">Management</button>
+                    <button class="filter-btn" onclick="filterSelection('science')">Applied Sciences</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="dept-grid">
+                    
+                    <div class="dept-card filter-item engineering">
+                        <div class="dept-header">
+                            <div class="icon-box"><i class="fas fa-laptop-code"></i></div>
+                            <span class="badge">B.Tech | M.Tech</span>
+                        </div>
+                        <h3>Computer Science (CSE)</h3>
+                        <p class="dept-desc">Focusing on AI, Machine Learning, Data Science, and core software engineering principles.</p>
+                        <div class="dept-stats">
+                            <div class="stat"><i class="fas fa-chalkboard-teacher"></i><span>25+ Faculty</span></div>
+                            <div class="stat"><i class="fas fa-flask"></i><span>12 Labs</span></div>
+                            <div class="stat"><i class="fas fa-users"></i><span>180 Seats</span></div>
+                        </div>
+                        <div class="dept-hod">
+                            <img src="oldwoman.webp" alt="HOD">
+                            <div><small>Head of Department</small><strong>Dr. Anjali Verma</strong></div>
+                        </div>
+                        <div class="dept-actions">
+                            <a href="program-detail.html" class="btn-text">View Details <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="btn-icon" title="Download Syllabus"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="dept-card filter-item engineering">
+                        <div class="dept-header">
+                            <div class="icon-box"><i class="fas fa-cogs"></i></div>
+                            <span class="badge">B.Tech | M.Tech</span>
+                        </div>
+                        <h3>Mechanical Engg.</h3>
+                        <p class="dept-desc">Equipped with CAD/CAM labs and workshops for Robotics, Mechatronics, and Automobiles.</p>
+                        <div class="dept-stats">
+                            <div class="stat"><i class="fas fa-chalkboard-teacher"></i><span>18+ Faculty</span></div>
+                            <div class="stat"><i class="fas fa-flask"></i><span>10 Labs</span></div>
+                            <div class="stat"><i class="fas fa-users"></i><span>120 Seats</span></div>
+                        </div>
+                        <div class="dept-hod">
+                            <img src="oldman.webp" alt="HOD">
+                            <div><small>Head of Department</small><strong>Prof. R.K. Singh</strong></div>
+                        </div>
+                        <div class="dept-actions">
+                            <a href="program-detail.html" class="btn-text">View Details <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="btn-icon"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="dept-card filter-item engineering">
+                        <div class="dept-header">
+                            <div class="icon-box"><i class="fas fa-satellite-dish"></i></div>
+                            <span class="badge">B.Tech | M.Tech</span>
+                        </div>
+                        <h3>Electronics (EC)</h3>
+                        <p class="dept-desc">Specializing in VLSI Design, Embedded Systems, IoT, and Communication Networks.</p>
+                        <div class="dept-stats">
+                            <div class="stat"><i class="fas fa-chalkboard-teacher"></i><span>20+ Faculty</span></div>
+                            <div class="stat"><i class="fas fa-flask"></i><span>08 Labs</span></div>
+                            <div class="stat"><i class="fas fa-users"></i><span>120 Seats</span></div>
+                        </div>
+                        <div class="dept-hod">
+                            <img src="oldwoman.webp" alt="HOD">
+                            <div><small>Head of Department</small><strong>Dr. S. Gupta</strong></div>
+                        </div>
+                        <div class="dept-actions">
+                            <a href="program-detail.html" class="btn-text">View Details <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="btn-icon"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="dept-card filter-item engineering">
+                        <div class="dept-header">
+                            <div class="icon-box"><i class="fas fa-hard-hat"></i></div>
+                            <span class="badge">B.Tech</span>
+                        </div>
+                        <h3>Civil Engineering</h3>
+                        <p class="dept-desc">Focusing on structural engineering, smart city planning, and sustainable construction.</p>
+                        <div class="dept-stats">
+                            <div class="stat"><i class="fas fa-chalkboard-teacher"></i><span>15+ Faculty</span></div>
+                            <div class="stat"><i class="fas fa-flask"></i><span>09 Labs</span></div>
+                            <div class="stat"><i class="fas fa-users"></i><span>60 Seats</span></div>
+                        </div>
+                        <div class="dept-hod">
+                            <img src="oldman.webp" alt="HOD">
+                            <div><small>Head of Department</small><strong>Prof. Amit Jain</strong></div>
+                        </div>
+                        <div class="dept-actions">
+                            <a href="program-detail.html" class="btn-text">View Details <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="btn-icon"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="dept-card filter-item management">
+                        <div class="dept-header">
+                            <div class="icon-box"><i class="fas fa-briefcase"></i></div>
+                            <span class="badge">PG Degree</span>
+                        </div>
+                        <h3>MBA</h3>
+                        <p class="dept-desc">Creating future leaders with specializations in Finance, Marketing, HR, and Analytics.</p>
+                        <div class="dept-stats">
+                            <div class="stat"><i class="fas fa-chalkboard-teacher"></i><span>12+ Faculty</span></div>
+                            <div class="stat"><i class="fas fa-briefcase"></i><span>100% Place</span></div>
+                            <div class="stat"><i class="fas fa-users"></i><span>60 Seats</span></div>
+                        </div>
+                        <div class="dept-hod">
+                            <img src="oldwoman.webp" alt="HOD">
+                            <div><small>Head of Department</small><strong>Dr. Neha Sharma</strong></div>
+                        </div>
+                        <div class="dept-actions">
+                            <a href="program-detail.html" class="btn-text">View Details <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="btn-icon"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="dept-card filter-item science">
+                        <div class="dept-header">
+                            <div class="icon-box"><i class="fas fa-atom"></i></div>
+                            <span class="badge">Foundation</span>
+                        </div>
+                        <h3>Applied Sciences</h3>
+                        <p class="dept-desc">Physics, Chemistry, and Mathematics department supporting all engineering branches.</p>
+                        <div class="dept-stats">
+                            <div class="stat"><i class="fas fa-chalkboard-teacher"></i><span>10+ Faculty</span></div>
+                            <div class="stat"><i class="fas fa-flask"></i><span>04 Labs</span></div>
+                            <div class="stat"><i class="fas fa-book"></i><span>R&D Cell</span></div>
+                        </div>
+                        <div class="dept-hod">
+                            <img src="oldman.webp" alt="HOD">
+                            <div><small>Head of Department</small><strong>Dr. V.K. Rao</strong></div>
+                        </div>
+                        <div class="dept-actions">
+                            <a href="program-detail.html" class="btn-text">View Details <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="btn-icon"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>Contact SVITS</h3>
+                <ul class="contact-list">
+                    <li><i class="fas fa-map-marker-alt"></i> Ujjain Road, Indore</li>
+                    <li><i class="fas fa-phone"></i> +91 9406661558</li>
+                    <li><i class="fas fa-envelope"></i> info@svits.edu.in</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Institute</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="mission.html">Mission & Vision</a></li>
+                    <li><a href="faculty.html">Faculty Directory</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Portals</h3>
+                <ul class="footer-links">
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="student-portal.html">Student Portal</a></li>
+                    <li><a href="admin-panel.html">Admin Panel</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Mandatory Disclosure</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SVITS | Developed by <strong>Kartik Bais</strong></p>
+        </div>
+    </footer>
+
+    <div class="chatbot-toggler"><i class="fas fa-comment-alt"></i></div>
+    <div class="chatbot-window"></div> 
+
+    <script src="script.js"></script>
+    <script src="chatbot-logic.js"></script>
+
+    <script>
+        function filterSelection(c) {
+            var x, i;
+            x = document.getElementsByClassName("filter-item");
+            if (c == "all") c = "";
+            
+            // Add/Remove Show Class
+            for (i = 0; i < x.length; i++) {
+                removeClass(x[i], "show");
+                if (x[i].className.indexOf(c) > -1) addClass(x[i], "show");
+            }
+            
+            // Update Active Button
+            var btns = document.getElementsByClassName("filter-btn");
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].classList.remove("active");
+                if(btns[i].getAttribute('onclick').includes(c || 'all')) {
+                    btns[i].classList.add("active");
+                }
+            }
+        }
+
+        function addClass(element, name) {
+            var i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+            }
+        }
+
+        function removeClass(element, name) {
+            var i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                while (arr1.indexOf(arr2[i]) > -1) {
+                    arr1.splice(arr1.indexOf(arr2[i]), 1);     
+                }
+            }
+            element.className = arr1.join(" ");
+        }
+
+        // Init
+        filterSelection("all");
+    </script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Events | SVITS - Life Beyond Academics</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="contact-info">
+                <span><i class="fas fa-phone-alt"></i> +91 9406661558</span>
+                <span><i class="fas fa-envelope"></i> events@svits.edu.in</span>
+            </div>
+            <div class="portal-links">
+                <a href="login.html?role=faculty"><i class="fas fa-chalkboard-teacher"></i> Faculty ERP</a>
+                <a href="login.html?role=admin"><i class="fas fa-user-cog"></i> Admin Panel</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar" id="mainNav">
+        <div class="logo">
+            <a href="index.html">
+                <i class="fas fa-graduation-cap"></i> SVITS<span>ERP</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="departments.html">Academics</a></li>
+            <li><a href="admissions.html">Admissions</a></li>
+            <li><a href="events.html" class="active">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="btn-nav">Student Portal</a></li>
+        </ul>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <header class="page-header" style="background: linear-gradient(rgba(0,74,153,0.9), rgba(0,0,0,0.6)), url('image.jpg') center/cover;">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Events</li>
+            </ul>
+            <h1>Campus Happenings</h1>
+            <p>Discover workshops, fests, and competitions.</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="featured-event-section">
+            <div class="container">
+                <div class="featured-card">
+                    <div class="featured-content">
+                        <span class="tag-highlight">Flagship Event</span>
+                        <h2>Innovate 2026: Tech Fest</h2>
+                        <p>Central India's largest technical festival featuring RoboWars, Hackathons, and Drone Racing. Don't miss the biggest tech gathering of the year!</p>
+                        
+                        <div class="countdown-timer" id="countdown">
+                            <div class="time-box">
+                                <span id="days">00</span>
+                                <small>Days</small>
+                            </div>
+                            <div class="time-box">
+                                <span id="hours">00</span>
+                                <small>Hours</small>
+                            </div>
+                            <div class="time-box">
+                                <span id="minutes">00</span>
+                                <small>Mins</small>
+                            </div>
+                            <div class="time-box">
+                                <span id="seconds">00</span>
+                                <small>Secs</small>
+                            </div>
+                        </div>
+
+                        <div class="featured-actions">
+                            <a href="event-registration.html" class="btn btn-white">Register Now</a>
+                            <a href="event-detail.html" class="btn btn-outline-light">View Details</a>
+                        </div>
+                    </div>
+                    <div class="featured-image">
+                        <div class="img-placeholder"><i class="fas fa-rocket"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding pb-0">
+            <div class="container">
+                <div class="event-toolbar">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" onclick="filterEvents('all')">All Events</button>
+                        <button class="filter-btn" onclick="filterEvents('technical')">Technical</button>
+                        <button class="filter-btn" onclick="filterEvents('cultural')">Cultural</button>
+                        <button class="filter-btn" onclick="filterEvents('workshop')">Workshops</button>
+                        <button class="filter-btn" onclick="filterEvents('sports')">Sports</button>
+                    </div>
+                    <div class="search-box-mini">
+                        <input type="text" id="eventSearch" placeholder="Search events..." onkeyup="searchEvents()">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="events-grid" id="eventsGrid">
+                    
+                    <div class="event-card filter-item technical">
+                        <div class="event-thumb">
+                            <img src="event.webp" alt="Hackathon">
+                            <div class="date-badge">
+                                <span class="day">15</span>
+                                <span class="month">MAR</span>
+                            </div>
+                            <span class="status-label open">Registration Open</span>
+                        </div>
+                        <div class="event-details">
+                            <span class="category"><i class="fas fa-code"></i> Technical</span>
+                            <h3>Code-A-Thon 2026</h3>
+                            <p class="location"><i class="fas fa-map-marker-alt"></i> Main Auditorium</p>
+                            <p class="desc">A 24-hour coding marathon to solve real-world problems.</p>
+                            <div class="card-footer">
+                                <a href="event-detail.html" class="link-arrow">Read More <i class="fas fa-arrow-right"></i></a>
+                                <a href="event-registration.html" class="btn-sm-primary">Register</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-card filter-item cultural">
+                        <div class="event-thumb">
+                            <img src="event.webp" alt="Cultural Fest">
+                            <div class="date-badge">
+                                <span class="day">02</span>
+                                <span class="month">APR</span>
+                            </div>
+                            <span class="status-label coming">Coming Soon</span>
+                        </div>
+                        <div class="event-details">
+                            <span class="category color-cult"><i class="fas fa-music"></i> Cultural</span>
+                            <h3>Spandan: Annual Fest</h3>
+                            <p class="location"><i class="fas fa-map-marker-alt"></i> College Ground</p>
+                            <p class="desc">Music, Dance, Drama and celebrity night performances.</p>
+                            <div class="card-footer">
+                                <a href="event-detail.html" class="link-arrow">Read More <i class="fas fa-arrow-right"></i></a>
+                                <button class="btn-sm-disabled" disabled>Waitlist</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-card filter-item workshop">
+                        <div class="event-thumb">
+                            <img src="event.webp" alt="Workshop">
+                            <div class="date-badge">
+                                <span class="day">10</span>
+                                <span class="month">FEB</span>
+                            </div>
+                            <span class="status-label open">Seats Filling</span>
+                        </div>
+                        <div class="event-details">
+                            <span class="category color-work"><i class="fas fa-chalkboard-teacher"></i> Workshop</span>
+                            <h3>AI & Cloud Computing</h3>
+                            <p class="location"><i class="fas fa-map-marker-alt"></i> Lab 204</p>
+                            <p class="desc">Hands-on workshop on AWS and Google Cloud Platform.</p>
+                            <div class="card-footer">
+                                <a href="event-detail.html" class="link-arrow">Read More <i class="fas fa-arrow-right"></i></a>
+                                <a href="event-registration.html" class="btn-sm-primary">Register</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-card filter-item sports">
+                        <div class="event-thumb">
+                            <img src="event.webp" alt="Cricket">
+                            <div class="date-badge">
+                                <span class="day">20</span>
+                                <span class="month">JAN</span>
+                            </div>
+                            <span class="status-label closed">Closed</span>
+                        </div>
+                        <div class="event-details">
+                            <span class="category color-sport"><i class="fas fa-running"></i> Sports</span>
+                            <h3>Inter-College Cricket</h3>
+                            <p class="location"><i class="fas fa-map-marker-alt"></i> Sports Complex</p>
+                            <p class="desc">The ultimate cricket tournament between top engineering colleges.</p>
+                            <div class="card-footer">
+                                <a href="event-detail.html" class="link-arrow">View Results <i class="fas fa-arrow-right"></i></a>
+                                <button class="btn-sm-disabled" disabled>Closed</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter-section">
+            <div class="container">
+                <div class="newsletter-box">
+                    <div class="news-text">
+                        <h2>Never Miss an Event!</h2>
+                        <p>Subscribe to our weekly newsletter for updates on fests and workshops.</p>
+                    </div>
+                    <form class="news-form">
+                        <input type="email" placeholder="Enter your email address">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact Events Cell</h3>
+                <ul class="contact-list">
+                    <li><i class="fa fa-map-marker-alt"></i> Student Activity Center, SVITS</li>
+                    <li><i class="fa fa-envelope"></i> events@svits.edu.in</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="admissions.html">Admissions</a></li>
+                    <li><a href="login.html">ERP Login</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 SVITS | Developed by Kartik Bais</p>
+        </div>
+    </footer>
+
+    <div class="chatbot-toggler"><i class="fas fa-comment-alt"></i></div>
+
+    <script src="script.js"></script>
+
+    <script>
+        // 1. Countdown Timer Logic
+        const targetDate = new Date("March 15, 2026 00:00:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("countdown").innerHTML = "<h3>Event Started!</h3>";
+            }
+        }, 1000);
+
+        // 2. Filter Logic
+        function filterEvents(category) {
+            let cards = document.getElementsByClassName('event-card');
+            let btns = document.getElementsByClassName('filter-btn');
+
+            // Update Buttons
+            for(let btn of btns) {
+                btn.classList.remove('active');
+                if(btn.getAttribute('onclick').includes(category)) btn.classList.add('active');
+            }
+
+            // Filter Cards
+            for (let card of cards) {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s';
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+        }
+
+        // 3. Search Logic
+        function searchEvents() {
+            let input = document.getElementById('eventSearch').value.toUpperCase();
+            let cards = document.getElementsByClassName('event-card');
+            
+            for (let card of cards) {
+                let title = card.querySelector('h3').innerText.toUpperCase();
+                if (title.indexOf(input) > -1) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

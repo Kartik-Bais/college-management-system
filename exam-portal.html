@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="config.js"></script>
+    <style>
+        /* Small override for mobile toggle */
+        .toggle-palette-btn { display: none; background: transparent; border: 1px solid white; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body class="exam-mode">
+
+    <nav class="exam-navbar">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="logo" style="font-size: 1.2rem; font-weight: 800;">SVITS EXAM</div>
+        </div>
+        
+        <div style="font-size: 1.1rem; font-weight: 600;">
+            Mid-Sem: Computer Science
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="toggle-palette-btn" onclick="document.querySelector('.question-palette-panel').classList.toggle('open')">
+                <i class="fas fa-th"></i>
+            </button>
+            <div class="q-timer">
+                <i class="fas fa-clock"></i> <span id="examTimer">30:00</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="exam-container">
+        
+        <main class="question-area">
+            <div class="q-header">
+                <h2 id="qNum" style="margin: 0; font-size: 1.5rem; color: var(--primary);">Question 1</h2>
+                <div>
+                    <span style="font-weight: 600; color: var(--success);">+4 Marks</span>
+                    <span style="font-weight: 600; color: var(--danger); margin-left: 10px;">-1 Mark</span>
+                </div>
+            </div>
+
+            <div class="question-text" id="qText">
+                Loading question...
+            </div>
+
+            <div class="option-group" id="optionsContainer">
+                </div>
+
+            <div class="exam-footer">
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-primary" style="background: #6b7280;" onclick="clearResponse()">Clear Response</button>
+                    <button class="btn-primary" style="background: #8b5cf6;" onclick="markForReview()">Mark for Review</button>
+                </div>
+                <button class="btn-primary" style="background: var(--success);" onclick="saveAndNext()">Save & Next</button>
+            </div>
+        </main>
+
+        <aside class="question-palette-panel">
+            <div class="student-info-mini">
+                <img src="https://placehold.co/50x50/004a99/FFF?text=KB" style="width: 40px; height: 40px; border-radius: 50%;" alt="User">
+                <div style="line-height: 1.2;">
+                    <strong style="font-size: 0.9rem;">Kartik Bais</strong><br>
+                    <span style="font-size: 0.75rem; color: #666;">ID: S1250</span>
+                </div>
+                <i class="fas fa-times" style="margin-left: auto; cursor: pointer; display: none;" onclick="document.querySelector('.question-palette-panel').classList.remove('open')"></i>
+            </div>
+
+            <div class="palette-legend">
+                <div class="legend-item"><div class="dot" style="background: var(--success);"></div> Answered</div>
+                <div class="legend-item"><div class="dot" style="background: var(--danger);"></div> Not Answered</div>
+                <div class="legend-item"><div class="dot" style="background: #8b5cf6;"></div> Review</div>
+                <div class="legend-item"><div class="dot" style="border: 2px solid var(--primary);"></div> Current</div>
+            </div>
+
+            <div style="padding: 15px; font-weight: 600; color: #666;">Section A: General</div>
+
+            <div class="palette-grid" id="paletteGrid">
+                </div>
+
+            <div style="padding: 20px; border-top: 1px solid #e5e7eb; background: white;">
+                <button class="btn-primary" style="width: 100%; background: var(--danger); font-size: 1.1rem;" onclick="submitExam()">Submit Exam</button>
+            </div>
+        </aside>
+
+    </div>
+
+    <script src="exam-logic.js"></script> 
+
+<script>
+    // Keep your fullscreen suggestion if you wish
+    window.onload = () => {
+        if(confirm("Start Exam in Fullscreen mode?")) {
+            document.documentElement.requestFullscreen().catch((e) => {});
+        }
+    };
+</script>
+</body>
+</body>
+</html>

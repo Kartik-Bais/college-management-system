@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | SVITS ERP Portal</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- LOGIN PAGE SPECIFIC CSS --- */
+        
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f2f5;
+        }
+
+        .login-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            background: #fff;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* --- LEFT SIDE (Visuals) --- */
+        .login-left {
+            flex: 1.2;
+            background: linear-gradient(rgba(0, 74, 153, 0.85), rgba(0, 51, 102, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            color: #fff;
+            position: relative;
+        }
+
+        .login-left .brand-content {
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .brand-content h1 { font-size: 3rem; font-weight: 700; margin-bottom: 20px; line-height: 1.2; }
+        .brand-content p { font-size: 1.1rem; opacity: 0.9; margin-bottom: 40px; line-height: 1.6; }
+        
+        .feature-list { list-style: none; padding: 0; }
+        .feature-list li { margin-bottom: 15px; font-size: 1rem; display: flex; align-items: center; gap: 15px; }
+        .feature-list li i { background: rgba(255,255,255,0.2); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: #fff; }
+
+        /* Floating Shapes for Decoration */
+        .shape { position: absolute; background: rgba(255,255,255,0.05); border-radius: 50%; }
+        .shape-1 { width: 300px; height: 300px; top: -50px; left: -50px; }
+        .shape-2 { width: 200px; height: 200px; bottom: 50px; right: 50px; }
+
+        /* --- RIGHT SIDE (Form) --- */
+        .login-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            background: #fff;
+            position: relative;
+        }
+
+        .login-form-wrapper {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-header { text-align: center; margin-bottom: 30px; }
+        .login-header img { height: 60px; margin-bottom: 15px; }
+        .login-header h2 { font-size: 1.8rem; color: var(--primary-color); font-weight: 700; }
+        .login-header p { color: #777; font-size: 0.9rem; }
+
+        /* Role Switcher (Tabs) */
+        .role-switcher {
+            display: flex;
+            background: #f0f2f5;
+            padding: 5px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+        }
+        .role-btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 50px;
+            border: none;
+            background: transparent;
+            color: #555;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        .role-btn.active {
+            background: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 74, 153, 0.3);
+        }
+
+        /* Input Fields */
+        .form-group { position: relative; margin-bottom: 25px; }
+        .form-group label {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            padding: 0 5px;
+            color: #999;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 15px 15px 15px 45px; /* Space for icon */
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+        .form-group i.field-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        /* Floating Label Effect */
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label {
+            top: 0;
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .form-group input:focus { border-color: var(--primary-color); }
+
+        /* Toggle Password */
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #ccc;
+        }
+        .toggle-password:hover { color: var(--primary-color); }
+
+        /* Utility Links */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+        .remember-me { display: flex; align-items: center; gap: 8px; color: #555; cursor: pointer; }
+        .forgot-link { color: var(--accent-color); font-weight: 500; text-decoration: none; }
+        .forgot-link:hover { text-decoration: underline; }
+
+        /* Submit Button */
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-login:hover { background: var(--accent-color); transform: translateY(-2px); }
+
+        /* Back to Home */
+        .back-home {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.3s;
+        }
+        .back-home:hover { color: var(--primary-color); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .login-left { display: none; }
+            .login-right { flex: 1; padding: 30px; }
+            .back-home { top: 20px; left: 20px; }
+        }
+        
+        /* Browser Autofill Fix */
+        .form-group input:-webkit-autofill + label {
+            top: 0;
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        
+        <div class="login-left">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            
+            <div class="brand-content">
+                <h1>Welcome to SVITS<br>Digital Campus</h1>
+                <p>One portal for all your academic needs. Track attendance, view results, access library, and connect with faculty seamlessly.</p>
+                
+                <ul class="feature-list">
+                    <li>
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Secure Access</strong><br>End-to-end encrypted data privacy.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-bolt"></i>
+                        <div>
+                            <strong>Real-time Updates</strong><br>Instant notifications for grades & notices.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-mobile-alt"></i>
+                        <div>
+                            <strong>Mobile Friendly</strong><br>Access ERP anytime, anywhere.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="login-right">
+            <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Back to Website</a>
+
+            <div class="login-form-wrapper">
+                <div class="login-header">
+                    <i class="fas fa-graduation-cap" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 10px;"></i>
+                    <h2 id="loginTitle">Student Login</h2>
+                    <p>Enter your credentials to access your dashboard.</p>
+                </div>
+
+                <div class="role-switcher">
+                    <button class="role-btn active" onclick="switchRole('student')" id="btn-student">Student</button>
+                    <button class="role-btn" onclick="switchRole('faculty')" id="btn-faculty">Faculty</button>
+                    <button class="role-btn" onclick="switchRole('parent')" id="btn-parent">Parent</button>
+                    <button class="role-btn" onclick="switchRole('admin')" id="btn-admin">Admin</button>
+                </div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
+                    
+                    <div class="form-group">
+                        <i class="fas fa-user field-icon"></i>
+                        <input type="text" id="username" placeholder=" " required autocomplete="off">
+                        <label for="username" id="userLabel">Enrollment Number</label>
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fas fa-lock field-icon"></i>
+                        <input type="password" id="password" placeholder=" " required autocomplete="off">
+                        <label for="password">Password</label>
+                        <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox"> Remember me
+                        </label>
+                        <a href="#" class="forgot-link">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-login">
+                        <span id="btnText">Login securely</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    
+                    <div id="loader" style="display: none; text-align: center; margin-top: 10px; color: var(--primary-color);">
+                        <i class="fas fa-spinner fa-spin"></i> Verifying Credentials...
+                    </div>
+
+                </form>
+                
+                <p style="text-align: center; margin-top: 30px; font-size: 0.9rem; color: #777;">
+                    Having trouble logging in? <a href="contact.html" style="color: var(--primary-color); font-weight: 600;">Contact Helpdesk</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentRole = 'student'; // Default Role
+
+        function switchRole(role) {
+            currentRole = role;
+            
+            // Update Buttons
+            document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + role).classList.add('active');
+
+            // Update Labels
+            const title = document.getElementById('loginTitle');
+            const userLabel = document.getElementById('userLabel');
+
+            if(role === 'student') {
+                title.innerText = 'Student Login';
+                userLabel.innerText = 'Enrollment Number';
+            } else if(role === 'faculty') {
+                title.innerText = 'Faculty Login';
+                userLabel.innerText = 'Employee ID';
+            } else if(role === 'parent') {
+                title.innerText = 'Parent Login';
+                userLabel.innerText = 'Parent ID / Mobile';
+            } else if(role === 'admin') {
+                title.innerText = 'Admin Login';
+                userLabel.innerText = 'Admin ID';
+            }
+        }
+
+        function togglePassword() {
+            const passField = document.getElementById('password');
+            const icon = document.querySelector('.toggle-password');
+            if(passField.type === 'password') {
+                passField.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passField.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const btnText = document.getElementById('btnText');
+            const loader = document.getElementById('loader');
+            const btn = document.querySelector('.btn-login');
+
+            // UI Loading State
+            btn.style.opacity = '0.7';
+            btn.style.pointerEvents = 'none';
+            btnText.innerText = 'Verifying Credentials...';
+            loader.style.display = 'block';
+
+            setTimeout(() => {
+                let redirectUrl = 'index.html'; // Fallback
+
+                // REDIRECTION LOGIC AS REQUESTED
+                switch(currentRole) {
+                    case 'student':
+                        redirectUrl = 'student-portal.html';
+                        break;
+                    case 'faculty':
+                        redirectUrl = 'faculty-dashboard.html';
+                        break;
+                    case 'admin':
+                        redirectUrl = 'admin-panel.html';
+                        break;
+                    case 'parent':
+                        redirectUrl = 'parents-dashboard.html';
+                        break;
+                    default:
+                        redirectUrl = 'index.html';
+                }
+
+                // Redirect
+                window.location.href = redirectUrl; 
+                
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

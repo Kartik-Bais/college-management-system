@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Grades | SVITS ERP</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- DASHBOARD LAYOUT CSS (Required for Sidebar & Header) --- */
+        :root {
+            --sidebar-width: 260px;
+            --header-height: 70px;
+            --primary-color: #004a99;
+            --secondary-color: #003366;
+            --accent-color: #007bff;
+            --text-dark: #333;
+            --card-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        body {
+            background-color: #f4f7f6;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 100;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            overflow-y: auto;
+            transition: 0.3s;
+        }
+
+        .sidebar-header {
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #eee;
+        }
+        .sidebar-header h2 { font-size: 1.5rem; color: var(--primary-color); font-weight: 700; margin: 0; }
+        .sidebar-header span { color: var(--accent-color); }
+
+        .sidebar-menu { padding: 20px 0; }
+        .menu-label { font-size: 0.75rem; text-transform: uppercase; color: #999; font-weight: 600; padding: 0 25px; margin-bottom: 10px; margin-top: 20px; }
+        .sidebar-menu ul { list-style: none; padding: 0; }
+        .sidebar-menu li a {
+            display: flex; align-items: center; gap: 15px; padding: 12px 25px;
+            color: var(--text-dark); font-size: 0.95rem; font-weight: 500;
+            text-decoration: none; transition: 0.3s; border-left: 4px solid transparent;
+        }
+        .sidebar-menu li a:hover, .sidebar-menu li a.active {
+            background: #eef7ff; color: var(--primary-color); border-left-color: var(--accent-color);
+        }
+        .sidebar-menu li a i { width: 20px; text-align: center; }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding-top: var(--header-height);
+            transition: 0.3s;
+            min-height: 100vh;
+        }
+
+        /* Top Header Styling */
+        .dashboard-header {
+            height: var(--header-height);
+            background: #fff;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0; right: 0; left: 0;
+            margin-left: var(--sidebar-width); /* Important alignment fix */
+            z-index: 90;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: 0.3s;
+        }
+
+        /* --- GRADES PAGE SPECIFIC STYLES --- */
+        
+        /* Result Header Section */
+        .result-header {
+            background: #fff;
+            padding: 25px 30px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .sem-selector select {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+            cursor: pointer;
+            outline: none;
+            min-width: 200px;
+        }
+
+        /* Stats Cards Mini */
+        .grade-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+        .summary-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            border-bottom: 4px solid transparent;
+        }
+        .summary-card h3 { font-size: 2rem; margin: 0; color: var(--primary-color); }
+        .summary-card p { color: #777; font-size: 0.9rem; margin: 0; text-transform: uppercase; }
+
+        /* Marksheet Container */
+        .marksheet-container {
+            background: #fff;
+            margin: 0 30px 30px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+        .marksheet-header {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Table Styling */
+        .table-responsive { overflow-x: auto; }
+        .grade-table { width: 100%; border-collapse: collapse; }
+        .grade-table th {
+            background: #f8f9fa; color: #555; font-weight: 600; padding: 15px;
+            text-align: left; border-bottom: 2px solid #eee; white-space: nowrap;
+        }
+        .grade-table td { padding: 15px; border-bottom: 1px solid #eee; color: #333; }
+        .grade-table tr:last-child td { border-bottom: none; }
+        
+        /* Badges */
+        .grade-badge {
+            padding: 5px 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem;
+            display: inline-block; min-width: 35px; text-align: center;
+        }
+        .grade-A-plus { background: #dcfce7; color: #166534; }
+        .grade-A { background: #dbeafe; color: #1e40af; }
+        .grade-B { background: #fef9c3; color: #854d0e; }
+        .grade-F { background: #fee2e2; color: #991b1b; }
+        .credit-tag { background: #f3f4f6; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; color: #555; }
+
+        /* Chart Section */
+        .chart-section {
+            background: #fff; margin: 0 30px 30px; padding: 25px;
+            border-radius: 12px; box-shadow: var(--card-shadow);
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .sidebar { left: -260px; }
+            .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; }
+            .dashboard-header { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>SVITS <span>ERP</span></h2>
+        </div>
+        <div class="sidebar-menu">
+            <p class="menu-label">Academic</p>
+            <ul>
+                <li><a href="student-portal.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+                <li><a href="student-timetable.html"><i class="far fa-calendar-alt"></i> Timetable</a></li>
+                <li><a href="student-grades.html" class="active"><i class="fas fa-chart-line"></i> Grades & Results</a></li>
+                <li><a href="student-assignments.html"><i class="fas fa-tasks"></i> Assignments</a></li>
+                <li><a href="student-placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
+            </ul>
+            <p class="menu-label">Administrative</p>
+            <ul>
+                <li><a href="student-fees.html"><i class="fas fa-wallet"></i> Fee Status</a></li>
+                <li><a href="library.html"><i class="fas fa-book"></i> Digital Library</a></li>
+            </ul>
+            <p class="menu-label">Campus Life</p>
+            <ul>
+                <li><a href="canteen.html"><i class="fas fa-utensils"></i> Canteen</a></li>
+                <li><a href="transport.html"><i class="fas fa-bus"></i> Transport</a></li>
+                <li><a href="grievance.html"><i class="fas fa-exclamation-circle"></i> Grievance</a></li>
+            </ul>
+            <div style="margin-top: 30px; padding: 0 25px;">
+                <a href="login.html" style="color: #dc3545; font-weight: 600; display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="dashboard-header">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <i class="fas fa-bars" id="menuToggle" style="cursor: pointer; font-size: 1.2rem; color: #555;"></i>
+                <h3 style="margin: 0; color: var(--text-dark); font-size: 1.2rem;">Examination Results</h3>
+            </div>
+            <div class="user-profile" style="display: flex; align-items: center; gap: 10px;">
+                <img src="avatar.png" style="width: 40px; height: 40px; border-radius: 50%;">
+                <div style="display: none; @media(min-width:768px){display:block;}">
+                    <h4 style="margin: 0; font-size: 0.9rem;">Kartik Bais</h4>
+                    <small style="color: #777;">0827CS221045</small>
+                </div>
+            </div>
+        </header>
+
+        <div class="result-header">
+            <div>
+                <h2 style="margin: 0; color: var(--primary-color); font-size: 1.5rem;">My Grade Card</h2>
+                <p style="margin: 5px 0 0; color: #777;">View your semester-wise academic performance.</p>
+            </div>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div class="sem-selector">
+                    <select id="semesterSelect" onchange="loadSemesterData()">
+                        <option value="4">Semester 4 (Current)</option>
+                        <option value="3">Semester 3</option>
+                        <option value="2">Semester 2</option>
+                        <option value="1">Semester 1</option>
+                    </select>
+                </div>
+                <button onclick="window.print()" style="border: 1px solid var(--primary-color); color: var(--primary-color); padding: 9px 20px; border-radius: 6px; cursor: pointer; background: transparent; display: flex; align-items: center; gap: 5px;">
+                    <i class="fas fa-download"></i> PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="grade-summary">
+            <div class="summary-card" style="border-bottom-color: var(--primary-color);">
+                <h3 id="displaySGPA">8.45</h3>
+                <p>Semester SGPA</p>
+            </div>
+            <div class="summary-card" style="border-bottom-color: var(--accent-color);">
+                <h3 id="displayCGPA">8.20</h3>
+                <p>Overall CGPA</p>
+            </div>
+            <div class="summary-card" style="border-bottom-color: #28a745;">
+                <h3 id="displayCredits">22</h3>
+                <p>Total Credits</p>
+            </div>
+            <div class="summary-card" style="border-bottom-color: #dc3545;">
+                <h3 id="displayBacklogs" style="color: #dc3545;">0</h3>
+                <p>Backlogs</p>
+            </div>
+        </div>
+
+        <div class="marksheet-container">
+            <div class="marksheet-header">
+                <span style="font-weight: 600; letter-spacing: 1px;">DETAILED BREAKDOWN</span>
+                <span style="font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px;">Regular Exam - May 2025</span>
+            </div>
+            <div class="table-responsive">
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>Sub Code</th>
+                            <th>Subject Name</th>
+                            <th>Credits</th>
+                            <th>Mid Sem (40)</th>
+                            <th>End Sem (60)</th>
+                            <th>Total (100)</th>
+                            <th>Grade</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradesBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h3 style="margin-bottom: 20px; color: var(--text-dark);">Performance Trend (SGPA)</h3>
+            <div style="height: 300px;">
+                <canvas id="cgpaChart"></canvas>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Sidebar Toggle Logic
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Mock Data for Semesters
+        const semesterData = {
+            "4": {
+                sgpa: 8.45, credits: 24, backlogs: 0,
+                subjects: [
+                    { code: "CS-401", name: "Operating Systems", credit: 4, mid: 32, end: 48, total: 80, grade: "A", type: "Th" },
+                    { code: "CS-402", name: "Analysis of Algorithms", credit: 4, mid: 28, end: 45, total: 73, grade: "B+", type: "Th" },
+                    { code: "CS-403", name: "Software Engineering", credit: 3, mid: 35, end: 52, total: 87, grade: "A+", type: "Th" },
+                    { code: "CS-404", name: "Computer Architecture", credit: 3, mid: 30, end: 42, total: 72, grade: "B+", type: "Th" },
+                    { code: "CS-405", name: "OS Lab", credit: 1, mid: 38, end: 55, total: 93, grade: "O", type: "Pr" },
+                    { code: "CS-406", name: "Python Programming", credit: 2, mid: 36, end: 50, total: 86, grade: "A+", type: "Pr" }
+                ]
+            },
+            "3": {
+                sgpa: 8.00, credits: 22, backlogs: 0,
+                subjects: [
+                    { code: "CS-301", name: "Data Structures", credit: 4, mid: 30, end: 40, total: 70, grade: "B+", type: "Th" },
+                    { code: "CS-302", name: "Discrete Structures", credit: 4, mid: 35, end: 50, total: 85, grade: "A+", type: "Th" },
+                    { code: "CS-303", name: "Digital Systems", credit: 3, mid: 25, end: 40, total: 65, grade: "B", type: "Th" },
+                    { code: "CS-304", name: "OOPs (C++)", credit: 4, mid: 38, end: 55, total: 93, grade: "O", type: "Th" }
+                ]
+            },
+            "2": {
+                sgpa: 8.20, credits: 20, backlogs: 0,
+                subjects: [
+                    { code: "BT-201", name: "Engineering Physics", credit: 4, mid: 32, end: 44, total: 76, grade: "A", type: "Th" },
+                    { code: "BT-202", name: "Mathematics II", credit: 4, mid: 38, end: 58, total: 96, grade: "O", type: "Th" },
+                    { code: "BT-203", name: "Basic Mechanical", credit: 3, mid: 28, end: 42, total: 70, grade: "B+", type: "Th" }
+                ]
+            },
+            "1": {
+                sgpa: 7.80, credits: 20, backlogs: 0,
+                subjects: [
+                    { code: "BT-101", name: "Engineering Chemistry", credit: 4, mid: 28, end: 40, total: 68, grade: "B", type: "Th" },
+                    { code: "BT-102", name: "Mathematics I", credit: 4, mid: 30, end: 45, total: 75, grade: "A", type: "Th" },
+                    { code: "BT-103", name: "English Communication", credit: 2, mid: 35, end: 48, total: 83, grade: "A+", type: "Th" }
+                ]
+            }
+        };
+
+        // Function to Load Data
+        function loadSemesterData() {
+            const sem = document.getElementById('semesterSelect').value;
+            const data = semesterData[sem];
+            const tbody = document.getElementById('gradesBody');
+            
+            // Update Summary Cards
+            document.getElementById('displaySGPA').innerText = data.sgpa.toFixed(2);
+            document.getElementById('displayCredits').innerText = data.credits;
+            document.getElementById('displayBacklogs').innerText = data.backlogs;
+            
+            // Clear Table
+            tbody.innerHTML = '';
+
+            // Populate Table
+            data.subjects.forEach(sub => {
+                let badgeClass = 'grade-B';
+                if(sub.grade === 'O' || sub.grade === 'A+') badgeClass = 'grade-A-plus';
+                if(sub.grade === 'A') badgeClass = 'grade-A';
+                if(sub.grade === 'F') badgeClass = 'grade-F';
+
+                const row = `
+                    <tr>
+                        <td><span style="font-weight:600; color:#555;">${sub.code}</span></td>
+                        <td>
+                            ${sub.name} 
+                            <span style="font-size:0.7rem; background:#eee; padding:2px 6px; border-radius:4px; margin-left:5px;">${sub.type}</span>
+                        </td>
+                        <td><span class="credit-tag">${sub.credit}</span></td>
+                        <td>${sub.mid}</td>
+                        <td>${sub.end}</td>
+                        <td><strong>${sub.total}</strong></td>
+                        <td><span class="grade-badge ${badgeClass}">${sub.grade}</span></td>
+                        <td><span style="color:${sub.grade === 'F' ? 'red' : 'green'}; font-weight:600;">${sub.grade === 'F' ? 'Re-appear' : 'Pass'}</span></td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Initialize Chart
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSemesterData(); // Load default (Sem 4)
+
+            const ctx = document.getElementById('cgpaChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
+                    datasets: [{
+                        label: 'SGPA',
+                        data: [7.8, 8.2, 8.0, 8.45],
+                        backgroundColor: '#004a99',
+                        borderRadius: 5,
+                        barThickness: 40
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: false, min: 5, max: 10 }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

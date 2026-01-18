@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics & Reports | SVITS Admin</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================================
+           1. ADMIN LAYOUT FIXES
+           ========================================= */
+        :root {
+            --sidebar-width: 260px;
+            --header-height: 70px;
+            --primary-color: #1a202c; /* Admin Dark */
+            --accent-color: #3182ce;
+            --text-dark: #2d3748;
+            --bg-light: #f7fafc;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #d69e2e;
+        }
+
+        body { background-color: var(--bg-light); margin: 0; padding: 0; overflow-x: hidden; font-family: 'Poppins', sans-serif; }
+
+        /* Sidebar & Header Fixed */
+        .sidebar {
+            width: var(--sidebar-width); background: #fff; position: fixed; top: 0; left: 0; height: 100%;
+            z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.05); overflow-y: auto; transition: 0.3s ease-in-out;
+        }
+        .dashboard-header {
+            height: var(--header-height); background: #fff; padding: 0 30px; display: flex; align-items: center; justify-content: space-between;
+            position: fixed; top: 0; right: 0; left: var(--sidebar-width); z-index: 900;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: 0.3s ease-in-out;
+        }
+        
+        /* Content Offset */
+        .main-content {
+            margin-left: var(--sidebar-width); 
+            min-height: 100vh;
+            transition: 0.3s ease-in-out; 
+            padding: 100px 30px 30px; /* Top padding 100px */
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 991px) {
+            .sidebar { left: -260px; } .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; padding-top: 100px; } 
+            .dashboard-header { left: 0; width: 100%; }
+            #menuToggle { display: block !important; }
+        }
+
+        /* =========================================
+           2. ANALYTICS PAGE STYLES
+           ========================================= */
+        
+        /* Filter Bar */
+        .analytics-filter {
+            background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
+        }
+        .date-range { display: flex; gap: 10px; align-items: center; }
+        .date-range input, .filter-select {
+            padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; outline: none; color: #4a5568;
+        }
+        .btn-export {
+            background: var(--success); color: #fff; padding: 10px 20px; border-radius: 6px; border: none;
+            cursor: pointer; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: 0.3s;
+        }
+        .btn-export:hover { background: #2f855a; }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px;
+        }
+        .kpi-card {
+            background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center; border-top: 4px solid transparent; position: relative; overflow: hidden;
+        }
+        .kpi-card.revenue { border-color: var(--success); }
+        .kpi-card.attendance { border-color: var(--accent-color); }
+        .kpi-card.placement { border-color: #805ad5; }
+        .kpi-card.faculty { border-color: var(--warning); }
+
+        .kpi-value { font-size: 2rem; font-weight: 700; color: var(--text-dark); margin: 10px 0 5px; }
+        .kpi-label { font-size: 0.9rem; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; }
+        .kpi-change { font-size: 0.8rem; font-weight: 600; margin-top: 5px; display: inline-block; padding: 2px 8px; border-radius: 12px; }
+        .up { background: #c6f6d5; color: #22543d; }
+        .down { background: #fed7d7; color: #742a2a; }
+
+        /* Charts Grid */
+        .charts-grid {
+            display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-bottom: 30px;
+        }
+        @media (max-width: 1024px) { .charts-grid { grid-template-columns: 1fr; } }
+
+        .chart-card {
+            background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: 100%; min-height: 400px;
+        }
+        .chart-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .chart-header h3 { margin: 0; font-size: 1.1rem; color: var(--text-dark); }
+
+        /* Reports Table */
+        .reports-section {
+            background: #fff; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .report-table { width: 100%; border-collapse: collapse; }
+        .report-table th { text-align: left; padding: 15px; border-bottom: 2px solid #edf2f7; color: #718096; font-size: 0.85rem; }
+        .report-table td { padding: 15px; border-bottom: 1px solid #edf2f7; color: #2d3748; }
+        .btn-download {
+            color: var(--accent-color); background: #ebf8ff; padding: 5px 10px; border-radius: 4px;
+            text-decoration: none; font-size: 0.8rem; font-weight: 600;
+        }
+        .btn-download:hover { background: var(--accent-color); color: #fff; }
+
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header" style="height: 70px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee;">
+            <h2 style="font-size: 1.5rem; color: var(--primary-color); font-weight: 700;">SVITS <span>Admin</span></h2>
+        </div>
+        
+        <div class="sidebar-menu" style="padding: 20px 0;">
+            <p style="font-size: 0.75rem; text-transform: uppercase; color: #a0aec0; font-weight: 600; padding: 0 25px; margin: 20px 0 10px;">Core</p>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="admin-panel.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #4a5568; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-tachometer-alt" style="width: 20px; text-align: center;"></i> Dashboard</a></li>
+                <li><a href="admin-manage-users.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #4a5568; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-users-cog" style="width: 20px; text-align: center;"></i> Manage Users</a></li>
+                <li><a href="admin-manage-courses.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #4a5568; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-book" style="width: 20px; text-align: center;"></i> Manage Courses</a></li>
+            </ul>
+
+            <p style="font-size: 0.75rem; text-transform: uppercase; color: #a0aec0; font-weight: 600; padding: 0 25px; margin: 20px 0 10px;">Reports</p>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="admin-analytics.html" class="active" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; background: #edf2f7; color: var(--primary-color); border-left: 4px solid var(--accent-color); text-decoration: none; font-weight: 500;"><i class="fas fa-chart-pie" style="width: 20px; text-align: center;"></i> Analytics & Reports</a></li>
+                <li><a href="#" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #4a5568; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-file-invoice-dollar" style="width: 20px; text-align: center;"></i> Fees Overview</a></li>
+            </ul>
+            
+            <div style="margin-top: 30px; padding: 0 25px;">
+                <a href="login.html" style="color: #e53e3e; font-weight: 600; display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="dashboard-header">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <i class="fas fa-bars" id="menuToggle" style="cursor: pointer; font-size: 1.2rem; color: #555; display: none;"></i>
+                <h3 style="margin: 0; color: var(--text-dark); font-size: 1.2rem;">Analytics & Reports</h3>
+            </div>
+            <div class="user-profile" style="display: flex; align-items: center; gap: 10px;">
+                <img src="parent.webp" style="width: 40px; height: 40px; border-radius: 50%;">
+            </div>
+        </header>
+
+        <div class="analytics-filter">
+            <div class="date-range">
+                <span style="font-weight:600; color:#718096;">Period:</span>
+                <input type="date" value="2025-01-01">
+                <span>to</span>
+                <input type="date" value="2025-12-31">
+            </div>
+            <div style="display: flex; gap: 15px;">
+                <select class="filter-select">
+                    <option>All Departments</option>
+                    <option>CSE</option>
+                    <option>Civil</option>
+                    <option>Mechanical</option>
+                </select>
+                <button class="btn-export"><i class="fas fa-download"></i> Export Data</button>
+            </div>
+        </div>
+
+        <div class="kpi-grid">
+            <div class="kpi-card revenue">
+                <div class="kpi-label">Total Revenue</div>
+                <div class="kpi-value">₹ 1.2 Cr</div>
+                <div class="kpi-change up"><i class="fas fa-arrow-up"></i> 12% vs last year</div>
+            </div>
+            <div class="kpi-card attendance">
+                <div class="kpi-label">Avg Attendance</div>
+                <div class="kpi-value">85%</div>
+                <div class="kpi-change up"><i class="fas fa-arrow-up"></i> 3% vs last sem</div>
+            </div>
+            <div class="kpi-card placement">
+                <div class="kpi-label">Placement Rate</div>
+                <div class="kpi-value">78%</div>
+                <div class="kpi-change down"><i class="fas fa-arrow-down"></i> 2% vs last year</div>
+            </div>
+            <div class="kpi-card faculty">
+                <div class="kpi-label">Faculty Rating</div>
+                <div class="kpi-value">4.2/5</div>
+                <div class="kpi-change up"><i class="fas fa-star"></i> Based on feedback</div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Academic Performance (Avg CGPA)</h3>
+                    <select class="filter-select" style="padding: 4px;">
+                        <option>2025</option>
+                        <option>2024</option>
+                    </select>
+                </div>
+                <div style="height: 350px;">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Fee Collection Status</h3>
+                </div>
+                <div style="height: 300px; display: flex; justify-content: center;">
+                    <canvas id="feeChart"></canvas>
+                </div>
+                <div style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #718096;">
+                    Total Outstanding: <strong>₹ 25 Lakhs</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="reports-section">
+            <h3 style="margin-bottom: 20px; color: var(--text-dark);">Available Reports</h3>
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th>Report Name</th>
+                        <th>Generated Date</th>
+                        <th>Format</th>
+                        <th>Size</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><i class="fas fa-file-excel" style="color: #28a745; margin-right: 10px;"></i> Semester Result Analysis (Fall 2025)</td>
+                        <td>15 Jan 2026</td>
+                        <td>XLSX</td>
+                        <td>2.4 MB</td>
+                        <td><a href="#" class="btn-download">Download</a></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-file-pdf" style="color: #e53e3e; margin-right: 10px;"></i> Fee Defaulter List - January</td>
+                        <td>10 Jan 2026</td>
+                        <td>PDF</td>
+                        <td>1.1 MB</td>
+                        <td><a href="#" class="btn-download">Download</a></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-file-alt" style="color: #3182ce; margin-right: 10px;"></i> Faculty Attendance Report</td>
+                        <td>01 Jan 2026</td>
+                        <td>CSV</td>
+                        <td>850 KB</td>
+                        <td><a href="#" class="btn-download">Download</a></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-file-pdf" style="color: #e53e3e; margin-right: 10px;"></i> Placement Statistics 2025</td>
+                        <td>28 Dec 2025</td>
+                        <td>PDF</td>
+                        <td>3.5 MB</td>
+                        <td><a href="#" class="btn-download">Download</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+        // --- CHARTS INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // 1. Performance Bar Chart
+            const ctx1 = document.getElementById('performanceChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['CSE', 'Civil', 'Mech', 'Electrical', 'IT'],
+                    datasets: [{
+                        label: 'Average CGPA',
+                        data: [8.2, 7.5, 7.8, 7.6, 8.0],
+                        backgroundColor: [
+                            'rgba(49, 130, 206, 0.7)',
+                            'rgba(56, 161, 105, 0.7)',
+                            'rgba(221, 107, 32, 0.7)',
+                            'rgba(128, 90, 213, 0.7)',
+                            'rgba(229, 62, 62, 0.7)'
+                        ],
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, max: 10 } }
+                }
+            });
+
+            // 2. Fee Collection Doughnut Chart
+            const ctx2 = document.getElementById('feeChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Collected', 'Pending'],
+                    datasets: [{
+                        data: [85, 15],
+                        backgroundColor: ['#38a169', '#e53e3e'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

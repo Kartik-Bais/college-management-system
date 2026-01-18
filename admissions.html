@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admissions 2025-26 | SVITS - Apply Online</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="contact-info">
+                <span><i class="fas fa-phone-alt"></i> +91 9406661558</span>
+                <span><i class="fas fa-envelope"></i> admission@svits.edu.in</span>
+            </div>
+            <div class="portal-links">
+                <a href="login.html?role=faculty"><i class="fas fa-chalkboard-teacher"></i> Faculty ERP</a>
+                <a href="login.html?role=admin"><i class="fas fa-user-cog"></i> Admin Panel</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar" id="mainNav">
+        <div class="logo">
+            <a href="index.html">
+                <i class="fas fa-graduation-cap"></i> SVITS<span>ERP</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="departments.html">Academics</a></li>
+            <li><a href="admissions.html" class="active">Admissions</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="btn-nav">Student Portal</a></li>
+        </ul>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <header class="page-header" style="background: linear-gradient(rgba(0,74,153,0.85), rgba(0,0,0,0.6)), url('image.jpg') center/cover;">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Admissions</li>
+            </ul>
+            <h1>Admissions 2025-26</h1>
+            <p>Join Central India's Leading Technical Institute.</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="section-padding bg-light">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2>Admission Process</h2>
+                    <p>Follow these simple steps to secure your seat.</p>
+                </div>
+                
+                <div class="process-wrapper">
+                    <div class="process-step">
+                        <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+                        <h4>1. Register</h4>
+                        <p>Create an account on the ERP portal.</p>
+                    </div>
+                    <div class="process-line"></div>
+                    <div class="process-step">
+                        <div class="step-icon"><i class="fas fa-file-alt"></i></div>
+                        <h4>2. Fill Form</h4>
+                        <p>Complete academic & personal details.</p>
+                    </div>
+                    <div class="process-line"></div>
+                    <div class="process-step">
+                        <div class="step-icon"><i class="fas fa-upload"></i></div>
+                        <h4>3. Upload Docs</h4>
+                        <p>Submit marksheets & ID proof.</p>
+                    </div>
+                    <div class="process-line"></div>
+                    <div class="process-step">
+                        <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                        <h4>4. Confirmation</h4>
+                        <p>Pay fees & get enrollment ID.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container admission-grid">
+                
+                <div class="admission-content">
+                    
+                    <div class="admission-tabs">
+                        <button class="tab-btn active" onclick="openTab(event, 'ug')">Undergraduate (B.Tech)</button>
+                        <button class="tab-btn" onclick="openTab(event, 'pg')">Postgraduate (M.Tech)</button>
+                        <button class="tab-btn" onclick="openTab(event, 'mba')">Management (MBA)</button>
+                    </div>
+
+                    <div id="ug" class="tab-content active">
+                        <h3>B.Tech Eligibility Criteria</h3>
+                        <p>Admissions to B.Tech are conducted through MP DTE Counselling based on JEE Main Score or 12th Merit.</p>
+                        <ul class="check-list">
+                            <li><i class="fas fa-check"></i> Passed 10+2 with Physics, Chemistry, Maths.</li>
+                            <li><i class="fas fa-check"></i> Minimum 45% marks (40% for reserved categories).</li>
+                            <li><i class="fas fa-check"></i> Valid JEE Main Scorecard (Preferred).</li>
+                        </ul>
+                        <div class="alert-box">
+                            <i class="fas fa-info-circle"></i>
+                            <span><strong>Note:</strong> Lateral Entry is available for Diploma holders directly in 2nd Year.</span>
+                        </div>
+                    </div>
+
+                    <div id="pg" class="tab-content">
+                        <h3>M.Tech Eligibility Criteria</h3>
+                        <p>Specializations available in Computer Science, Digital Communications, and VLSI Design.</p>
+                        <ul class="check-list">
+                            <li><i class="fas fa-check"></i> B.E. / B.Tech in relevant branch.</li>
+                            <li><i class="fas fa-check"></i> Valid GATE Score is mandatory for scholarship.</li>
+                            <li><i class="fas fa-check"></i> Sponsored candidates need 2 years experience.</li>
+                        </ul>
+                    </div>
+
+                    <div id="mba" class="tab-content">
+                        <h3>MBA Eligibility Criteria</h3>
+                        <p>Dual specialization offered in Marketing, Finance, HR, and Systems.</p>
+                        <ul class="check-list">
+                            <li><i class="fas fa-check"></i> Graduation in any discipline with min 50%.</li>
+                            <li><i class="fas fa-check"></i> Valid CMAT Score (Counseling via DTE).</li>
+                        </ul>
+                    </div>
+
+                    <div class="scholarship-section" style="margin-top: 40px;">
+                        <h3><i class="fas fa-graduation-cap"></i> Scholarships & Financial Aid</h3>
+                        <p>We offer various scholarships to meritorious and needy students:</p>
+                        <div class="tags-container">
+                            <span class="tag">Post Matric Scholarship (OBC/SC/ST)</span>
+                            <span class="tag">Merit-Cum-Means</span>
+                            <span class="tag">Minority Scholarship</span>
+                            <span class="tag">Chancellor's Scholarship</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="sidebar">
+                    
+                    <div class="form-card-sidebar">
+                        <h3><i class="fas fa-pen-nib"></i> Quick Inquiry</h3>
+                        <form id="admissionForm">
+                            <input type="text" placeholder="Student Name *" required>
+                            <input type="tel" placeholder="Mobile Number *" required>
+                            <input type="email" placeholder="Email ID">
+                            <select required>
+                                <option value="">Select Course</option>
+                                <option value="CS">B.Tech CS</option>
+                                <option value="ME">B.Tech Mech</option>
+                                <option value="MBA">MBA</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary w-100">Submit Request</button>
+                        </form>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3><i class="fas fa-calendar-alt"></i> Important Dates</h3>
+                        <ul class="date-list">
+                            <li>
+                                <span class="d-date">15 May</span>
+                                <span class="d-event">Registration Starts</span>
+                            </li>
+                            <li>
+                                <span class="d-date">30 Jun</span>
+                                <span class="d-event">JEE Main Counselling</span>
+                            </li>
+                            <li>
+                                <span class="d-date">15 Jul</span>
+                                <span class="d-event">First Merit List</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3><i class="fas fa-download"></i> Downloads</h3>
+                        <a href="#" class="download-link"><i class="fas fa-file-pdf"></i> Information Brochure 2025</a>
+                        <a href="#" class="download-link"><i class="fas fa-file-invoice-dollar"></i> Fee Structure</a>
+                        <a href="#" class="download-link"><i class="fas fa-list"></i> Document Checklist</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact Admission Cell</h3>
+                <ul class="contact-list">
+                    <li><i class="fa fa-phone"></i> +91 9406661558</li>
+                    <li><i class="fa fa-envelope"></i> admission@svits.edu.in</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="login.html">ERP Login</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 SVITS | Developed by Kartik Bais</p>
+        </div>
+    </footer>
+
+    <div class="chatbot-toggler"><i class="fas fa-comment-alt"></i></div>
+
+    <script src="script.js"></script>
+
+    <script>
+        function openTab(evt, tabName) {
+            // Hide all tab content
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+
+            // Remove active class from buttons
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show current tab and add active class to button
+            document.getElementById(tabName).style.display = "block";
+            setTimeout(() => {
+                document.getElementById(tabName).classList.add("active");
+            }, 10); // Small delay for fade effect
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>

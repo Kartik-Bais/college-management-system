@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Aman Sharma - Faculty Profile | SVITS</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar" id="mainNav">
+        <div class="logo">
+            <a href="index.html">
+                <i class="fas fa-graduation-cap"></i> SVITS<span>ERP</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="departments.html">Academics</a></li>
+            <li><a href="faculty.html" class="active">Faculty</a></li> <li><a href="admissions.html">Admissions</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="btn-nav">Student Portal</a></li>
+        </ul>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <header class="page-header" style="background: linear-gradient(rgba(0,74,153,0.9), rgba(0,0,0,0.7)), url('image.jpg') center/cover;">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="faculty.html">Faculty</a></li>
+                <li>Dr. Aman Sharma</li>
+            </ul>
+            <h1>Faculty Profile</h1>
+            <p>Department of Computer Science & Engineering</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="section-padding">
+            <div class="container profile-layout">
+                
+                <div class="profile-sidebar-card">
+                    <div class="profile-image-wrapper">
+                        <img src="sir.webp" alt="Dr. Aman Sharma">
+                        <span class="status-badge online"><i class="fas fa-circle"></i> Available</span>
+                    </div>
+                    
+                    <div class="profile-basic-info">
+                        <h3>Dr. Aman Sharma</h3>
+                        <p class="designation">Professor & HOD</p>
+                        <p class="dept">Computer Science</p>
+                        
+                        <div class="profile-actions">
+                            <a href="#" class="btn btn-sm btn-primary w-100"><i class="fas fa-download"></i> Download CV</a>
+                            <a href="#appointment" class="btn btn-sm btn-outline w-100 mt-2"><i class="far fa-calendar-check"></i> Book Appointment</a>
+                        </div>
+                    </div>
+
+                    <div class="info-list">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>aman.sharma@svits.edu.in</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 98765 43210</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Block A, Room 204</span>
+                        </div>
+                    </div>
+
+                    <div class="social-links-profile">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-google-scholar"></i></a>
+                        <a href="#"><i class="fab fa-researchgate"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <div class="profile-main-content">
+                    
+                    <div class="stats-cards-mini">
+                        <div class="stat-mini">
+                            <h3>15+</h3>
+                            <p>Years Exp.</p>
+                        </div>
+                        <div class="stat-mini">
+                            <h3>25</h3>
+                            <p>Projects</p>
+                        </div>
+                        <div class="stat-mini">
+                            <h3>40+</h3>
+                            <p>Publications</p>
+                        </div>
+                        <div class="stat-mini">
+                            <h3>12</h3>
+                            <p>Patents</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-tabs">
+                        <button class="tab-link active" onclick="openProfileTab(event, 'biography')">Biography</button>
+                        <button class="tab-link" onclick="openProfileTab(event, 'research')">Research & Publications</button>
+                        <button class="tab-link" onclick="openProfileTab(event, 'courses')">Current Courses</button>
+                    </div>
+
+                    <div id="biography" class="tab-pane active">
+                        <h3>About Dr. Aman Sharma</h3>
+                        <p>Dr. Aman Sharma is a distinguished academician and researcher with over 15 years of experience in the field of Computer Science. He completed his Ph.D. in Artificial Intelligence from IIT Bombay. His primary research interests include Machine Learning, Data Analytics, and Cloud Computing.</p>
+                        <p>He has guided more than 10 Ph.D. scholars and has published numerous research papers in reputed international journals. At SVITS, he leads the "AI Innovation Cell" and mentors students for national-level hackathons.</p>
+
+                        <h4 class="mt-4">Education</h4>
+                        <ul class="education-timeline">
+                            <li>
+                                <strong>Ph.D. in Computer Science</strong>
+                                <span>IIT Bombay, 2012</span>
+                            </li>
+                            <li>
+                                <strong>M.Tech in Software Engineering</strong>
+                                <span>NIT Trichy, 2008</span>
+                            </li>
+                            <li>
+                                <strong>B.E. in Computer Science</strong>
+                                <span>RGPV Bhopal, 2006</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="research" class="tab-pane">
+                        <h3>Research Areas</h3>
+                        <div class="tags-container mb-4">
+                            <span class="tag">Artificial Intelligence</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Big Data</span>
+                            <span class="tag">IoT Security</span>
+                        </div>
+
+                        <h3>Selected Publications</h3>
+                        <div class="publication-list">
+                            <div class="pub-item">
+                                <i class="fas fa-file-alt"></i>
+                                <div>
+                                    <a href="#">"Optimizing Neural Networks for Edge Computing"</a>
+                                    <span class="pub-meta">IEEE Transactions on AI, 2024 | Citations: 45</span>
+                                </div>
+                            </div>
+                            <div class="pub-item">
+                                <i class="fas fa-file-alt"></i>
+                                <div>
+                                    <a href="#">"Secure Data Transmission in IoT using Blockchain"</a>
+                                    <span class="pub-meta">Springer Journal of Cloud Computing, 2023 | Citations: 32</span>
+                                </div>
+                            </div>
+                            <div class="pub-item">
+                                <i class="fas fa-file-alt"></i>
+                                <div>
+                                    <a href="#">"A Novel Approach to Sentiment Analysis"</a>
+                                    <span class="pub-meta">International Conference on Data Science (ICDS), 2022</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="courses" class="tab-pane">
+                        <h3>Courses Taught (Spring 2026)</h3>
+                        <div class="courses-grid">
+                            <div class="course-card-mini">
+                                <div class="cc-header">CS-601</div>
+                                <div class="cc-body">
+                                    <h4>Machine Learning</h4>
+                                    <p>B.Tech CSE - 6th Sem</p>
+                                    <span class="badge-status">In Progress</span>
+                                </div>
+                            </div>
+                            <div class="course-card-mini">
+                                <div class="cc-header">CS-802</div>
+                                <div class="cc-body">
+                                    <h4>Cloud Computing</h4>
+                                    <p>B.Tech CSE - 8th Sem</p>
+                                    <span class="badge-status">In Progress</span>
+                                </div>
+                            </div>
+                            <div class="course-card-mini">
+                                <div class="cc-header">AI-LAB</div>
+                                <div class="cc-body">
+                                    <h4>AI Lab</h4>
+                                    <p>Practical Session</p>
+                                    <span class="badge-status">Lab</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="appointment" class="appointment-box mt-5">
+                        <h3><i class="far fa-clock"></i> Book an Appointment</h3>
+                        <p>Select a slot to discuss projects or doubts.</p>
+                        <form class="appointment-form">
+                            <div class="form-row">
+                                <input type="text" placeholder="Your Name" required>
+                                <input type="text" placeholder="Enrollment ID" required>
+                            </div>
+                            <div class="form-row">
+                                <select required>
+                                    <option value="">Reason for Meeting</option>
+                                    <option>Project Guidance</option>
+                                    <option>Academic Doubt</option>
+                                    <option>Mentorship</option>
+                                </select>
+                                <input type="datetime-local" required>
+                            </div>
+                            <button class="btn btn-primary">Request Appointment</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact SVITS</h3>
+                <ul class="contact-list">
+                    <li><i class="fa fa-map-marker-alt"></i> Ujjain Road, Indore</li>
+                    <li><i class="fa fa-envelope"></i> hr@svits.edu.in</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="faculty.html">Faculty Directory</a></li>
+                    <li><a href="login.html">ERP Login</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 SVITS | Developed by Kartik Bais</p>
+        </div>
+    </footer>
+
+    <div class="chatbot-toggler"><i class="fas fa-comment-alt"></i></div>
+
+    <script src="script.js"></script>
+
+    <script>
+        function openProfileTab(evt, tabName) {
+            // Hide all tab content
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-pane");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+
+            // Remove active class from buttons
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show current tab
+            document.getElementById(tabName).style.display = "block";
+            setTimeout(() => {
+                document.getElementById(tabName).classList.add("active");
+            }, 10);
+            evt.currentTarget.className += " active";
+        }
+
+        // Initialize first tab
+        document.getElementById('biography').style.display = "block";
+    </script>
+</body>
+</html>

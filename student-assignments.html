@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments | SVITS ERP</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- LAYOUT FIXES (Same as other pages) --- */
+        :root {
+            --sidebar-width: 260px;
+            --header-height: 70px;
+            --primary-color: #004a99;
+            --accent-color: #007bff;
+            --text-dark: #333;
+        }
+
+        body { background-color: #f4f7f6; margin: 0; padding: 0; overflow-x: hidden; }
+
+        /* Sidebar Fixed */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: #fff;
+            position: fixed;
+            top: 0; left: 0; height: 100%;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            overflow-y: auto;
+            transition: 0.3s ease-in-out;
+        }
+
+        /* Header Fixed & Offset */
+        .dashboard-header {
+            height: var(--header-height);
+            background: #fff;
+            padding: 0 30px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: fixed;
+            top: 0; right: 0; left: var(--sidebar-width); /* Pushed right */
+            z-index: 900;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: 0.3s ease-in-out;
+        }
+
+        /* Main Content Offset */
+        .main-content {
+            margin-left: var(--sidebar-width); /* Pushed right */
+            padding-top: var(--header-height); /* Pushed down */
+            min-height: 100vh;
+            transition: 0.3s ease-in-out;
+            padding: 100px 30px 30px; /* Extra padding for neatness */
+        }
+
+        /* --- ASSIGNMENT PAGE STYLES --- */
+        
+        /* Stats Row */
+        .assign-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #fff; padding: 20px; border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex; align-items: center; gap: 15px;
+            border-left: 4px solid transparent;
+        }
+        .stat-card.pending { border-color: #ffc107; }
+        .stat-card.submitted { border-color: #28a745; }
+        .stat-card.missed { border-color: #dc3545; }
+        
+        .stat-icon {
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; background: #f4f7f6;
+        }
+        .stat-info h3 { margin: 0; font-size: 1.5rem; color: var(--text-dark); }
+        .stat-info p { margin: 0; font-size: 0.9rem; color: #777; }
+
+        /* Tabs */
+        .tab-nav {
+            display: flex; gap: 20px; border-bottom: 2px solid #eee; margin-bottom: 20px;
+        }
+        .tab-btn {
+            padding: 10px 20px; background: none; border: none;
+            font-size: 1rem; font-weight: 600; color: #777; cursor: pointer;
+            position: relative; transition: 0.3s;
+        }
+        .tab-btn.active { color: var(--primary-color); }
+        .tab-btn.active::after {
+            content: ''; position: absolute; bottom: -2px; left: 0;
+            width: 100%; height: 3px; background: var(--primary-color);
+        }
+
+        /* Assignment Cards */
+        .assign-card {
+            background: #fff; border-radius: 12px; padding: 25px;
+            margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee; display: flex; flex-wrap: wrap;
+            justify-content: space-between; align-items: center; gap: 20px;
+            transition: 0.3s;
+        }
+        .assign-card:hover { transform: translateY(-3px); border-color: var(--accent-color); }
+
+        .assign-info { flex: 2; min-width: 250px; }
+        .assign-info h4 { margin: 0 0 5px; font-size: 1.1rem; color: var(--text-dark); }
+        .assign-info p { margin: 0; font-size: 0.9rem; color: #777; }
+        .assign-meta {
+            display: flex; gap: 15px; margin-top: 10px; font-size: 0.85rem; color: #555;
+        }
+        .assign-meta i { color: var(--accent-color); margin-right: 5px; }
+        .urgent { color: #dc3545; font-weight: 600; }
+
+        .assign-status { text-align: right; min-width: 120px; }
+        .badge { padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-block; }
+        .bg-pending { background: #fff3cd; color: #856404; }
+        .bg-submitted { background: #d4edda; color: #155724; }
+        .bg-late { background: #f8d7da; color: #721c24; }
+
+        .assign-action { display: flex; gap: 10px; }
+        .btn-upload {
+            background: var(--primary-color); color: #fff; padding: 8px 20px;
+            border-radius: 6px; border: none; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; gap: 8px; font-size: 0.9rem;
+        }
+        .btn-upload:hover { background: var(--accent-color); }
+        .btn-view {
+            background: #f4f7f6; color: var(--text-dark); padding: 8px 15px;
+            border-radius: 6px; border: 1px solid #ddd; cursor: pointer;
+        }
+
+        /* Sidebar Styles (Repeated specifically to ensure loading) */
+        .sidebar-header { height: 70px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; }
+        .sidebar-header h2 { font-size: 1.5rem; color: var(--primary-color); font-weight: 700; margin: 0; }
+        .sidebar-menu { padding: 20px 0; }
+        .menu-label { font-size: 0.75rem; text-transform: uppercase; color: #999; font-weight: 600; padding: 0 25px; margin: 20px 0 10px; }
+        .sidebar-menu ul { list-style: none; padding: 0; }
+        .sidebar-menu a { display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: var(--text-dark); text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background: #eef7ff; color: var(--primary-color); border-left-color: var(--accent-color); }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .sidebar { left: -260px; }
+            .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; }
+            .dashboard-header { left: 0; width: 100%; }
+            #menuToggle { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>SVITS <span>ERP</span></h2>
+        </div>
+        
+        <div class="sidebar-menu">
+            <p class="menu-label">Academic</p>
+            <ul>
+                <li><a href="student-portal.html"><i class="fas fa-th-large"></i> Dashboard</a></li>
+                <li><a href="student-timetable.html"><i class="far fa-calendar-alt"></i> Timetable</a></li>
+                <li><a href="student-grades.html"><i class="fas fa-chart-line"></i> Grades & Results</a></li>
+                <li><a href="student-assignments.html" class="active"><i class="fas fa-tasks"></i> Assignments</a></li>
+                <li><a href="student-placements.html"><i class="fas fa-briefcase"></i> Placements</a></li>
+            </ul>
+
+            <p class="menu-label">Administrative</p>
+            <ul>
+                <li><a href="student-fees.html"><i class="fas fa-wallet"></i> Fee Status</a></li>
+                <li><a href="library.html"><i class="fas fa-book"></i> Digital Library</a></li>
+            </ul>
+
+            <p class="menu-label">Campus Life</p>
+            <ul>
+                <li><a href="canteen.html"><i class="fas fa-utensils"></i> Canteen</a></li>
+                <li><a href="transport.html"><i class="fas fa-bus"></i> Transport</a></li>
+                <li><a href="grievance.html"><i class="fas fa-exclamation-circle"></i> Grievance</a></li>
+            </ul>
+            
+            <div style="margin-top: 30px; padding: 0 25px;">
+                <a href="login.html" style="color: #dc3545; font-weight: 600; display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="dashboard-header">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <i class="fas fa-bars" id="menuToggle" style="cursor: pointer; font-size: 1.2rem; color: #555; display: none;"></i>
+                <h3 style="margin: 0; color: var(--text-dark); font-size: 1.2rem;">My Assignments</h3>
+            </div>
+            <div class="user-profile" style="display: flex; align-items: center; gap: 10px;">
+                <img src="avatar.png" style="width: 40px; height: 40px; border-radius: 50%;">
+                <div style="display: none; @media(min-width:768px){display:block;}">
+                    <h4 style="margin: 0; font-size: 0.9rem;">Kartik Bais</h4>
+                    <small style="color: #777;">0827CS221045</small>
+                </div>
+            </div>
+        </header>
+
+        <div class="assign-stats">
+            <div class="stat-card pending">
+                <div class="stat-icon"><i class="fas fa-clock" style="color: #ffc107;"></i></div>
+                <div class="stat-info">
+                    <h3>3</h3>
+                    <p>Pending Tasks</p>
+                </div>
+            </div>
+            <div class="stat-card submitted">
+                <div class="stat-icon"><i class="fas fa-check-circle" style="color: #28a745;"></i></div>
+                <div class="stat-info">
+                    <h3>12</h3>
+                    <p>Submitted</p>
+                </div>
+            </div>
+            <div class="stat-card missed">
+                <div class="stat-icon"><i class="fas fa-exclamation-triangle" style="color: #dc3545;"></i></div>
+                <div class="stat-info">
+                    <h3>1</h3>
+                    <p>Missed/Late</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="filterAssignments('all')">All</button>
+            <button class="tab-btn" onclick="filterAssignments('pending')">Pending</button>
+            <button class="tab-btn" onclick="filterAssignments('submitted')">Submitted</button>
+        </div>
+
+        <div class="assignment-list">
+            
+            <div class="assign-card pending-item">
+                <div class="assign-info">
+                    <h4>Data Structures - Lab Record 3</h4>
+                    <p>Implement Stack and Queue using Arrays.</p>
+                    <div class="assign-meta">
+                        <span><i class="fas fa-book"></i> CS-403</span>
+                        <span><i class="fas fa-chalkboard-teacher"></i> Prof. Sharma</span>
+                        <span class="urgent"><i class="far fa-calendar-alt"></i> Due: Tomorrow</span>
+                    </div>
+                </div>
+                <div class="assign-status">
+                    <span class="badge bg-pending">Pending</span>
+                </div>
+                <div class="assign-action">
+                    <button class="btn-view"><i class="fas fa-eye"></i></button>
+                    <button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                </div>
+            </div>
+
+            <div class="assign-card pending-item">
+                <div class="assign-info">
+                    <h4>Software Engg - Case Study</h4>
+                    <p>Analyze the Waterfall vs Agile model for a given scenario.</p>
+                    <div class="assign-meta">
+                        <span><i class="fas fa-book"></i> CS-402</span>
+                        <span><i class="fas fa-chalkboard-teacher"></i> Prof. Kale</span>
+                        <span><i class="far fa-calendar-alt"></i> Due: 25 Jan</span>
+                    </div>
+                </div>
+                <div class="assign-status">
+                    <span class="badge bg-pending">Pending</span>
+                </div>
+                <div class="assign-action">
+                    <button class="btn-view"><i class="fas fa-eye"></i></button>
+                    <button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                </div>
+            </div>
+
+            <div class="assign-card submitted-item">
+                <div class="assign-info">
+                    <h4>Operating Systems - Scheduling Algo</h4>
+                    <p>Simulation of FCFS and Round Robin algorithms.</p>
+                    <div class="assign-meta">
+                        <span><i class="fas fa-book"></i> CS-401</span>
+                        <span><i class="fas fa-check"></i> Submitted on 15 Jan</span>
+                    </div>
+                </div>
+                <div class="assign-status">
+                    <span class="badge bg-submitted">Graded (A)</span>
+                </div>
+                <div class="assign-action">
+                    <button class="btn-view" style="color:#28a745; border-color:#28a745;">View Feedback</button>
+                </div>
+            </div>
+
+            <div class="assign-card missed-item">
+                <div class="assign-info">
+                    <h4>Mathematics III - Tutorial 1</h4>
+                    <p>Laplace Transform problems set A.</p>
+                    <div class="assign-meta">
+                        <span><i class="fas fa-book"></i> BT-401</span>
+                        <span style="color: #dc3545;"><i class="fas fa-times-circle"></i> Deadline Passed</span>
+                    </div>
+                </div>
+                <div class="assign-status">
+                    <span class="badge bg-late">Late Submission</span>
+                </div>
+                <div class="assign-action">
+                    <button class="btn-view">Details</button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Sidebar Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+        // Simple Tab Filter Logic
+        function filterAssignments(type) {
+            // Update Tab UI
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter Logic
+            const pending = document.querySelectorAll('.pending-item');
+            const submitted = document.querySelectorAll('.submitted-item');
+            const missed = document.querySelectorAll('.missed-item');
+
+            if (type === 'all') {
+                document.querySelectorAll('.assign-card').forEach(el => el.style.display = 'flex');
+            } else if (type === 'pending') {
+                pending.forEach(el => el.style.display = 'flex');
+                submitted.forEach(el => el.style.display = 'none');
+                missed.forEach(el => el.style.display = 'none');
+            } else if (type === 'submitted') {
+                pending.forEach(el => el.style.display = 'none');
+                submitted.forEach(el => el.style.display = 'flex');
+                missed.forEach(el => el.style.display = 'none');
+            }
+        }
+    </script>
+
+</body>
+</html>

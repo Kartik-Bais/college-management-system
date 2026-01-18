@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Directory | SVITS - Mentors & Researchers</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="contact-info">
+                <span><i class="fas fa-phone-alt"></i> +91 9406661558</span>
+                <span><i class="fas fa-envelope"></i> hr@svits.edu.in</span>
+            </div>
+            <div class="portal-links">
+                <a href="login.html?role=faculty"><i class="fas fa-chalkboard-teacher"></i> Faculty ERP</a>
+                <a href="login.html?role=admin"><i class="fas fa-user-cog"></i> Admin Panel</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar" id="mainNav">
+        <div class="logo">
+            <a href="index.html">
+                <i class="fas fa-graduation-cap"></i> SVITS<span>ERP</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="departments.html">Academics</a></li>
+            <li><a href="faculty.html" class="active">Faculty</a></li>
+            <li><a href="admissions.html">Admissions</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="btn-nav">Student Portal</a></li>
+        </ul>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <header class="page-header" style="background: linear-gradient(rgba(0,74,153,0.9), rgba(0,0,0,0.6)), url('image.jpg') center/cover;">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Faculty</li>
+            </ul>
+            <h1>Our Esteemed Faculty</h1>
+            <p>Mentors, Researchers, and Innovators shaping the future.</p>
+        </div>
+    </header>
+
+    <section class="section-padding pb-0">
+        <div class="container">
+            <div class="faculty-search-bar">
+                <div class="search-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="facultySearch" placeholder="Search by Name, Designation..." onkeyup="filterFaculty()">
+                </div>
+                <div class="filter-dropdown">
+                    <select id="deptFilter" onchange="filterFaculty()">
+                        <option value="all">All Departments</option>
+                        <option value="CSE">Computer Science</option>
+                        <option value="ME">Mechanical</option>
+                        <option value="ECE">Electronics</option>
+                        <option value="CIVIL">Civil</option>
+                        <option value="ASH">Applied Sciences</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <section class="section-padding">
+            <div class="container">
+                <h2 class="section-heading-center">Institute Leadership</h2>
+                <div class="leadership-grid">
+                    
+                    <div class="leader-card">
+                        <div class="leader-img">
+                            <img src="oldman.webp" alt="Director">
+                        </div>
+                        <div class="leader-info">
+                            <h3>Dr. R.K. Sharma</h3>
+                            <span class="designation">Director, SVITS</span>
+                            <p>Ph.D (IIT Bombay), M.Tech (CSE)</p>
+                            <p class="exp">30+ Years Experience</p>
+                            <div class="social-links-mini">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="leader-card">
+                        <div class="leader-img">
+                            <img src="oldwoman.webp" alt="Dean">
+                        </div>
+                        <div class="leader-info">
+                            <h3>Dr. Anjali Verma</h3>
+                            <span class="designation">Dean Academics</span>
+                            <p>Ph.D (IISc Bangalore), M.Tech (VLSI)</p>
+                            <p class="exp">25+ Years Experience</p>
+                            <div class="social-links-mini">
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding bg-light">
+            <div class="container">
+                <div class="section-header-flex">
+                    <h2>Faculty Members</h2>
+                    <span class="badge-count" id="facultyCount">Showing all members</span>
+                </div>
+
+                <div class="team-grid" id="teamGrid">
+                    
+                    <div class="team-member" data-dept="CSE" data-name="Aman Sharma">
+                        <div class="member-img">
+                            <img src="sir.webp" alt="Faculty">
+                            <div class="overlay">
+                                <a href="faculty-profile.html" class="view-btn">View Profile</a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <span class="dept-badge">CSE</span>
+                            <h3>Dr. Aman Sharma</h3>
+                            <p class="desg">Professor & HOD</p>
+                            <div class="details">
+                                <span><i class="fas fa-graduation-cap"></i> Ph.D (AI/ML)</span>
+                                <span><i class="fas fa-briefcase"></i> 15 Years Exp.</span>
+                            </div>
+                            <div class="research-area">
+                                <small>Research: Data Science, IoT</small>
+                            </div>
+                            <div class="social-row">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-google-scholar"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="team-member" data-dept="ME" data-name="Priya Singh">
+                        <div class="member-img">
+                            <img src="maam.webp" alt="Faculty">
+                            <div class="overlay">
+                                <a href="faculty-profile.html" class="view-btn">View Profile</a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <span class="dept-badge me-badge">ME</span>
+                            <h3>Dr. Priya Singh</h3>
+                            <p class="desg">Associate Professor</p>
+                            <div class="details">
+                                <span><i class="fas fa-graduation-cap"></i> Ph.D (Robotics)</span>
+                                <span><i class="fas fa-briefcase"></i> 12 Years Exp.</span>
+                            </div>
+                            <div class="research-area">
+                                <small>Research: Automation, CAD</small>
+                            </div>
+                            <div class="social-row">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-google-scholar"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="team-member" data-dept="ECE" data-name="Akash Verma">
+                        <div class="member-img">
+                            <img src="sir.webp" alt="Faculty">
+                            <div class="overlay">
+                                <a href="faculty-profile.html" class="view-btn">View Profile</a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <span class="dept-badge ece-badge">ECE</span>
+                            <h3>Dr. Akash Verma</h3>
+                            <p class="desg">Assistant Professor</p>
+                            <div class="details">
+                                <span><i class="fas fa-graduation-cap"></i> M.Tech (VLSI)</span>
+                                <span><i class="fas fa-briefcase"></i> 8 Years Exp.</span>
+                            </div>
+                            <div class="research-area">
+                                <small>Research: Embedded Systems</small>
+                            </div>
+                            <div class="social-row">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-google-scholar"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="team-member" data-dept="CIVIL" data-name="Sneha Patel">
+                        <div class="member-img">
+                            <img src="maam.webp" alt="Faculty">
+                            <div class="overlay">
+                                <a href="faculty-profile.html" class="view-btn">View Profile</a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <span class="dept-badge civil-badge">CIVIL</span>
+                            <h3>Dr. Sneha Patel</h3>
+                            <p class="desg">Professor</p>
+                            <div class="details">
+                                <span><i class="fas fa-graduation-cap"></i> Ph.D (Struct.)</span>
+                                <span><i class="fas fa-briefcase"></i> 18 Years Exp.</span>
+                            </div>
+                            <div class="research-area">
+                                <small>Research: Smart Cities</small>
+                            </div>
+                            <div class="social-row">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-google-scholar"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="team-member" data-dept="ASH" data-name="Vikram Rao">
+                        <div class="member-img">
+                            <img src="sir.webp" alt="Faculty">
+                            <div class="overlay">
+                                <a href="faculty-profile.html" class="view-btn">View Profile</a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <span class="dept-badge ash-badge">ASH</span>
+                            <h3>Dr. Vikram Rao</h3>
+                            <p class="desg">HOD Applied Sciences</p>
+                            <div class="details">
+                                <span><i class="fas fa-graduation-cap"></i> Ph.D (Maths)</span>
+                                <span><i class="fas fa-briefcase"></i> 20 Years Exp.</span>
+                            </div>
+                            <div class="research-area">
+                                <small>Research: Cryptography</small>
+                            </div>
+                            <div class="social-row">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-google-scholar"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="team-member" data-dept="CSE" data-name="Nidhi Gupta">
+                        <div class="member-img">
+                            <img src="maam.webp" alt="Faculty">
+                            <div class="overlay">
+                                <a href="faculty-profile.html" class="view-btn">View Profile</a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <span class="dept-badge">CSE</span>
+                            <h3>Prof. Nidhi Gupta</h3>
+                            <p class="desg">Assistant Professor</p>
+                            <div class="details">
+                                <span><i class="fas fa-graduation-cap"></i> M.Tech (CSE)</span>
+                                <span><i class="fas fa-briefcase"></i> 5 Years Exp.</span>
+                            </div>
+                            <div class="research-area">
+                                <small>Research: Web Security</small>
+                            </div>
+                            <div class="social-row">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-google-scholar"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding" style="background: var(--primary-color); color: #fff;">
+            <div class="container">
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <i class="fas fa-user-graduate"></i>
+                        <h3>50+</h3>
+                        <p>PhD Holders</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-book-open"></i>
+                        <h3>200+</h3>
+                        <p>Research Papers</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-award"></i>
+                        <h3>15+</h3>
+                        <p>Patents Filed</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-chalkboard"></i>
+                        <h3>150+</h3>
+                        <p>Total Faculty</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section text-center">
+            <div class="container">
+                <h2>Join Our Academic Family</h2>
+                <p>We are always looking for passionate educators and researchers.</p>
+                <a href="contact.html" class="btn btn-white">View Open Positions</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Contact SVITS</h3>
+                <ul class="contact-list">
+                    <li><i class="fa fa-map-marker-alt"></i> Ujjain Road, Indore</li>
+                    <li><i class="fa fa-envelope"></i> hr@svits.edu.in</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="departments.html">Departments</a></li>
+                    <li><a href="login.html">ERP Login</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 SVITS | Developed by Kartik Bais</p>
+        </div>
+    </footer>
+
+    <div class="chatbot-toggler"><i class="fas fa-comment-alt"></i></div>
+
+    <script src="script.js"></script>
+
+    <script>
+        function filterFaculty() {
+            let input = document.getElementById('facultySearch').value.toUpperCase();
+            let dept = document.getElementById('deptFilter').value;
+            let cards = document.getElementsByClassName('team-member');
+            let count = 0;
+
+            for (let i = 0; i < cards.length; i++) {
+                let name = cards[i].getAttribute('data-name').toUpperCase();
+                let category = cards[i].getAttribute('data-dept');
+                let matchesName = name.indexOf(input) > -1;
+                let matchesDept = (dept === 'all') || (category === dept);
+
+                if (matchesName && matchesDept) {
+                    cards[i].style.display = "";
+                    count++;
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+
+            // Update Counter
+            let countText = count > 0 ? `Showing ${count} members` : "No members found";
+            document.getElementById('facultyCount').innerText = countText;
+        }
+    </script>
+</body>
+</html>

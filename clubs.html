@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Clubs - SVITS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="config.js"></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><a href="index.html">SVITS.</a></div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="departments.html">Academics</a>
+            <a href="admissions.html">Admissions</a>
+            <a href="events.html">Events</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html" class="btn-primary" style="color:white;">Login</a>
+        </div>
+        <div class="hamburger"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <header class="hero-wrapper" style="height: 50vh;">
+        <div class="hero-bg" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://source.unsplash.com/1600x900/?concert,team');"></div>
+        <div class="hero-content">
+            <h1 class="animate-up">Life Beyond <span style="color:var(--accent);">Academics</span></h1>
+            <p class="animate-up" style="transition-delay: 0.1s;">Explore your passion. Join a community. Make memories.</p>
+        </div>
+    </header>
+
+    <main class="section-padding">
+        
+        <div class="filter-bar animate-up" style="margin-bottom: 40px;">
+            <button class="filter-btn active club-filter" data-filter="all">All Clubs</button>
+            <button class="filter-btn club-filter" data-filter="tech">Technical</button>
+            <button class="filter-btn club-filter" data-filter="cultural">Cultural</button>
+            <button class="filter-btn club-filter" data-filter="sports">Sports</button>
+        </div>
+
+        <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            
+            <div class="club-card-wrapper animate-up" data-category="tech">
+                <div class="club-card">
+                    <img src="https://source.unsplash.com/400x500/?coding,hacker" class="club-bg" alt="Coding">
+                    <div class="club-overlay">
+                        <div class="club-icon"><i class="fas fa-code"></i></div>
+                        <h3 class="club-title">ByteCode</h3>
+                        <p class="club-desc">The official coding society. We organize Hackathons, CP contests, and AI workshops.</p>
+                        <div class="club-meta">
+                            <span style="font-size: 0.8rem; opacity: 0.8;">Members: 500+</span>
+                            <button class="btn-primary" style="padding: 8px 20px; font-size: 0.8rem;" onclick="joinClub(this, 'ByteCode')">Join Club</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="club-card-wrapper animate-up" data-category="cultural" style="transition-delay: 0.1s;">
+                <div class="club-card">
+                    <img src="https://source.unsplash.com/400x500/?band,guitar" class="club-bg" alt="Music">
+                    <div class="club-overlay">
+                        <div class="club-icon" style="color: #e11d48;"><i class="fas fa-music"></i></div>
+                        <h3 class="club-title">Dhwan</h3>
+                        <p class="club-desc">For the melody makers. Bands, vocalists, and instrumentalists unite here.</p>
+                        <div class="club-meta">
+                            <span style="font-size: 0.8rem; opacity: 0.8;">Members: 120+</span>
+                            <button class="btn-primary" style="padding: 8px 20px; font-size: 0.8rem; background: white; color: black;" onclick="joinClub(this, 'Dhwan')">Join Club</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="club-card-wrapper animate-up" data-category="tech" style="transition-delay: 0.2s;">
+                <div class="club-card">
+                    <img src="https://source.unsplash.com/400x500/?robot,electronics" class="club-bg" alt="Robotics">
+                    <div class="club-overlay">
+                        <div class="club-icon" style="color: #f59e0b;"><i class="fas fa-robot"></i></div>
+                        <h3 class="club-title">Mech-Bots</h3>
+                        <p class="club-desc">Build drones, rovers, and battle-bots. We compete in national RoboWars.</p>
+                        <div class="club-meta">
+                            <span style="font-size: 0.8rem; opacity: 0.8;">Members: 200+</span>
+                            <button class="btn-primary" style="padding: 8px 20px; font-size: 0.8rem;" onclick="joinClub(this, 'Mech-Bots')">Join Club</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="club-card-wrapper animate-up" data-category="cultural" style="transition-delay: 0.3s;">
+                <div class="club-card">
+                    <img src="https://source.unsplash.com/400x500/?camera,photographer" class="club-bg" alt="Photography">
+                    <div class="club-overlay">
+                        <div class="club-icon" style="color: #8b5cf6;"><i class="fas fa-camera"></i></div>
+                        <h3 class="club-title">Pixel</h3>
+                        <p class="club-desc">Capturing moments. We cover all college events and organize photo walks.</p>
+                        <div class="club-meta">
+                            <span style="font-size: 0.8rem; opacity: 0.8;">Members: 80+</span>
+                            <button class="btn-primary" style="padding: 8px 20px; font-size: 0.8rem; background: white; color: black;" onclick="joinClub(this, 'Pixel')">Join Club</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="club-card-wrapper animate-up" data-category="sports" style="transition-delay: 0.4s;">
+                <div class="club-card">
+                    <img src="https://source.unsplash.com/400x500/?cricket,football" class="club-bg" alt="Sports">
+                    <div class="club-overlay">
+                        <div class="club-icon" style="color: #10b981;"><i class="fas fa-running"></i></div>
+                        <h3 class="club-title">Strikers</h3>
+                        <p class="club-desc">Cricket, Football, Basketball, and more. Champions are made here.</p>
+                        <div class="club-meta">
+                            <span style="font-size: 0.8rem; opacity: 0.8;">Members: 300+</span>
+                            <button class="btn-primary" style="padding: 8px 20px; font-size: 0.8rem;" onclick="joinClub(this, 'Strikers')">Join Club</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="club-card-wrapper animate-up" data-category="cultural" style="transition-delay: 0.5s;">
+                <div class="club-card">
+                    <img src="https://source.unsplash.com/400x500/?books,library" class="club-bg" alt="Literature">
+                    <div class="club-overlay">
+                        <div class="club-icon" style="color: #06b6d4;"><i class="fas fa-pen-nib"></i></div>
+                        <h3 class="club-title">Vakta</h3>
+                        <p class="club-desc">Debates, poetry, and storytelling. The voice of SVITS students.</p>
+                        <div class="club-meta">
+                            <span style="font-size: 0.8rem; opacity: 0.8;">Members: 150+</span>
+                            <button class="btn-primary" style="padding: 8px 20px; font-size: 0.8rem; background: white; color: black;" onclick="joinClub(this, 'Vakta')">Join Club</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container" style="max-width: 800px; margin: 4rem auto 0; text-align: center;">
+            <h2 style="margin-bottom: 20px;">Upcoming Meetups</h2>
+            <div class="card-advanced" style="text-align: left;">
+                <div style="display: flex; gap: 15px; border-bottom: 1px solid #eee; padding: 15px; align-items: center;">
+                    <div style="background: #e0f2fe; padding: 10px; border-radius: 8px; font-weight: 700; text-align: center;">
+                        <span style="color: var(--primary);">SAT</span><br>10AM
+                    </div>
+                    <div>
+                        <h4 style="margin: 0;">ByteCode: Intro to Python</h4>
+                        <p style="margin: 0; color: #666; font-size: 0.9rem;">Computer Lab 1</p>
+                    </div>
+                    <button class="btn-primary" style="margin-left: auto; padding: 5px 15px; font-size: 0.8rem;">RSVP</button>
+                </div>
+                <div style="display: flex; gap: 15px; padding: 15px; align-items: center;">
+                    <div style="background: #fef2f2; padding: 10px; border-radius: 8px; font-weight: 700; text-align: center;">
+                        <span style="color: var(--danger);">SUN</span><br>4PM
+                    </div>
+                    <div>
+                        <h4 style="margin: 0;">Strikers: Cricket Selection</h4>
+                        <p style="margin: 0; color: #666; font-size: 0.9rem;">College Ground</p>
+                    </div>
+                    <button class="btn-primary" style="margin-left: auto; padding: 5px 15px; font-size: 0.8rem;">RSVP</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

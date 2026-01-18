@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Grades | SVITS Faculty</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================================
+           1. STANDARD LAYOUT FIXES
+           ========================================= */
+        :root {
+            --sidebar-width: 260px;
+            --header-height: 70px;
+            --primary-color: #004a99;
+            --secondary-color: #003366;
+            --accent-color: #007bff;
+            --text-dark: #333;
+            --bg-light: #f4f7f6;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+        }
+
+        body { background-color: var(--bg-light); margin: 0; padding: 0; overflow-x: hidden; font-family: 'Poppins', sans-serif; }
+
+        /* Sidebar & Header Fixed */
+        .sidebar {
+            width: var(--sidebar-width); background: #fff; position: fixed; top: 0; left: 0; height: 100%;
+            z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.05); overflow-y: auto; transition: 0.3s ease-in-out;
+        }
+        .dashboard-header {
+            height: var(--header-height); background: #fff; padding: 0 30px; display: flex; align-items: center; justify-content: space-between;
+            position: fixed; top: 0; right: 0; left: var(--sidebar-width); z-index: 900;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: 0.3s ease-in-out;
+        }
+        
+        /* Content Offset */
+        .main-content {
+            margin-left: var(--sidebar-width); 
+            min-height: 100vh;
+            transition: 0.3s ease-in-out; 
+            padding: 100px 30px 30px; /* Top padding 100px */
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 991px) {
+            .sidebar { left: -260px; } .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; padding-top: 100px; } 
+            .dashboard-header { left: 0; width: 100%; }
+            #menuToggle { display: block !important; }
+        }
+
+        /* =========================================
+           2. GRADING PAGE SPECIFIC STYLES
+           ========================================= */
+        
+        /* Control Bar */
+        .grade-controls {
+            background: #fff; padding: 25px; border-radius: 12px; margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee;
+            display: flex; flex-wrap: wrap; gap: 20px; align-items: end;
+        }
+        .form-group { flex: 1; min-width: 180px; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: #555; margin-bottom: 8px; }
+        .form-group select {
+            width: 100%; padding: 10px 15px; border: 1px solid #ddd; border-radius: 6px;
+            font-size: 0.95rem; outline: none; background: #f9f9f9;
+        }
+        
+        .action-buttons { display: flex; gap: 10px; }
+        .btn-outline {
+            padding: 10px 20px; border: 1px solid var(--primary-color); color: var(--primary-color);
+            background: transparent; border-radius: 6px; font-weight: 500; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-outline:hover { background: #eef7ff; }
+
+        /* Grading Table */
+        .grading-container {
+            background: #fff; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee;
+        }
+        .grading-header {
+            padding: 20px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center;
+        }
+        .grading-header h3 { margin: 0; font-size: 1.2rem; color: var(--text-dark); }
+        .info-tag { font-size: 0.85rem; color: #777; background: #f4f7f6; padding: 5px 10px; border-radius: 4px; }
+
+        .table-responsive { overflow-x: auto; }
+        .grade-table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        
+        .grade-table th {
+            background: #f8f9fa; text-align: left; padding: 15px; font-weight: 600; color: #555;
+            border-bottom: 2px solid #eee;
+        }
+        .grade-table td { padding: 12px 15px; border-bottom: 1px solid #eee; vertical-align: middle; }
+        
+        /* Input Fields */
+        .mark-input {
+            width: 70px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;
+            text-align: center; font-weight: 600; outline: none; transition: 0.2s;
+        }
+        .mark-input:focus { border-color: var(--primary-color); background: #f0f7ff; }
+        .mark-input.invalid { border-color: var(--danger); background: #fff5f5; color: var(--danger); }
+
+        /* Readonly Fields */
+        .total-score { font-weight: 700; color: var(--text-dark); }
+        .grade-badge {
+            display: inline-block; width: 35px; height: 35px; line-height: 35px;
+            text-align: center; border-radius: 50%; font-weight: 700; font-size: 0.9rem;
+            background: #eee; color: #555;
+        }
+        
+        /* Dynamic Grade Colors */
+        .grade-O { background: #dcfce7; color: #166534; }
+        .grade-A { background: #dbeafe; color: #1e40af; }
+        .grade-B { background: #fef9c3; color: #854d0e; }
+        .grade-F { background: #fee2e2; color: #991b1b; }
+
+        /* Footer */
+        .grading-footer {
+            padding: 20px; background: #fafafa; border-top: 1px solid #f0f0f0;
+            display: flex; justify-content: flex-end; gap: 15px;
+        }
+        .btn-save {
+            padding: 10px 25px; border: 1px solid #ddd; background: #fff; color: #555;
+            border-radius: 6px; cursor: pointer; font-weight: 600;
+        }
+        .btn-publish {
+            padding: 10px 30px; background: var(--success); color: #fff; border: none;
+            border-radius: 6px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+        }
+        .btn-publish:hover { background: #218838; }
+
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header" style="height: 70px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee;">
+            <h2 style="font-size: 1.5rem; color: var(--primary-color); font-weight: 700;">SVITS <span>Faculty</span></h2>
+        </div>
+        
+        <div class="sidebar-menu" style="padding: 20px 0;">
+            <p style="font-size: 0.75rem; text-transform: uppercase; color: #999; font-weight: 600; padding: 0 25px; margin: 20px 0 10px;">Main</p>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="faculty-dashboard.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-home" style="width: 20px; text-align: center;"></i> Dashboard</a></li>
+                <li><a href="#" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-users" style="width: 20px; text-align: center;"></i> My Students</a></li>
+                <li><a href="faculty-attendance.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-chalkboard-teacher" style="width: 20px; text-align: center;"></i> Attendance</a></li>
+            </ul>
+
+            <p style="font-size: 0.75rem; text-transform: uppercase; color: #999; font-weight: 600; padding: 0 25px; margin: 20px 0 10px;">Academic</p>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="faculty-my-courses.html" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-book-open" style="width: 20px; text-align: center;"></i> My Courses</a></li>
+                
+                <li><a href="faculty-upload-grades.html" class="active" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; background: #eef7ff; color: var(--primary-color); border-left: 4px solid var(--accent-color); text-decoration: none; font-weight: 500;"><i class="fas fa-edit" style="width: 20px; text-align: center;"></i> Grading & Marks</a></li>
+                
+                <li><a href="#" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-calendar-alt" style="width: 20px; text-align: center;"></i> Timetable</a></li>
+            </ul>
+
+            <p style="font-size: 0.75rem; text-transform: uppercase; color: #999; font-weight: 600; padding: 0 25px; margin: 20px 0 10px;">Personal</p>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="#" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-file-alt" style="width: 20px; text-align: center;"></i> Leave Application</a></li>
+                <li><a href="#" style="display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 500; transition: 0.3s; border-left: 4px solid transparent;"><i class="fas fa-user-circle" style="width: 20px; text-align: center;"></i> Profile</a></li>
+            </ul>
+            
+            <div style="margin-top: 30px; padding: 0 25px;">
+                <a href="login.html" style="color: #dc3545; font-weight: 600; display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="dashboard-header">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <i class="fas fa-bars" id="menuToggle" style="cursor: pointer; font-size: 1.2rem; color: #555; display: none;"></i>
+                <h3 style="margin: 0; color: var(--text-dark); font-size: 1.2rem;">Upload Grades</h3>
+            </div>
+            <div class="user-profile" style="display: flex; align-items: center; gap: 10px;">
+                <img src="https://randomuser.me/api/portraits/men/45.jpg" style="width: 40px; height: 40px; border-radius: 50%;">
+                <div style="display: none; @media(min-width:768px){display:block;}">
+                    <h4 style="margin: 0; font-size: 0.9rem;">Prof. Amit Sharma</h4>
+                    <small style="color: #777;">Dept. of CSE</small>
+                </div>
+            </div>
+        </header>
+
+        <div class="grade-controls">
+            <div class="form-group">
+                <label>Course</label>
+                <select>
+                    <option>Data Structures (CS-301)</option>
+                    <option>Operating Systems (CS-405)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Examination</label>
+                <select>
+                    <option>Mid Semester Exam</option>
+                    <option>End Semester Exam</option>
+                    <option>Internal Assessment</option>
+                </select>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-outline"><i class="fas fa-file-download"></i> Template</button>
+                <button class="btn-outline"><i class="fas fa-file-upload"></i> Import CSV</button>
+            </div>
+        </div>
+
+        <div class="grading-container">
+            <div class="grading-header">
+                <div>
+                    <h3>Enter Marks</h3>
+                    <span class="info-tag">CS-301 • Mid Sem (Max: 40) • End Sem (Max: 60)</span>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>Roll No</th>
+                            <th>Student Name</th>
+                            <th style="text-align:center;">Mid Sem (40)</th>
+                            <th style="text-align:center;">End Sem (60)</th>
+                            <th style="text-align:center;">Total (100)</th>
+                            <th style="text-align:center;">Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr class="student-row">
+                            <td>0827CS221045</td>
+                            <td>Kartik Bais</td>
+                            <td style="text-align:center;">
+                                <input type="number" class="mark-input mid-marks" value="32" max="40" oninput="calculateRow(this)">
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="number" class="mark-input end-marks" value="48" max="60" oninput="calculateRow(this)">
+                            </td>
+                            <td style="text-align:center;">
+                                <span class="total-score">80</span>
+                            </td>
+                            <td style="text-align:center;">
+                                <span class="grade-badge grade-A">A</span>
+                            </td>
+                        </tr>
+
+                        <tr class="student-row">
+                            <td>0827CS221046</td>
+                            <td>Priya Verma</td>
+                            <td style="text-align:center;">
+                                <input type="number" class="mark-input mid-marks" value="38" max="40" oninput="calculateRow(this)">
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="number" class="mark-input end-marks" value="55" max="60" oninput="calculateRow(this)">
+                            </td>
+                            <td style="text-align:center;">
+                                <span class="total-score">93</span>
+                            </td>
+                            <td style="text-align:center;">
+                                <span class="grade-badge grade-O">O</span>
+                            </td>
+                        </tr>
+
+                        <tr class="student-row">
+                            <td>0827CS221047</td>
+                            <td>Rohan Das</td>
+                            <td style="text-align:center;">
+                                <input type="number" class="mark-input mid-marks" value="15" max="40" oninput="calculateRow(this)">
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="number" class="mark-input end-marks" value="20" max="60" oninput="calculateRow(this)">
+                            </td>
+                            <td style="text-align:center;">
+                                <span class="total-score">35</span>
+                            </td>
+                            <td style="text-align:center;">
+                                <span class="grade-badge grade-F">F</span>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grading-footer">
+                <button class="btn-save">Save Draft</button>
+                <button class="btn-publish">Publish Results</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Sidebar Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+        // Auto Calculation Logic
+        function calculateRow(inputElement) {
+            // Find the parent row
+            const row = inputElement.closest('tr');
+            
+            // Get Inputs
+            const midInput = row.querySelector('.mid-marks');
+            const endInput = row.querySelector('.end-marks');
+            
+            // Validate Max Marks
+            if(parseInt(midInput.value) > 40) midInput.classList.add('invalid');
+            else midInput.classList.remove('invalid');
+
+            if(parseInt(endInput.value) > 60) endInput.classList.add('invalid');
+            else endInput.classList.remove('invalid');
+
+            // Calculate Total
+            const mid = parseInt(midInput.value) || 0;
+            const end = parseInt(endInput.value) || 0;
+            const total = mid + end;
+
+            // Update Total
+            row.querySelector('.total-score').innerText = total;
+
+            // Assign Grade
+            const gradeBadge = row.querySelector('.grade-badge');
+            let grade = 'F';
+            let gradeClass = 'grade-F';
+
+            if (total >= 90) { grade = 'O'; gradeClass = 'grade-O'; }
+            else if (total >= 80) { grade = 'A'; gradeClass = 'grade-A'; }
+            else if (total >= 60) { grade = 'B'; gradeClass = 'grade-B'; }
+            else if (total >= 40) { grade = 'C'; gradeClass = 'grade-B'; } // Using B color for C for simplicity
+
+            gradeBadge.innerText = grade;
+            gradeBadge.className = `grade-badge ${gradeClass}`;
+        }
+    </script>
+
+</body>
+</html>
